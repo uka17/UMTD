@@ -1,0 +1,63 @@
+<html>
+<head>
+<script src="Scripts/jquery-2.2.3.min.js" type="text/javascript"></script>
+<script src="Scripts/jquery-ui.min.js" type="text/javascript"></script>
+<script src="Scripts/knockout-3.4.0.js" type="text/javascript"></script>
+<style>
+    .uom, .material, .method, .test {
+        border-radius: 3px;
+        padding: 3px;
+        padding-left: 5px;
+        padding-right: 5px;
+        cursor: pointer;
+    }
+    .uom { background-color: #93b995; }
+    .material { background-color: #ff6a00; }
+    .method { background-color: #ffd800; }
+    .test { background-color: #808080; }
+    .ajax-loader {
+
+    }
+</style>
+</head>
+<body>
+    <div id="dialog-message" title="">
+	    <img src="Images/ajax-loader.gif" alt="Loading..." title="Loading..." class="ajax-loader">
+    </div>
+    <table cellpadding="5">
+		<thead>
+			<tr>
+				<th>Id</th>
+				<th>Uom</th>
+                <th>Material</th>
+                <th>Method</th>
+			</tr>
+		</thead>
+		<tbody data-bind="foreach: testList">		
+			<tr>
+				<td><span class="test" data-bind="text: name, click: $root.removeTest"/></td>
+                <td>
+                    <!-- ko foreach: uom -->
+                        <span class="uom" data-bind="text: name, click: $parent.removeUom.bind($parent, $data)"></span><br />
+                    <!-- /ko -->
+                    <select siz="10" data-bind='options: uomList, optionsText: "name", optionsCaption: "Select...", selectedOptions: selectedUom, optionsValue: "id"'> </select>
+                </td>
+                <td>
+                    <!-- ko foreach: material -->
+                    <span class="material" data-bind="text: name, click: $parent.removeMaterial.bind($parent, $data)"></span><br />
+                    <!-- /ko -->
+                    <select siz="10" data-bind='options: materialList, optionsText: "name", optionsCaption: "Select...", selectedOptions: selectedMaterial, optionsValue: "id"'> </select>
+                </td>
+                <td>
+                    <!-- ko foreach: method -->
+                    <span class="method" data-bind="text: name, click: $parent.removeMethod.bind($parent, $data)"></span><br />
+                    <!-- /ko -->
+                    <select siz="10" data-bind='options: methodList, optionsText: "name", optionsCaption: "Select...", selectedOptions: selectedMethod, optionsValue: "id"'> </select>
+                </td>
+			</tr>
+		</tbody>
+	</table>
+
+	<script type="text/javascript" src="Scripts/test.js"></script>	
+</body>
+</html>

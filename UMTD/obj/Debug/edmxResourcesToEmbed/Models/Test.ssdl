@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="TestModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <Function Name="prcMaterialList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="prcMethodList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="prcTestInsert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Name" Type="nvarchar(max)" Mode="In" />
+    <Parameter Name="Code" Type="nvarchar(max)" Mode="In" />
+  </Function>
+  <Function Name="prcTestMaterialInsert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="TestId" Type="int" Mode="In" />
+    <Parameter Name="MaterialId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="prcTestMaterialRemove" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="TestId" Type="int" Mode="In" />
+    <Parameter Name="MaterialId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="prcTestMethodInsert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="TestId" Type="int" Mode="In" />
+    <Parameter Name="MethodId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="prcTestMethodRemove" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="TestId" Type="int" Mode="In" />
+    <Parameter Name="MethodId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="prcTestParse" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Code" Type="nvarchar(max)" Mode="In" />
+    <Parameter Name="ruText" Type="nvarchar(max)" Mode="In" />
+    <Parameter Name="enText" Type="nvarchar(max)" Mode="In" />
+    <Parameter Name="Method" Type="nvarchar(max)" Mode="In" />
+    <Parameter Name="Uom" Type="nvarchar(max)" Mode="In" />
+    <Parameter Name="Material" Type="nvarchar(max)" Mode="In" />
+  </Function>
+  <Function Name="prcTestRemove" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="TestId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="prcTestSelectAll" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="prcTestUomInsert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="TestId" Type="int" Mode="In" />
+    <Parameter Name="UomId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="prcTestUomRemove" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="TestId" Type="int" Mode="In" />
+    <Parameter Name="UomId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="prcUomList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <EntityContainer Name="TestModelStoreContainer" />
+</Schema>
