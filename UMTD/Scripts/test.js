@@ -18,18 +18,17 @@ function ajaxLoad(type) {
         case "material":
             url = "api/Material/List";
             arr = materialList;
-            nextType = "method";
             break;
         case "method":
             url = "api/Method/List";
             arr = methodList;
-            nextType = "uom";
             break;
         case "uom":
             url = "api/Uom/List";
             arr = uomList;
             nextType = null;
     }
+    loadingEvent(type, 1);
     if (url != null) {
         this.request = $.ajax({
             statusCode: {
@@ -37,6 +36,7 @@ function ajaxLoad(type) {
                     alert("Page not found");
                 }
             },
+            async: false,
             contentType: "application/json",
             dataType: "json",
             url: url,
@@ -48,11 +48,9 @@ function ajaxLoad(type) {
                       name: e.Name
                   });
               });
-              if (nextType != null)
-                  ajaxLoad(nextType);
+              loadingEvent(type, 0);
           });
     }
-    $("#dialog-message").dialog("open");
 }
 
 var testList = ko.observableArray();
@@ -166,5 +164,7 @@ $("#dialog-message").dialog({
     width: 280
 });
 ajaxLoad("material");
+ajaxLoad("method");
+ajaxLoad("uom");
 
 

@@ -113,6 +113,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
+    <Content Include="Images\ajax-loader.gif" />
     <Content Include="index.html" />
     <Content Include="Models\Test.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -125,6 +126,7 @@
       <LastGenOutput>Test.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\jquery-2.2.3.min.js" />
+    <Content Include="Scripts\jquery-ui.min.js" />
     <Content Include="Scripts\knockout-3.4.0.js" />
     <Content Include="Scripts\test.js" />
     <Content Include="Web.config" />
