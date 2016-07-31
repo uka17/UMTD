@@ -14,6 +14,7 @@ namespace UMTD.Models
     public partial class prcUomList_Result
     {
         public int Id { get; set; }
-        public string Name { get; set; }
+        public string ShortName { get; set; }
+        public string FullName { get; set; }
     }
 }

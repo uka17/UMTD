@@ -1,0 +1,29 @@
+﻿.uom, .material, .method, .test {
+    display:inline-block;
+    margin-top: 3px;
+    margin-bottom: 3px;
+    border-radius: 3px;
+    border: 1px solid #999;
+    padding: 3px;
+    padding-left: 5px;
+    padding-right: 5px;
+    cursor: pointer;
+    box-shadow: 1px 1px 5px rgba(0,0,0,0.5);
+    font-family: gotham,helvetica,arial,sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    color: #333;
+}
+.uom { background-color: #93b995; }
+.material { background-color: #ff6a00; }
+.method { background-color: #ffd800; }
+.test { background-color: #808080; }
+.ajax-loader {
+
+}
+.test-content td.attribute {
+    border-left: 1px solid #ccc;
+}
+.test-content td {
+    border-bottom: 1px solid #ccc;
+}

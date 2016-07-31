@@ -18,7 +18,7 @@ namespace UMTD.Controllers
         {
             try
             {
-                List<prcTestSelectAll_Result> TestList = (from s in dbContext.prcTestSelectAll()
+                List<prcTestSelectAll_Result> TestList = (from s in dbContext.prcTestSelectAll(1)
                                                           select s).ToList();
                 return Request.CreateResponse<IEnumerable<prcTestSelectAll_Result>>(HttpStatusCode.OK, TestList);
             }
@@ -33,7 +33,7 @@ namespace UMTD.Controllers
         {
             try
             {
-                dbContext.prcTestRemove(testId);
+                dbContext.prcTestDelete(testId);
                 return new HttpResponseMessage(HttpStatusCode.OK);
             }
             catch (Exception e)

@@ -129,6 +129,7 @@
     <Content Include="Scripts\jquery-ui.min.js" />
     <Content Include="Scripts\knockout-3.4.0.js" />
     <Content Include="Scripts\test.js" />
+    <Content Include="Styles\site.css" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>

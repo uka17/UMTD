@@ -18,7 +18,7 @@ namespace UMTD.Controllers
         {
             try
             {
-                List<prcMaterialList_Result> MaterialList = (from s in dbContext.prcMaterialList()
+                List<prcMaterialList_Result> MaterialList = (from s in dbContext.prcMaterialList(1)
                                                              select s).ToList();
                 return Request.CreateResponse<IEnumerable<prcMaterialList_Result>>(HttpStatusCode.OK, MaterialList);
             }
@@ -34,7 +34,7 @@ namespace UMTD.Controllers
         {
             try
             {
-                dbContext.prcTestMaterialRemove(testId, MaterialId);
+                dbContext.prcTestMaterialDelete(testId, MaterialId);
                 return new HttpResponseMessage(HttpStatusCode.OK);
             }
             catch (Exception e)

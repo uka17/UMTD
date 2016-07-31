@@ -18,7 +18,7 @@ namespace UMTD.Controllers
         {
             try
             {
-                List<prcMethodList_Result> MethodList = (from s in dbContext.prcMethodList()
+                List<prcMethodList_Result> MethodList = (from s in dbContext.prcMethodList(1)
                                                          select s).ToList();
                 return Request.CreateResponse<IEnumerable<prcMethodList_Result>>(HttpStatusCode.OK, MethodList);
             }
@@ -34,7 +34,7 @@ namespace UMTD.Controllers
         {
             try
             {
-                dbContext.prcTestMethodRemove(testId, MethodId);
+                dbContext.prcTestMethodDelete(testId, MethodId);
                 return new HttpResponseMessage(HttpStatusCode.OK);
             }
             catch (Exception e)

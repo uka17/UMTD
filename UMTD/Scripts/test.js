@@ -43,10 +43,19 @@ function ajaxLoad(type) {
         })
           .done(function (data) {
               data.map(function (e) {
-                  arr.push({
-                      id: e.Id,
-                      name: e.Name
-                  });
+                  switch (type) {
+                      case "uom":
+                          arr.push({
+                              id: e.Id,
+                              name: e.FullName
+                          });
+                          break;
+                      default:
+                          arr.push({
+                              id: e.Id,
+                              name: e.Name
+                          });
+                  }
               });
               loadingEvent(type, 0);
           });
@@ -116,7 +125,7 @@ var test = function (t) {
 //Data models
 var uom = function (t) {
     this.id = t.Id;
-    this.name = t.Name;
+    this.name = t.FullName;
 }
 var method = function (t) {
     this.id = t.Id;
