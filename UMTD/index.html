@@ -20,7 +20,12 @@
         </thead>
         <tbody data-bind="foreach: testList">
             <tr>
-                <td><span class="test" data-bind="text: name, click: $root.removeTest" /></td>
+                <!--<td><span class="test" data-bind="text: name, click: $root.removeTest" /></td>-->
+                <td class="attribute">
+                    <!-- ko foreach: synonym -->
+                    <span data-bind="text: name, css: testCSS, click: $parent.removeSynonym.bind($parent, $data)"></span>
+                    <!-- /ko -->
+                </td>
                 <td class="attribute">
                     <!-- ko foreach: uom -->
                     <span class="uom" data-bind="text: name, click: $parent.removeUom.bind($parent, $data)"></span><br />

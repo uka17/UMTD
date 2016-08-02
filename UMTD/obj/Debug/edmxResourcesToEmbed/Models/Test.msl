@@ -23,18 +23,6 @@
     <FunctionImportMapping FunctionImportName="prcTestMaterialInsert" FunctionName="TestModel.Store.prcTestMaterialInsert" />
     <FunctionImportMapping FunctionImportName="prcTestMethodDelete" FunctionName="TestModel.Store.prcTestMethodDelete" />
     <FunctionImportMapping FunctionImportName="prcTestMethodInsert" FunctionName="TestModel.Store.prcTestMethodInsert" />
-    <FunctionImportMapping FunctionImportName="prcTestSelectAll" FunctionName="TestModel.Store.prcTestSelectAll">
-      <ResultMapping>
-        <ComplexTypeMapping TypeName="TestModel.prcTestSelectAll_Result">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="Code" ColumnName="Code" />
-          <ScalarProperty Name="Material" ColumnName="Material" />
-          <ScalarProperty Name="Method" ColumnName="Method" />
-          <ScalarProperty Name="Uom" ColumnName="Uom" />
-          <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
-        </ComplexTypeMapping>
-      </ResultMapping>
-    </FunctionImportMapping>
     <FunctionImportMapping FunctionImportName="prcTestUomDelete" FunctionName="TestModel.Store.prcTestUomDelete" />
     <FunctionImportMapping FunctionImportName="prcTestUomInsert" FunctionName="TestModel.Store.prcTestUomInsert" />
     <FunctionImportMapping FunctionImportName="prcUomList" FunctionName="TestModel.Store.prcUomList">
@@ -43,6 +31,19 @@
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="ShortName" ColumnName="ShortName" />
           <ScalarProperty Name="FullName" ColumnName="FullName" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="prcTestSelectAll" FunctionName="TestModel.Store.prcTestSelectAll">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="TestModel.prcTestSelectAll_Result">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
+          <ScalarProperty Name="Synonym" ColumnName="Synonym" />
+          <ScalarProperty Name="Material" ColumnName="Material" />
+          <ScalarProperty Name="Method" ColumnName="Method" />
+          <ScalarProperty Name="Uom" ColumnName="Uom" />
+          <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>

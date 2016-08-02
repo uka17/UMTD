@@ -15,6 +15,7 @@ namespace UMTD.Models
     {
         public int Id { get; set; }
         public string Code { get; set; }
+        public string Synonym { get; set; }
         public string Material { get; set; }
         public string Method { get; set; }
         public string Uom { get; set; }

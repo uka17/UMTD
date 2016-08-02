@@ -71,11 +71,21 @@ var methodList = ko.observableArray();
 var test = function (t) {
     var self = this;
     self.id = t.Id;
-    self.name = t.Name;
+    self.synonym = ko.observableArray();
+    var synonymJSON = jQuery.parseJSON(t.Synonym);
+    synonymJSON.map(function (e) {
+        self.synonym.push(new synonym(e));
+    });
     self.uom = ko.observableArray(jQuery.parseJSON(t.Uom));
     self.method = ko.observableArray(jQuery.parseJSON(t.Method));
     self.material = ko.observableArray(jQuery.parseJSON(t.Material));
 
+    //Synonym
+    self.removeSynonym = function (obj) {
+        //Remove item
+        self.synonym.remove(obj);
+        $.get("api/Synonym/Delete", { testId: self.id, synonymId: obj.id });
+    }
     //Uom
     self.removeUom = function (obj) {
         //Remove item
@@ -134,6 +144,15 @@ var method = function (t) {
 var material = function (t) {
     this.id = t.Id;
     this.name = t.Name;
+}
+var synonym = function (t) {
+    var self = this;
+    self.id = t.id;
+    self.languageId = t.languageId;
+    self.name = t.name;
+    self.testCSS = ko.pureComputed(function () {
+        return self.languageId == 1 ? "test-ru" : "test-en";
+    });
 }
 //Model itself
 var ViewModel = function (testList, uomList, materialList, methodList) {

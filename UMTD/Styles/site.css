@@ -1,4 +1,4 @@
-﻿.uom, .material, .method, .test {
+﻿.uom, .material, .method, .test-ru, .test-en {
     display:inline-block;
     margin-top: 3px;
     margin-bottom: 3px;
@@ -17,7 +17,13 @@
 .uom { background-color: #93b995; }
 .material { background-color: #ff6a00; }
 .method { background-color: #ffd800; }
-.test { background-color: #808080; }
+.test-ru { background:url(../Images/ru.png) right bottom; }
+.test-en { background:url(../Images/en.png) right bottom; }
+.test-ru, .test-en { 
+    background-repeat: no-repeat;
+    background-color: #808080; 
+    padding-right: 20px;
+}
 .ajax-loader {
 
 }

@@ -30,9 +30,6 @@
       <Parameter Name="TestId" Mode="In" Type="Int32" />
       <Parameter Name="MethodId" Mode="In" Type="Int32" />
     </FunctionImport>
-    <FunctionImport Name="prcTestSelectAll" ReturnType="Collection(TestModel.prcTestSelectAll_Result)">
-      <Parameter Name="LanguageId" Mode="In" Type="Int32" />
-    </FunctionImport>
     <FunctionImport Name="prcTestUomDelete">
       <Parameter Name="TestId" Mode="In" Type="Int32" />
       <Parameter Name="UomId" Mode="In" Type="Int32" />
@@ -44,6 +41,9 @@
     <FunctionImport Name="prcUomList" ReturnType="Collection(TestModel.prcUomList_Result)">
       <Parameter Name="LanguageId" Mode="In" Type="Int32" />
     </FunctionImport>
+    <FunctionImport Name="prcTestSelectAll" ReturnType="Collection(TestModel.prcTestSelectAll_Result)">
+      <Parameter Name="LanguageId" Mode="In" Type="Int32" />
+    </FunctionImport>
   </EntityContainer>
   <ComplexType Name="prcMaterialList_Result">
     <Property Type="Int32" Name="Id" Nullable="false" />
@@ -53,17 +53,18 @@
     <Property Type="Int32" Name="Id" Nullable="false" />
     <Property Type="String" Name="Name" Nullable="true" />
   </ComplexType>
-  <ComplexType Name="prcTestSelectAll_Result">
-    <Property Type="Int32" Name="Id" Nullable="false" />
-    <Property Type="String" Name="Code" Nullable="true" />
-    <Property Type="String" Name="Material" Nullable="true" />
-    <Property Type="String" Name="Method" Nullable="true" />
-    <Property Type="String" Name="Uom" Nullable="true" />
-    <Property Type="DateTime" Name="ModifiedOn" Nullable="false" Precision="23" />
-  </ComplexType>
   <ComplexType Name="prcUomList_Result">
     <Property Type="Int32" Name="Id" Nullable="false" />
     <Property Type="String" Name="ShortName" Nullable="true" />
     <Property Type="String" Name="FullName" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="prcTestSelectAll_Result">
+    <Property Type="Int32" Name="Id" Nullable="false" />
+    <Property Type="String" Name="Code" Nullable="true" />
+    <Property Type="String" Name="Synonym" Nullable="true" />
+    <Property Type="String" Name="Material" Nullable="true" />
+    <Property Type="String" Name="Method" Nullable="true" />
+    <Property Type="String" Name="Uom" Nullable="true" />
+    <Property Type="DateTime" Name="ModifiedOn" Nullable="false" Precision="23" />
   </ComplexType>
 </Schema>
