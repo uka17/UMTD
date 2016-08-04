@@ -3,19 +3,29 @@
 <script src="Scripts/jquery-2.2.3.min.js" type="text/javascript"></script>
 <script src="Scripts/jquery-ui.min.js" type="text/javascript"></script>
 <script src="Scripts/knockout-3.4.0.js" type="text/javascript"></script>
-<link rel="stylesheet" href="Styles/site.css">
+<script src="Scripts/helper.js" type="text/javascript"></script>
+<script src="Scripts/data-model.js" type="text/javascript"></script>
+<link rel="stylesheet" type="text/css" href="Styles/site.css">
+<link rel="stylesheet" type="text/css" href="Styles/jquery-ui.css" />
+<link rel="stylesheet" type="text/css" href="Styles/jquery-ui.structure.css" />
+<link rel="stylesheet" type="text/css" href="Styles/jquery-ui.theme.css" />
 </head>
 <body>
     <div id="dialog-message" title="">
 	    <img src="Images/ajax-loader.gif" alt="Loading..." title="Loading..." class="ajax-loader">
     </div>
+    <div id="dialog-add-translation" title="">
+        <select siz="10" id="language" data-bind='options: languageList, optionsText: "name", optionsValue: "id"'></select>
+        <input type="text" id="newTranslation" />
+        <a class="button" href="#" id="createTestTranslation">Created</a>
+    </div>
     <table class="test-content" cellpadding="5" cellspacing="0">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Uom</th>
-                <th>Material</th>
-                <th>Method</th>
+                <th width="25%">Id</th>
+                <th width="25%">Uom</th>
+                <th width="25%">Material</th>
+                <th width="25%">Method</th>
             </tr>
         </thead>
         <tbody data-bind="foreach: testList">
@@ -23,26 +33,41 @@
                 <!--<td><span class="test" data-bind="text: name, click: $root.removeTest" /></td>-->
                 <td class="attribute">
                     <!-- ko foreach: synonym -->
-                    <span data-bind="text: name, css: testCSS, click: $parent.removeSynonym.bind($parent, $data)"></span>
+                    <div class="test-synonym">
+                        <div class="item-delete"><img src="Images/item-delete.png" data-bind="click: $parent.removeSynonym.bind($parent, $data)" /></div>
+                        <span class="item-text" data-bind="text: name"></span>
+                        <div class="item-lang"><img data-bind="attr: { src: languageIcon}" /></div>
+                    </div>
                     <!-- /ko -->
+                    <br />
+                    <a data-bind="attr: { href: '#'}, click: addTestTranslation"><img src="Images/add.png" /></a>
                 </td>
                 <td class="attribute">
                     <!-- ko foreach: uom -->
-                    <span class="uom" data-bind="text: name, click: $parent.removeUom.bind($parent, $data)"></span><br />
+                    <div class="test-uom">
+                        <div class="item-delete"><img src="Images/item-delete.png" data-bind="click: $parent.removeUom.bind($parent, $data)" /></div>
+                        <span data-bind="text: name"></span>
+                    </div>
                     <!-- /ko -->
-                    <select siz="10" data-bind='options: uomList, optionsText: "name", optionsCaption: "Select...", selectedOptions: selectedUom, optionsValue: "id"'> </select>
+                    <select data-bind='options: uomList, optionsText: "name", optionsCaption: "Select...", selectedOptions: selectedUom, optionsValue: "id"'> </select>
                 </td>
                 <td class="attribute">
                     <!-- ko foreach: material -->
-                    <span class="material" data-bind="text: name, click: $parent.removeMaterial.bind($parent, $data)"></span><br />
+                    <div class="test-material">
+                        <div class="item-delete"><img src="Images/item-delete.png" data-bind="click: $parent.removeMaterial.bind($parent, $data)" /></div>
+                        <span data-bind="text: name"></span>
+                    </div>
                     <!-- /ko -->
-                    <select siz="10" data-bind='options: materialList, optionsText: "name", optionsCaption: "Select...", selectedOptions: selectedMaterial, optionsValue: "id"'> </select>
+                    <select data-bind='options: materialList, optionsText: "name", optionsCaption: "Select...", selectedOptions: selectedMaterial, optionsValue: "id"'> </select>
                 </td>
                 <td class="attribute">
                     <!-- ko foreach: method -->
-                    <span class="method" data-bind="text: name, click: $parent.removeMethod.bind($parent, $data)"></span><br />
+                    <div class="test-method">
+                        <div class="item-delete"><img src="Images/item-delete.png" data-bind="click: $parent.removeMethod.bind($parent, $data)" /></div>
+                        <span data-bind="text: name"></span>
+                    </div>
                     <!-- /ko -->
-                    <select class="form-control" siz="10" data-bind='options: methodList, optionsText: "name", optionsCaption: "Select...", selectedOptions: selectedMethod, optionsValue: "id"'> </select>
+                    <select data-bind='options: methodList, optionsText: "name", optionsCaption: "Select...", selectedOptions: selectedMethod, optionsValue: "id"'> </select>
                 </td>
             </tr>
         </tbody>

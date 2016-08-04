@@ -30,11 +30,11 @@ namespace UMTD.Controllers
 
         [HttpGet]
         [ActionName("Delete")]
-        public HttpResponseMessage Delete(int testId, int MethodId)
+        public HttpResponseMessage Delete(int testId, int methodId)
         {
             try
             {
-                dbContext.prcTestMethodDelete(testId, MethodId);
+                dbContext.prcTestMethodDelete(testId, methodId);
                 return new HttpResponseMessage(HttpStatusCode.OK);
             }
             catch (Exception e)
@@ -45,11 +45,11 @@ namespace UMTD.Controllers
 
         [HttpGet]
         [ActionName("Insert")]
-        public HttpResponseMessage Insert(int testId, int MethodId)
+        public HttpResponseMessage Insert(int testId, int methodId)
         {
             try
             {
-                dbContext.prcTestMethodInsert(testId, MethodId);
+                dbContext.prcTestMethodInsert(testId, methodId);
                 return new HttpResponseMessage(HttpStatusCode.OK);
             }
             catch (Exception e)

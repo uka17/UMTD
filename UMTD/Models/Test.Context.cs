@@ -163,5 +163,40 @@ namespace UMTD.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<prcTestSelectAll_Result>("prcTestSelectAll", languageIdParameter);
         }
+    
+        public virtual ObjectResult<prcLanguageList_Result> prcLanguageList()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<prcLanguageList_Result>("prcLanguageList");
+        }
+    
+        public virtual ObjectResult<Nullable<int>> prcTestTranslationInsert(Nullable<int> testId, Nullable<int> languageId, string translation, string modifiedBy)
+        {
+            var testIdParameter = testId.HasValue ?
+                new ObjectParameter("TestId", testId) :
+                new ObjectParameter("TestId", typeof(int));
+    
+            var languageIdParameter = languageId.HasValue ?
+                new ObjectParameter("LanguageId", languageId) :
+                new ObjectParameter("LanguageId", typeof(int));
+    
+            var translationParameter = translation != null ?
+                new ObjectParameter("Translation", translation) :
+                new ObjectParameter("Translation", typeof(string));
+    
+            var modifiedByParameter = modifiedBy != null ?
+                new ObjectParameter("ModifiedBy", modifiedBy) :
+                new ObjectParameter("ModifiedBy", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("prcTestTranslationInsert", testIdParameter, languageIdParameter, translationParameter, modifiedByParameter);
+        }
+    
+        public virtual int prcTestTranslationDelete(Nullable<int> testTranslationId)
+        {
+            var testTranslationIdParameter = testTranslationId.HasValue ?
+                new ObjectParameter("TestTranslationId", testTranslationId) :
+                new ObjectParameter("TestTranslationId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("prcTestTranslationDelete", testTranslationIdParameter);
+        }
     }
 }

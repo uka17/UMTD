@@ -1,17 +1,5 @@
-﻿function findNameById(id, arr) {
-    for (var i = 0; i < arr().length - 1; i++) {
-        if (arr()[i].id == id)
-            return arr()[i].name;
-    }
-    return null;
-}
-function loadingEvent(entity, state) {
-    $("#dialog-message").attr("title", entity);
-    if(state)
-        $("#dialog-message").dialog("open");
-    else
-        $("#dialog-message").dialog("close");
-}
+﻿var activeTestId = 0;
+
 function ajaxLoad(type) {
     var url = null;
     switch (type) {
@@ -23,10 +11,13 @@ function ajaxLoad(type) {
             url = "api/Method/List";
             arr = methodList;
             break;
+        case "language":
+            url = "api/Language/List";
+            arr = languageList;
+            break;
         case "uom":
             url = "api/Uom/List";
             arr = uomList;
-            nextType = null;
     }
     loadingEvent(type, 1);
     if (url != null) {
@@ -66,6 +57,7 @@ var testList = ko.observableArray();
 var uomList = ko.observableArray();
 var materialList = ko.observableArray();
 var methodList = ko.observableArray();
+var languageList = ko.observableArray();
 
 //Object for saving data
 var test = function (t) {
@@ -84,7 +76,7 @@ var test = function (t) {
     self.removeSynonym = function (obj) {
         //Remove item
         self.synonym.remove(obj);
-        $.get("api/Synonym/Delete", { testId: self.id, synonymId: obj.id });
+        $.get("api/Test/TranslationDelete", { translationId: obj.id });
     }
     //Uom
     self.removeUom = function (obj) {
@@ -131,43 +123,29 @@ var test = function (t) {
             $.get("api/Method/Insert", { testId: self.id, methodId: self.selectedMethod()[0] });
         }
     });
-}
-//Data models
-var uom = function (t) {
-    this.id = t.Id;
-    this.name = t.FullName;
-}
-var method = function (t) {
-    this.id = t.Id;
-    this.name = t.Name;
-}
-var material = function (t) {
-    this.id = t.Id;
-    this.name = t.Name;
-}
-var synonym = function (t) {
-    var self = this;
-    self.id = t.id;
-    self.languageId = t.languageId;
-    self.name = t.name;
-    self.testCSS = ko.pureComputed(function () {
-        return self.languageId == 1 ? "test-ru" : "test-en";
-    });
+
+    //Test translation
+    self.addTestTranslation = function (obj) {
+        activeTestId = self.id;
+        $('#newTranslation').val('');
+        $("#dialog-add-translation").dialog("open");
+    }
 }
 //Model itself
-var ViewModel = function (testList, uomList, materialList, methodList) {
+var ViewModel = function (testList, uomList, materialList, methodList, languageList) {
     var self = this;
     self.testList = testList;
     self.uomList = uomList;
     self.materialList = materialList;
     self.methodList = methodList;
+    self.languageList = languageList;
     self.removeTest = function (test) {
         self.testList.remove(test);
         $.get("api/Test/Delete", { testId: test.id });
     };
 };
 
-ko.applyBindings(new ViewModel(testList, uomList, materialList, methodList));
+ko.applyBindings(new ViewModel(testList, uomList, materialList, methodList, languageList));
 
 //Test list
 $.ajax({
@@ -185,14 +163,41 @@ $.ajax({
           testList.push(new test(e));
       });
   });
-//uom and methods will be triggered recursively
+
 $("#dialog-message").dialog({
     modal: true,
     autoOpen: false,
     width: 280
 });
+$("#dialog-add-translation").dialog({
+    modal: true,
+    autoOpen: false,
+    width: 400
+});
+
+$('#createTestTranslation').click(function () {
+    var j = 0;
+    var translation = $('#newTranslation').val();
+
+    $.get("api/Test/TranslationInsert", { testId: activeTestId, languageId: $('#language').val(), translation: translation })
+    .done(function (data) {
+        for (var i = 0; i < arr().length - 1; i++) {
+            if (arr()[i].id == activeTestId)
+                j = i;
+        }
+        if (j == 0) {
+            testList()[j].synonym.push(new synonym({ id: data, name: translation, languageId: $('#language').val() }));
+        }
+        else
+            alert("Test with Id=" + activeTestId + " was not found")
+    });
+
+    $('#dialog-add-translation').dialog("close");
+});
+//uom and methods will be triggered recursively
 ajaxLoad("material");
 ajaxLoad("method");
 ajaxLoad("uom");
+ajaxLoad("language");
 
 

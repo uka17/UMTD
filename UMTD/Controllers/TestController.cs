@@ -40,7 +40,36 @@ namespace UMTD.Controllers
             {
                 return Request.CreateResponse<string>(HttpStatusCode.InternalServerError, e.Message);
             }
-        }        
+        }
+        [HttpGet]
+        [ActionName("TranslationInsert")]
+        public HttpResponseMessage TranslationInsert(int testId, int languageId, string translation)
+        {
+            try
+            {
+                int Result = (from s in dbContext.prcTestTranslationInsert(testId, languageId, translation, "system")
+                              select s.Value).FirstOrDefault();
+                return Request.CreateResponse<int>(HttpStatusCode.OK, Result);
+            }
+            catch (Exception e)
+            {
+                return Request.CreateResponse<string>(HttpStatusCode.InternalServerError, e.Message);
+            }
+        }
+        [HttpGet]
+        [ActionName("TranslationDelete")]
+        public HttpResponseMessage TranslationDelete(int translationId)
+        {
+            try
+            {
+                dbContext.prcTestTranslationDelete(translationId);
+                return new HttpResponseMessage(HttpStatusCode.OK);
+            }
+            catch (Exception e)
+            {
+                return Request.CreateResponse<string>(HttpStatusCode.InternalServerError, e.Message);
+            }
+        }
         #endregion
     }
 }

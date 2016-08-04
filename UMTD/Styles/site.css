@@ -1,4 +1,4 @@
-﻿.uom, .material, .method, .test-ru, .test-en {
+﻿.test-uom, .test-material, .test-method, .test-synonym {
     display:inline-block;
     margin-top: 3px;
     margin-bottom: 3px;
@@ -13,17 +13,34 @@
     font-size: 12px;
     font-weight: 400;
     color: #333;
-}
-.uom { background-color: #93b995; }
-.material { background-color: #ff6a00; }
-.method { background-color: #ffd800; }
-.test-ru { background:url(../Images/ru.png) right bottom; }
-.test-en { background:url(../Images/en.png) right bottom; }
-.test-ru, .test-en { 
-    background-repeat: no-repeat;
-    background-color: #808080; 
+    position: relative;
+    padding: 5px;
     padding-right: 20px;
 }
+
+.test-synonym { background-color: #E7CD83; }
+.test-uom { background-color: #C6DF7E; }
+.test-material { background-color: #99CCFF; }
+.test-method { background-color: #FFC373; }
+
+.item-delete {
+    position: absolute;
+    right: 0px;
+    top: 3px;
+    opacity: 0.7;
+}
+.item-delete:hover {
+    opacity: 1;
+}
+.item-text {
+    margin-left: 15px;
+}
+.item-lang {
+    position: absolute;
+    left: 3px;
+    top: 5px;  
+}
+
 .ajax-loader {
 
 }
@@ -32,4 +49,25 @@
 }
 .test-content td {
     border-bottom: 1px solid #ccc;
+}
+.button {
+	background-color:#75C22A;
+	-moz-border-radius:3px;
+	-webkit-border-radius:3px;
+	border-radius:2px;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:arial;
+	font-size:13px;
+	padding:10px 24px;
+	text-decoration:none;
+}
+.button:hover
+{
+    background-color: #99DB57;
+}
+.button:active {
+	position:relative;
+	top:1px;
 }
