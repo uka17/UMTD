@@ -17,6 +17,6 @@ var synonym = function (t) {
     self.languageId = t.languageId;
     self.name = t.name;
     self.languageIcon = ko.pureComputed(function () {
-        return self.languageId == 1 ? "Images/ru.png" : "Images/en.png";
+        return self.languageId == 1 ? "/Images/ru.png" : "/Images/en.png";
     });
 }

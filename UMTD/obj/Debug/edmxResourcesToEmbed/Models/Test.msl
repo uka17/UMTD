@@ -34,6 +34,16 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="prcLanguageList" FunctionName="TestModel.Store.prcLanguageList">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="TestModel.prcLanguageList_Result">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="prcTestTranslationInsert" FunctionName="TestModel.Store.prcTestTranslationInsert" />
+    <FunctionImportMapping FunctionImportName="prcTestTranslationDelete" FunctionName="TestModel.Store.prcTestTranslationDelete" />
     <FunctionImportMapping FunctionImportName="prcTestSelectAll" FunctionName="TestModel.Store.prcTestSelectAll">
       <ResultMapping>
         <ComplexTypeMapping TypeName="TestModel.prcTestSelectAll_Result">
@@ -47,15 +57,6 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
-    <FunctionImportMapping FunctionImportName="prcLanguageList" FunctionName="TestModel.Store.prcLanguageList">
-      <ResultMapping>
-        <ComplexTypeMapping TypeName="TestModel.prcLanguageList_Result">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
-        </ComplexTypeMapping>
-      </ResultMapping>
-    </FunctionImportMapping>
-    <FunctionImportMapping FunctionImportName="prcTestTranslationInsert" FunctionName="TestModel.Store.prcTestTranslationInsert" />
-    <FunctionImportMapping FunctionImportName="prcTestTranslationDelete" FunctionName="TestModel.Store.prcTestTranslationDelete" />
+    <FunctionImportMapping FunctionImportName="prcTestSelectAllPageCount" FunctionName="TestModel.Store.prcTestSelectAllPageCount" />
   </EntityContainerMapping>
 </Mapping>

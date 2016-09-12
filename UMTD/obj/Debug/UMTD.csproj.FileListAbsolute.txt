@@ -40,6 +40,10 @@ D:\Files\UMTD\UMTD\bin\Newtonsoft.Json.xml
 D:\Files\UMTD\UMTD\bin\System.Net.Http.Formatting.xml
 D:\Files\UMTD\UMTD\bin\System.Web.Http.xml
 D:\Files\UMTD\UMTD\bin\System.Web.Http.WebHost.xml
-D:\Files\UMTD\UMTD\obj\Debug\UMTD.csprojResolveAssemblyReference.cache
 D:\Files\UMTD\UMTD\obj\Debug\UMTD.dll
 D:\Files\UMTD\UMTD\obj\Debug\UMTD.pdb
+D:\Files\UMTD\UMTD\bin\Antlr3.Runtime.dll
+D:\Files\UMTD\UMTD\bin\System.Web.Optimization.dll
+D:\Files\UMTD\UMTD\bin\WebGrease.dll
+D:\Files\UMTD\UMTD\bin\Antlr3.Runtime.pdb
+D:\Files\UMTD\UMTD\bin\System.Web.Optimization.xml

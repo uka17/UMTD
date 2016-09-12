@@ -1,22 +1,42 @@
 ﻿var activeTestId = 0;
 
+function loadTestList(filter, pageNumber) {
+    testList.removeAll();
+    $.ajax({
+        statusCode: {
+            404: function () {
+                alert("page not found");
+            }
+        },
+        contentType: "application/json",
+        dataType: "json",
+        data: { filter: '', pageNumber: pageNumber },
+        url: "/api/Test/List",
+    })
+      .done(function (data) {
+          data.map(function (e) {
+              testList.push(new test(e));
+          });
+      });
+}
+
 function ajaxLoad(type) {
     var url = null;
     switch (type) {
         case "material":
-            url = "api/Material/List";
+            url = "/api/Material/List";
             arr = materialList;
             break;
         case "method":
-            url = "api/Method/List";
+            url = "/api/Method/List";
             arr = methodList;
             break;
         case "language":
-            url = "api/Language/List";
+            url = "/api/Language/List";
             arr = languageList;
             break;
         case "uom":
-            url = "api/Uom/List";
+            url = "/api/Uom/List";
             arr = uomList;
     }
     loadingEvent(type, 1);
@@ -82,7 +102,7 @@ var test = function (t) {
     self.removeUom = function (obj) {
         //Remove item
         self.uom.remove(obj);
-        $.get("api/Uom/Delete", { testId: self.id, uomId: obj.id });
+        $.get("/api/Uom/Delete", { testId: self.id, uomId: obj.id });
     }
     self.selectedUom = ko.observableArray();
 
@@ -90,14 +110,14 @@ var test = function (t) {
         var name = findNameById(value, uomList);
         if (name != null) {
             self.uom.push({ id: self.selectedUom()[0], name: name });
-            $.get("api/Uom/Insert", { testId: self.id, uomId: self.selectedUom()[0] });
+            $.get("/api/Uom/Insert", { testId: self.id, uomId: self.selectedUom()[0] });
         }
     });
     //Material
     self.removeMaterial = function (obj) {
         //Remove item
         self.material.remove(obj);
-        $.get("api/Material/Delete", { testId: self.id, materialId: obj.id });
+        $.get("/api/Material/Delete", { testId: self.id, materialId: obj.id });
     }
     self.selectedMaterial = ko.observableArray();
 
@@ -112,7 +132,7 @@ var test = function (t) {
     self.removeMethod = function (obj) {
         //Remove item
         self.method.remove(obj);
-        $.get("api/Method/Delete", { testId: self.id, methodId: obj.id });
+        $.get("/api/Method/Delete", { testId: self.id, methodId: obj.id });
     }
     self.selectedMethod = ko.observableArray();
 
@@ -120,7 +140,7 @@ var test = function (t) {
         var name = findNameById(value, methodList);
         if (name != null) {
             self.method.push({ id: self.selectedMethod()[0], name: name });
-            $.get("api/Method/Insert", { testId: self.id, methodId: self.selectedMethod()[0] });
+            $.get("/api/Method/Insert", { testId: self.id, methodId: self.selectedMethod()[0] });
         }
     });
 
@@ -141,28 +161,20 @@ var ViewModel = function (testList, uomList, materialList, methodList, languageL
     self.languageList = languageList;
     self.removeTest = function (test) {
         self.testList.remove(test);
-        $.get("api/Test/Delete", { testId: test.id });
+        $.get("/api/Test/Delete", { testId: test.id });
     };
+    self.gotoPage = function (pageNumber) {
+        loadTestList('', pageNumber);
+        self.currentPage(pageNumber);
+    }
+    self.pageCount = [1, 2, 3, 4, 5];
+    self.currentPage = ko.observable(1);
 };
 
 ko.applyBindings(new ViewModel(testList, uomList, materialList, methodList, languageList));
 
 //Test list
-$.ajax({
-    statusCode: {
-        404: function () {
-            alert("page not found");
-        }
-    },
-    contentType: "application/json",
-    dataType: "json",
-    url: "api/Test/List",
-})
-  .done(function (data) {
-      data.map(function (e) {
-          testList.push(new test(e));
-      });
-  });
+loadTestList('', 1);
 
 $("#dialog-message").dialog({
     modal: true,
@@ -172,7 +184,8 @@ $("#dialog-message").dialog({
 $("#dialog-add-translation").dialog({
     modal: true,
     autoOpen: false,
-    width: 400
+    width: 400,
+    position: { my: "center center", at: "center top" }
 });
 
 $('#createTestTranslation').click(function () {

@@ -1,0 +1,92 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="TestModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="TestEntities" annotation:LazyLoadingEnabled="true">
+    <FunctionImport Name="prcMaterialList" ReturnType="Collection(TestModel.prcMaterialList_Result)">
+      <Parameter Name="LanguageId" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="prcMethodList" ReturnType="Collection(TestModel.prcMethodList_Result)">
+      <Parameter Name="LanguageId" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="prcTestDelete">
+      <Parameter Name="TestId" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="prcTestInsert">
+      <Parameter Name="Name" Mode="In" Type="String" />
+      <Parameter Name="Code" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="prcTestMaterialDelete">
+      <Parameter Name="TestId" Mode="In" Type="Int32" />
+      <Parameter Name="MaterialId" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="prcTestMaterialInsert">
+      <Parameter Name="TestId" Mode="In" Type="Int32" />
+      <Parameter Name="MaterialId" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="prcTestMethodDelete">
+      <Parameter Name="TestId" Mode="In" Type="Int32" />
+      <Parameter Name="MethodId" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="prcTestMethodInsert">
+      <Parameter Name="TestId" Mode="In" Type="Int32" />
+      <Parameter Name="MethodId" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="prcTestUomDelete">
+      <Parameter Name="TestId" Mode="In" Type="Int32" />
+      <Parameter Name="UomId" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="prcTestUomInsert">
+      <Parameter Name="TestId" Mode="In" Type="Int32" />
+      <Parameter Name="UomId" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="prcUomList" ReturnType="Collection(TestModel.prcUomList_Result)">
+      <Parameter Name="LanguageId" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="prcLanguageList" ReturnType="Collection(TestModel.prcLanguageList_Result)" />
+    <FunctionImport Name="prcTestTranslationInsert" ReturnType="Collection(Int32)">
+      <Parameter Name="TestId" Mode="In" Type="Int32" />
+      <Parameter Name="LanguageId" Mode="In" Type="Int32" />
+      <Parameter Name="Translation" Mode="In" Type="String" />
+      <Parameter Name="ModifiedBy" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="prcTestTranslationDelete">
+      <Parameter Name="TestTranslationId" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="prcTestSelectAll" ReturnType="Collection(TestModel.prcTestSelectAll_Result)">
+      <Parameter Name="LanguageId" Mode="In" Type="Int32" />
+      <Parameter Name="Filter" Mode="In" Type="String" />
+      <Parameter Name="PageNumber" Mode="In" Type="Int32" />
+      <Parameter Name="RowsPerPage" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="prcTestSelectAllPageCount" ReturnType="Collection(Int32)">
+      <Parameter Name="Filter" Mode="In" Type="String" />
+      <Parameter Name="LanguageId" Mode="In" Type="Int32" />
+      <Parameter Name="RowsPerPage" Mode="In" Type="Int32" />
+    </FunctionImport>
+  </EntityContainer>
+  <ComplexType Name="prcMaterialList_Result">
+    <Property Type="Int32" Name="Id" Nullable="false" />
+    <Property Type="String" Name="Name" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="prcMethodList_Result">
+    <Property Type="Int32" Name="Id" Nullable="false" />
+    <Property Type="String" Name="Name" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="prcUomList_Result">
+    <Property Type="Int32" Name="Id" Nullable="false" />
+    <Property Type="String" Name="ShortName" Nullable="true" />
+    <Property Type="String" Name="FullName" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="prcLanguageList_Result">
+    <Property Type="Int32" Name="Id" Nullable="false" />
+    <Property Type="String" Name="Name" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="prcTestSelectAll_Result">
+    <Property Type="Int32" Name="Id" Nullable="false" />
+    <Property Type="String" Name="Code" Nullable="true" />
+    <Property Type="String" Name="Synonym" Nullable="true" />
+    <Property Type="String" Name="Material" Nullable="true" />
+    <Property Type="String" Name="Method" Nullable="true" />
+    <Property Type="String" Name="Uom" Nullable="true" />
+    <Property Type="DateTime" Name="ModifiedOn" Nullable="false" Precision="23" />
+  </ComplexType>
+</Schema>

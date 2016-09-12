@@ -9,15 +9,36 @@
 <link rel="stylesheet" type="text/css" href="Styles/jquery-ui.css" />
 <link rel="stylesheet" type="text/css" href="Styles/jquery-ui.structure.css" />
 <link rel="stylesheet" type="text/css" href="Styles/jquery-ui.theme.css" />
+<link rel="stylesheet" type="text/css" href="Styles/kraken.css" />
 </head>
 <body>
     <div id="dialog-message" title="">
 	    <img src="Images/ajax-loader.gif" alt="Loading..." title="Loading..." class="ajax-loader">
     </div>
-    <div id="dialog-add-translation" title="">
-        <select siz="10" id="language" data-bind='options: languageList, optionsText: "name", optionsValue: "id"'></select>
-        <input type="text" id="newTranslation" />
-        <a class="button" href="#" id="createTestTranslation">Created</a>
+    <div id="dialog-add-translation" title="Add translation">
+        <form>
+            <div class="row">
+                <div class="grid-fourth">
+                    <label>Language</label>
+                </div>
+                <div class="grid-three-fourths">
+                    <select siz="10" id="language" data-bind='options: languageList, optionsText: "name", optionsValue: "id"'></select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="grid-fourth">
+                    <label>Name</label>
+                </div>
+                <div class="grid-three-fourths">
+                    <input type="text" id="newTranslation" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="grid-three-fourths offset-fourth">
+                    <button class="btn" id="createTestTranslation">Created</button>
+                </div>
+            </div>
+        </form>
     </div>
     <table class="test-content" cellpadding="5" cellspacing="0">
         <thead>
@@ -40,7 +61,7 @@
                     </div>
                     <!-- /ko -->
                     <br />
-                    <a data-bind="attr: { href: '#'}, click: addTestTranslation"><img src="Images/add.png" /></a>
+                    <button data-bind="attr: { href: '#'}, click: addTestTranslation" class="btn">Add translation</button>
                 </td>
                 <td class="attribute">
                     <!-- ko foreach: uom -->

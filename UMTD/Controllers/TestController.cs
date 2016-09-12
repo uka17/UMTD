@@ -14,11 +14,11 @@ namespace UMTD.Controllers
         #region Test
         [HttpGet]
         [ActionName("List")]
-        public HttpResponseMessage List()
+        public HttpResponseMessage List(string filter, int pageNumber = 0)
         {
             try
             {
-                List<prcTestSelectAll_Result> TestList = (from s in dbContext.prcTestSelectAll(1)
+                List<prcTestSelectAll_Result> TestList = (from s in dbContext.prcTestSelectAll(1, filter, pageNumber, 10)
                                                           select s).ToList();
                 return Request.CreateResponse<IEnumerable<prcTestSelectAll_Result>>(HttpStatusCode.OK, TestList);
             }

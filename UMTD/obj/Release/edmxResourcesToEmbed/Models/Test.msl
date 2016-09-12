@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="TestModelStoreContainer" CdmEntityContainer="TestEntities">
+    <FunctionImportMapping FunctionImportName="prcMaterialList" FunctionName="TestModel.Store.prcMaterialList">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="TestModel.prcMaterialList_Result">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="prcMethodList" FunctionName="TestModel.Store.prcMethodList">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="TestModel.prcMethodList_Result">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="prcTestDelete" FunctionName="TestModel.Store.prcTestDelete" />
+    <FunctionImportMapping FunctionImportName="prcTestInsert" FunctionName="TestModel.Store.prcTestInsert" />
+    <FunctionImportMapping FunctionImportName="prcTestMaterialDelete" FunctionName="TestModel.Store.prcTestMaterialDelete" />
+    <FunctionImportMapping FunctionImportName="prcTestMaterialInsert" FunctionName="TestModel.Store.prcTestMaterialInsert" />
+    <FunctionImportMapping FunctionImportName="prcTestMethodDelete" FunctionName="TestModel.Store.prcTestMethodDelete" />
+    <FunctionImportMapping FunctionImportName="prcTestMethodInsert" FunctionName="TestModel.Store.prcTestMethodInsert" />
+    <FunctionImportMapping FunctionImportName="prcTestUomDelete" FunctionName="TestModel.Store.prcTestUomDelete" />
+    <FunctionImportMapping FunctionImportName="prcTestUomInsert" FunctionName="TestModel.Store.prcTestUomInsert" />
+    <FunctionImportMapping FunctionImportName="prcUomList" FunctionName="TestModel.Store.prcUomList">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="TestModel.prcUomList_Result">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="ShortName" ColumnName="ShortName" />
+          <ScalarProperty Name="FullName" ColumnName="FullName" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="prcLanguageList" FunctionName="TestModel.Store.prcLanguageList">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="TestModel.prcLanguageList_Result">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="prcTestTranslationInsert" FunctionName="TestModel.Store.prcTestTranslationInsert" />
+    <FunctionImportMapping FunctionImportName="prcTestTranslationDelete" FunctionName="TestModel.Store.prcTestTranslationDelete" />
+    <FunctionImportMapping FunctionImportName="prcTestSelectAll" FunctionName="TestModel.Store.prcTestSelectAll">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="TestModel.prcTestSelectAll_Result">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
+          <ScalarProperty Name="Synonym" ColumnName="Synonym" />
+          <ScalarProperty Name="Material" ColumnName="Material" />
+          <ScalarProperty Name="Method" ColumnName="Method" />
+          <ScalarProperty Name="Uom" ColumnName="Uom" />
+          <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="prcTestSelectAllPageCount" FunctionName="TestModel.Store.prcTestSelectAllPageCount" />
+  </EntityContainerMapping>
+</Mapping>

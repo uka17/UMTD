@@ -39,3 +39,6 @@ D:\Files\UMTD\UMTD.Tests\bin\Debug\System.Web.WebPages.Deployment.xml
 D:\Files\UMTD\UMTD.Tests\obj\Debug\UMTD.Tests.csprojResolveAssemblyReference.cache
 D:\Files\UMTD\UMTD.Tests\obj\Debug\UMTD.Tests.dll
 D:\Files\UMTD\UMTD.Tests\obj\Debug\UMTD.Tests.pdb
+D:\Files\UMTD\UMTD.Tests\bin\Debug\UMTD.Tests.dll.config
+D:\Files\UMTD\UMTD.Tests\bin\Debug\System.Web.Optimization.dll
+D:\Files\UMTD\UMTD.Tests\bin\Debug\System.Web.Optimization.xml

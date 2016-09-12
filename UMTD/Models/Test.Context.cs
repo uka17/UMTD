@@ -155,15 +155,6 @@ namespace UMTD.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<prcUomList_Result>("prcUomList", languageIdParameter);
         }
     
-        public virtual ObjectResult<prcTestSelectAll_Result> prcTestSelectAll(Nullable<int> languageId)
-        {
-            var languageIdParameter = languageId.HasValue ?
-                new ObjectParameter("LanguageId", languageId) :
-                new ObjectParameter("LanguageId", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<prcTestSelectAll_Result>("prcTestSelectAll", languageIdParameter);
-        }
-    
         public virtual ObjectResult<prcLanguageList_Result> prcLanguageList()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<prcLanguageList_Result>("prcLanguageList");
@@ -197,6 +188,44 @@ namespace UMTD.Models
                 new ObjectParameter("TestTranslationId", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("prcTestTranslationDelete", testTranslationIdParameter);
+        }
+    
+        public virtual ObjectResult<prcTestSelectAll_Result> prcTestSelectAll(Nullable<int> languageId, string filter, Nullable<int> pageNumber, Nullable<int> rowsPerPage)
+        {
+            var languageIdParameter = languageId.HasValue ?
+                new ObjectParameter("LanguageId", languageId) :
+                new ObjectParameter("LanguageId", typeof(int));
+    
+            var filterParameter = filter != null ?
+                new ObjectParameter("Filter", filter) :
+                new ObjectParameter("Filter", typeof(string));
+    
+            var pageNumberParameter = pageNumber.HasValue ?
+                new ObjectParameter("PageNumber", pageNumber) :
+                new ObjectParameter("PageNumber", typeof(int));
+    
+            var rowsPerPageParameter = rowsPerPage.HasValue ?
+                new ObjectParameter("RowsPerPage", rowsPerPage) :
+                new ObjectParameter("RowsPerPage", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<prcTestSelectAll_Result>("prcTestSelectAll", languageIdParameter, filterParameter, pageNumberParameter, rowsPerPageParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<int>> prcTestSelectAllPageCount(string filter, Nullable<int> languageId, Nullable<int> rowsPerPage)
+        {
+            var filterParameter = filter != null ?
+                new ObjectParameter("Filter", filter) :
+                new ObjectParameter("Filter", typeof(string));
+    
+            var languageIdParameter = languageId.HasValue ?
+                new ObjectParameter("LanguageId", languageId) :
+                new ObjectParameter("LanguageId", typeof(int));
+    
+            var rowsPerPageParameter = rowsPerPage.HasValue ?
+                new ObjectParameter("RowsPerPage", rowsPerPage) :
+                new ObjectParameter("RowsPerPage", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("prcTestSelectAllPageCount", filterParameter, languageIdParameter, rowsPerPageParameter);
         }
     }
 }

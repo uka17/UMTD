@@ -1,0 +1,101 @@
+﻿@using UMTD.Classes;
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div id="dialog-message" title="">
+    <img src="/Images/ajax-loader.gif" alt="Loading..." title="Loading..." class="ajax-loader">
+</div>
+<div id="dialog-add-translation" title="Add translation">
+    <form>
+        <div class="row">
+            <div class="grid-fourth">
+                <label>Language</label>
+            </div>
+            <div class="grid-three-fourths">
+                <select siz="10" id="language" data-bind='options: languageList, optionsText: "name", optionsValue: "id"'></select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="grid-fourth">
+                <label>Text</label>
+            </div>
+            <div class="grid-three-fourths">
+                <input type="text" id="newTranslation" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="grid-three-fourths offset-fourth">
+                <button class="btn" id="createTestTranslation">Created</button>
+            </div>
+        </div>
+    </form>
+</div>
+<table class="test-content" cellpadding="5" cellspacing="0">
+    <thead>
+        <tr>
+            <th width="25%">Id</th>
+            <th width="25%">Uom</th>
+            <th width="25%">Material</th>
+            <th width="25%">Method</th>
+        </tr>
+    </thead>
+    <tbody data-bind="foreach: testList">
+        <tr>
+            <!--<td><span class="test" data-bind="text: name, click: $root.removeTest" /></td>-->
+            <td class="attribute">
+                <!-- ko foreach: synonym -->
+                <div class="test-synonym">
+                    <div class="item-delete"><img src="/Images/item-delete.png" data-bind="click: $parent.removeSynonym.bind($parent, $data)" /></div>
+                    <span class="item-text" data-bind="text: name"></span>
+                    <div class="item-lang"><img data-bind="attr: { src: languageIcon}" /></div>
+                </div>
+                <!-- /ko -->
+                <br />
+                <button data-bind="attr: { href: '#'}, click: addTestTranslation" class="btn">Add translation</button>
+            </td>
+            <td class="attribute">
+                <!-- ko foreach: uom -->
+                <div class="test-uom">
+                    <div class="item-delete"><img src="/Images/item-delete.png" data-bind="click: $parent.removeUom.bind($parent, $data)" /></div>
+                    <span data-bind="text: name"></span>
+                </div>
+                <!-- /ko -->
+                <select data-bind='options: uomList, optionsText: "name", optionsCaption: "Select...", selectedOptions: selectedUom, optionsValue: "id"'> </select>
+            </td>
+            <td class="attribute">
+                <!-- ko foreach: material -->
+                <div class="test-material">
+                    <div class="item-delete"><img src="/Images/item-delete.png" data-bind="click: $parent.removeMaterial.bind($parent, $data)" /></div>
+                    <span data-bind="text: name"></span>
+                </div>
+                <!-- /ko -->
+                <select data-bind='options: materialList, optionsText: "name", optionsCaption: "Select...", selectedOptions: selectedMaterial, optionsValue: "id"'> </select>
+            </td>
+            <td class="attribute">
+                <!-- ko foreach: method -->
+                <div class="test-method">
+                    <div class="item-delete"><img src="/Images/item-delete.png" data-bind="click: $parent.removeMethod.bind($parent, $data)" /></div>
+                    <span data-bind="text: name"></span>
+                </div>
+                <!-- /ko -->
+                <select data-bind='options: methodList, optionsText: "name", optionsCaption: "Select...", selectedOptions: selectedMethod, optionsValue: "id"'> </select>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<br />
+<table class="pagination-table">
+    <tbody>
+        <tr>
+            <td>
+                <!-- ko foreach: pageCount -->
+                    <button class="btn" data-bind="click: $root.gotoPage, text: $data, css: { disabled: $root.currentPage() == $data }"></button>
+                <!-- /ko -->
+            </td>
+        </tr>
+    </tbody>
+</table>
+@Scripts.Render("~/bundles/test")
+
+
