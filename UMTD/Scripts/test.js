@@ -1,7 +1,6 @@
 ﻿var activeTestId = 0;
 
-function loadTestList(filter, pageNumber) {
-    testList.removeAll();
+function loadTestList(pageNumber) {    
     $.ajax({
         statusCode: {
             404: function () {
@@ -10,19 +9,19 @@ function loadTestList(filter, pageNumber) {
         },
         contentType: "application/json",
         dataType: "json",
-        data: { filter: '', pageNumber: pageNumber },
+        data: { filter: $('#filter').val(), pageNumber: pageNumber },
         url: "/api/Test/List",
     })
       .done(function (data) {
-          loadPageCount();
+          loadPageCount($('#filter').val());
+          testList.removeAll();
           data.map(function (e) {
               testList.push(new test(e));
           });
       });
 }
 
-function loadPageCount() {
-    pageList.removeAll();
+function loadPageCount(filter) {   
     $.ajax({
         statusCode: {
             404: function () {
@@ -31,12 +30,15 @@ function loadPageCount() {
         },
         contentType: "application/json",
         dataType: "json",
-        data: { filter: ''},
+        data: { filter: filter },
         url: "/api/Test/PageCount",
     })
       .done(function (data) {
+          if (pageList().length != data) {
+              pageList.removeAll();
               for (var i = 1; i < data + 1; i++) {
                   pageList.push(i);
+              }
           }
       });
 }
@@ -186,17 +188,25 @@ var ViewModel = function (testList, uomList, materialList, methodList, languageL
         $.get("/api/Test/Delete", { testId: test.id });
     };
     self.gotoPage = function (pageNumber) {
-        loadTestList('', pageNumber);
+        loadTestList(pageNumber);
         self.currentPage(pageNumber);
     }
     self.pageList = pageList;
     self.currentPage = ko.observable(1);
+    self.filter = function (data, event) {
+        if (event.keyCode == 13) {
+            loadTestList(self.currentPage);
+            return false;
+        }
+        else
+            return true;
+    }
 };
 
 ko.applyBindings(new ViewModel(testList, uomList, materialList, methodList, languageList, pageList));
 
 //Test list
-loadTestList('', 1);
+loadTestList(1);
 
 $("#dialog-message").dialog({
     modal: true,

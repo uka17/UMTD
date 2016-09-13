@@ -3,6 +3,15 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<br />
+<div class="row">
+    <div class="grid-three-fourths">
+        <input type="text" id="filter" data-bind="event: { keypress: filter }">
+    </div>
+    <div class="grid-fourth">
+        <button class="btn" data-bind="click: gotoPage.bind($data, currentPage())">Filter</button>
+    </div>
+    </div>
 <div id="dialog-message" title="">
     <img src="/Images/ajax-loader.gif" alt="Loading..." title="Loading..." class="ajax-loader">
 </div>
