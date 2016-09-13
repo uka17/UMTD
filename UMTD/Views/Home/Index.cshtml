@@ -89,7 +89,7 @@
     <tbody>
         <tr>
             <td>
-                <!-- ko foreach: pageCount -->
+                <!-- ko foreach: pageList -->
                     <button class="btn" data-bind="click: $root.gotoPage, text: $data, css: { disabled: $root.currentPage() == $data }"></button>
                 <!-- /ko -->
             </td>

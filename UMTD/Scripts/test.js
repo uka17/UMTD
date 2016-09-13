@@ -14,9 +14,30 @@ function loadTestList(filter, pageNumber) {
         url: "/api/Test/List",
     })
       .done(function (data) {
+          loadPageCount();
           data.map(function (e) {
               testList.push(new test(e));
           });
+      });
+}
+
+function loadPageCount() {
+    pageList.removeAll();
+    $.ajax({
+        statusCode: {
+            404: function () {
+                alert("page not found");
+            }
+        },
+        contentType: "application/json",
+        dataType: "json",
+        data: { filter: ''},
+        url: "/api/Test/PageCount",
+    })
+      .done(function (data) {
+              for (var i = 1; i < data + 1; i++) {
+                  pageList.push(i);
+          }
       });
 }
 
@@ -78,6 +99,7 @@ var uomList = ko.observableArray();
 var materialList = ko.observableArray();
 var methodList = ko.observableArray();
 var languageList = ko.observableArray();
+var pageList = ko.observableArray();
 
 //Object for saving data
 var test = function (t) {
@@ -152,7 +174,7 @@ var test = function (t) {
     }
 }
 //Model itself
-var ViewModel = function (testList, uomList, materialList, methodList, languageList) {
+var ViewModel = function (testList, uomList, materialList, methodList, languageList, pageList) {
     var self = this;
     self.testList = testList;
     self.uomList = uomList;
@@ -167,11 +189,11 @@ var ViewModel = function (testList, uomList, materialList, methodList, languageL
         loadTestList('', pageNumber);
         self.currentPage(pageNumber);
     }
-    self.pageCount = [1, 2, 3, 4, 5];
+    self.pageList = pageList;
     self.currentPage = ko.observable(1);
 };
 
-ko.applyBindings(new ViewModel(testList, uomList, materialList, methodList, languageList));
+ko.applyBindings(new ViewModel(testList, uomList, materialList, methodList, languageList, pageList));
 
 //Test list
 loadTestList('', 1);

@@ -55,12 +55,10 @@
       <Parameter Name="LanguageId" Mode="In" Type="Int32" />
       <Parameter Name="Filter" Mode="In" Type="String" />
       <Parameter Name="PageNumber" Mode="In" Type="Int32" />
-      <Parameter Name="RowsPerPage" Mode="In" Type="Int32" />
     </FunctionImport>
     <FunctionImport Name="prcTestSelectAllPageCount" ReturnType="Collection(Int32)">
       <Parameter Name="Filter" Mode="In" Type="String" />
       <Parameter Name="LanguageId" Mode="In" Type="Int32" />
-      <Parameter Name="RowsPerPage" Mode="In" Type="Int32" />
     </FunctionImport>
   </EntityContainer>
   <ComplexType Name="prcMaterialList_Result">

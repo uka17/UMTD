@@ -34,12 +34,10 @@
     <Parameter Name="LanguageId" Type="int" Mode="In" />
     <Parameter Name="Filter" Type="nvarchar(max)" Mode="In" />
     <Parameter Name="PageNumber" Type="int" Mode="In" />
-    <Parameter Name="RowsPerPage" Type="int" Mode="In" />
   </Function>
   <Function Name="prcTestSelectAllPageCount" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="Filter" Type="nvarchar(max)" Mode="In" />
     <Parameter Name="LanguageId" Type="int" Mode="In" />
-    <Parameter Name="RowsPerPage" Type="int" Mode="In" />
   </Function>
   <Function Name="prcTestTranslationDelete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="TestTranslationId" Type="int" Mode="In" />

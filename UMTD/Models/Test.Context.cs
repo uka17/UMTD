@@ -190,7 +190,7 @@ namespace UMTD.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("prcTestTranslationDelete", testTranslationIdParameter);
         }
     
-        public virtual ObjectResult<prcTestSelectAll_Result> prcTestSelectAll(Nullable<int> languageId, string filter, Nullable<int> pageNumber, Nullable<int> rowsPerPage)
+        public virtual ObjectResult<prcTestSelectAll_Result> prcTestSelectAll(Nullable<int> languageId, string filter, Nullable<int> pageNumber)
         {
             var languageIdParameter = languageId.HasValue ?
                 new ObjectParameter("LanguageId", languageId) :
@@ -204,14 +204,10 @@ namespace UMTD.Models
                 new ObjectParameter("PageNumber", pageNumber) :
                 new ObjectParameter("PageNumber", typeof(int));
     
-            var rowsPerPageParameter = rowsPerPage.HasValue ?
-                new ObjectParameter("RowsPerPage", rowsPerPage) :
-                new ObjectParameter("RowsPerPage", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<prcTestSelectAll_Result>("prcTestSelectAll", languageIdParameter, filterParameter, pageNumberParameter, rowsPerPageParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<prcTestSelectAll_Result>("prcTestSelectAll", languageIdParameter, filterParameter, pageNumberParameter);
         }
     
-        public virtual ObjectResult<Nullable<int>> prcTestSelectAllPageCount(string filter, Nullable<int> languageId, Nullable<int> rowsPerPage)
+        public virtual ObjectResult<Nullable<int>> prcTestSelectAllPageCount(string filter, Nullable<int> languageId)
         {
             var filterParameter = filter != null ?
                 new ObjectParameter("Filter", filter) :
@@ -221,11 +217,7 @@ namespace UMTD.Models
                 new ObjectParameter("LanguageId", languageId) :
                 new ObjectParameter("LanguageId", typeof(int));
     
-            var rowsPerPageParameter = rowsPerPage.HasValue ?
-                new ObjectParameter("RowsPerPage", rowsPerPage) :
-                new ObjectParameter("RowsPerPage", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("prcTestSelectAllPageCount", filterParameter, languageIdParameter, rowsPerPageParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("prcTestSelectAllPageCount", filterParameter, languageIdParameter);
         }
     }
 }

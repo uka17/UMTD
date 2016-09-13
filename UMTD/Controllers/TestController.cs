@@ -18,11 +18,26 @@ namespace UMTD.Controllers
         {
             try
             {
-                List<prcTestSelectAll_Result> TestList = (from s in dbContext.prcTestSelectAll(1, filter, pageNumber, 10)
+                List<prcTestSelectAll_Result> TestList = (from s in dbContext.prcTestSelectAll(1, filter, pageNumber)
                                                           select s).ToList();
                 return Request.CreateResponse<IEnumerable<prcTestSelectAll_Result>>(HttpStatusCode.OK, TestList);
             }
             catch(Exception e)
+            {
+                return Request.CreateResponse<string>(HttpStatusCode.InternalServerError, e.Message);
+            }
+        }
+        [HttpGet]
+        [ActionName("PageCount")]
+        public HttpResponseMessage PageCount(string filter)
+        {
+            try
+            {
+                int PageCount = (from s in dbContext.prcTestSelectAllPageCount(filter, 1)
+                                 select s.Value).FirstOrDefault();
+                return Request.CreateResponse<int>(HttpStatusCode.OK, PageCount);
+            }
+            catch (Exception e)
             {
                 return Request.CreateResponse<string>(HttpStatusCode.InternalServerError, e.Message);
             }
