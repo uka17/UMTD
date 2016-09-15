@@ -47,3 +47,4 @@ D:\Files\UMTD\UMTD\bin\System.Web.Optimization.dll
 D:\Files\UMTD\UMTD\bin\WebGrease.dll
 D:\Files\UMTD\UMTD\bin\Antlr3.Runtime.pdb
 D:\Files\UMTD\UMTD\bin\System.Web.Optimization.xml
+D:\Files\UMTD\UMTD\obj\Debug\UMTD.csprojResolveAssemblyReference.cache

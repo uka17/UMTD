@@ -58,5 +58,6 @@
       </ResultMapping>
     </FunctionImportMapping>
     <FunctionImportMapping FunctionImportName="prcTestSelectAllPageCount" FunctionName="TestModel.Store.prcTestSelectAllPageCount" />
+    <FunctionImportMapping FunctionImportName="prcTestConfirm" FunctionName="TestModel.Store.prcTestConfirm" />
   </EntityContainerMapping>
 </Mapping>

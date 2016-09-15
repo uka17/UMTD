@@ -219,5 +219,14 @@ namespace UMTD.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("prcTestSelectAllPageCount", filterParameter, languageIdParameter);
         }
+    
+        public virtual int prcTestConfirm(Nullable<int> testId)
+        {
+            var testIdParameter = testId.HasValue ?
+                new ObjectParameter("TestId", testId) :
+                new ObjectParameter("TestId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("prcTestConfirm", testIdParameter);
+        }
     }
 }

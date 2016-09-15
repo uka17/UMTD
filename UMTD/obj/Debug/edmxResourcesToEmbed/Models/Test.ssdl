@@ -7,6 +7,9 @@
   <Function Name="prcMethodList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="LanguageId" Type="int" Mode="In" />
   </Function>
+  <Function Name="prcTestConfirm" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="TestId" Type="int" Mode="In" />
+  </Function>
   <Function Name="prcTestDelete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="TestId" Type="int" Mode="In" />
   </Function>

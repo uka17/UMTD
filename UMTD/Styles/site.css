@@ -7,7 +7,6 @@
     padding: 3px;
     padding-left: 5px;
     padding-right: 5px;
-    cursor: pointer;
     box-shadow: 1px 1px 5px rgba(0,0,0,0.5);
     font-family: gotham,helvetica,arial,sans-serif;
     font-size: 12px;
@@ -28,6 +27,7 @@
     right: 0px;
     top: 3px;
     opacity: 0.7;
+    cursor: pointer;
 }
 .item-delete:hover {
     opacity: 1;
@@ -44,10 +44,11 @@
 .ajax-loader {
 
 }
-.test-content td {
-    border-top: 1px solid #ccc;
-}
+
 .test-content th, .pagination-table td {
     border: 0px;    
     text-align: center;
 }
+
+table[class="test-content"] tr:nth-child(even) {background: #eee}
+table[class="test-content"] tr:nth-child(odd) {background: #FFF}

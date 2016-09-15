@@ -1,98 +1,54 @@
 ﻿var activeTestId = 0;
+var activeTest = null;
 
 function loadTestList(pageNumber) {    
-    $.ajax({
-        statusCode: {
-            404: function () {
-                alert("page not found");
-            }
-        },
-        contentType: "application/json",
-        dataType: "json",
-        data: { filter: $('#filter').val(), pageNumber: pageNumber },
-        url: "/api/Test/List",
-    })
-      .done(function (data) {
-          loadPageCount($('#filter').val());
-          testList.removeAll();
-          data.map(function (e) {
-              testList.push(new test(e));
-          });
-      });
+    loadTestDone = function (data) {
+        loadPageCount($('#filter').val());
+        testList.removeAll();
+        data.map(function (e) {
+            testList.push(new test(e));
+        });
+    };
+    ajaxLoad("/api/Test/List", { filter: $('#filter').val(), pageNumber: pageNumber }, loadTestDone);
 }
 
 function loadPageCount(filter) {   
-    $.ajax({
-        statusCode: {
-            404: function () {
-                alert("page not found");
+    loadPageCountDone = function (data) {
+        if (pageList().length != data) {
+            pageList.removeAll();
+            for (var i = 1; i < data + 1; i++) {
+                pageList.push(i);
             }
-        },
-        contentType: "application/json",
-        dataType: "json",
-        data: { filter: filter },
-        url: "/api/Test/PageCount",
-    })
-      .done(function (data) {
-          if (pageList().length != data) {
-              pageList.removeAll();
-              for (var i = 1; i < data + 1; i++) {
-                  pageList.push(i);
-              }
-          }
-      });
+        }
+    };
+    ajaxLoad("/api/Test/PageCount", { filter: filter }, loadPageCountDone);
 }
 
-function ajaxLoad(type) {
-    var url = null;
+function loadReference(type) {
     switch (type) {
         case "material":
-            url = "/api/Material/List";
-            arr = materialList;
+            var materialLoadDone = function (data) {
+                data.map(function (e) { materialList.push({ id: e.Id, name: e.Name }); });
+            };
+            ajaxLoad("/api/Material/List", {}, materialLoadDone);
             break;
         case "method":
-            url = "/api/Method/List";
-            arr = methodList;
+            var methodLoadDone = function (data) {
+                data.map(function (e) { methodList.push({ id: e.Id, name: e.Name }); });
+            };
+            ajaxLoad("/api/Method/List", {}, methodLoadDone);
             break;
         case "language":
-            url = "/api/Language/List";
-            arr = languageList;
+            var languageLoadDone = function (data) {
+                data.map(function (e) { languageList.push({ id: e.Id, name: e.Name }); });
+            };
+            ajaxLoad("/api/Language/List", {}, languageLoadDone);
             break;
         case "uom":
-            url = "/api/Uom/List";
-            arr = uomList;
-    }
-    loadingEvent(type, 1);
-    if (url != null) {
-        this.request = $.ajax({
-            statusCode: {
-                404: function () {
-                    alert("Page not found");
-                }
-            },
-            async: false,
-            contentType: "application/json",
-            dataType: "json",
-            url: url,
-        })
-          .done(function (data) {
-              data.map(function (e) {
-                  switch (type) {
-                      case "uom":
-                          arr.push({
-                              id: e.Id,
-                              name: e.FullName
-                          });
-                          break;
-                      default:
-                          arr.push({
-                              id: e.Id,
-                              name: e.Name
-                          });
-                  }
-              });
-              loadingEvent(type, 0);
-          });
+            var uomLoadDone = function (data) {
+                data.map(function (e) { uomList.push({ id: e.Id, name: e.FullName }); });
+            };
+            ajaxLoad("/api/Language/List", {}, uomLoadDone);
     }
 }
 
@@ -117,10 +73,10 @@ var test = function (t) {
     self.material = ko.observableArray(jQuery.parseJSON(t.Material));
 
     //Synonym
-    self.removeSynonym = function (obj) {
+    self.removeTranslation = function (obj) {
         //Remove item
         self.synonym.remove(obj);
-        $.get("api/Test/TranslationDelete", { translationId: obj.id });
+        ajaxGet("api/Test/TranslationDelete", { translationId: obj.id });
     }
     //Uom
     self.removeUom = function (obj) {
@@ -134,14 +90,14 @@ var test = function (t) {
         var name = findNameById(value, uomList);
         if (name != null) {
             self.uom.push({ id: self.selectedUom()[0], name: name });
-            $.get("/api/Uom/Insert", { testId: self.id, uomId: self.selectedUom()[0] });
+            ajaxGet("/api/Uom/Insert", { testId: self.id, uomId: self.selectedUom()[0] });
         }
     });
     //Material
     self.removeMaterial = function (obj) {
         //Remove item
         self.material.remove(obj);
-        $.get("/api/Material/Delete", { testId: self.id, materialId: obj.id });
+        ajaxGet("/api/Material/Delete", { testId: self.id, materialId: obj.id });
     }
     self.selectedMaterial = ko.observableArray();
 
@@ -149,14 +105,14 @@ var test = function (t) {
         var name = findNameById(value, materialList);
         if (name != null) {
             self.material.push({ id: self.selectedMaterial()[0], name: name });
-            $.get("api/Material/Insert", { testId: self.id, materialId: self.selectedMaterial()[0] });
+            ajaxGet("api/Material/Insert", { testId: self.id, materialId: self.selectedMaterial()[0] });
         }
     });
     //Method
     self.removeMethod = function (obj) {
         //Remove item
         self.method.remove(obj);
-        $.get("/api/Method/Delete", { testId: self.id, methodId: obj.id });
+        ajaxGet("/api/Method/Delete", { testId: self.id, methodId: obj.id });
     }
     self.selectedMethod = ko.observableArray();
 
@@ -164,7 +120,7 @@ var test = function (t) {
         var name = findNameById(value, methodList);
         if (name != null) {
             self.method.push({ id: self.selectedMethod()[0], name: name });
-            $.get("/api/Method/Insert", { testId: self.id, methodId: self.selectedMethod()[0] });
+            ajaxGet("/api/Method/Insert", { testId: self.id, methodId: self.selectedMethod()[0] });
         }
     });
 
@@ -173,6 +129,12 @@ var test = function (t) {
         activeTestId = self.id;
         $('#newTranslation').val('');
         $("#dialog-add-translation").dialog("open");
+    }
+
+    //Confirm test correct
+    self.confirm = function (obj) {
+        activeTest = self;
+        $("#dialog-confirm-test").dialog("open");
     }
 }
 //Model itself
@@ -185,7 +147,7 @@ var ViewModel = function (testList, uomList, materialList, methodList, languageL
     self.languageList = languageList;
     self.removeTest = function (test) {
         self.testList.remove(test);
-        $.get("/api/Test/Delete", { testId: test.id });
+        ajaxGet("/api/Test/Delete", { testId: test.id });
     };
     self.gotoPage = function (pageNumber) {
         loadTestList(pageNumber);
@@ -201,6 +163,26 @@ var ViewModel = function (testList, uomList, materialList, methodList, languageL
         else
             return true;
     }
+    self.createTranslation = function() {
+        var j = 0;
+        var translation = $('#newTranslation').val();
+
+        var addTranslationDone = function (data) {
+            if (findIndexById(activeTestId, self.testList) != null) {
+                testList()[j].synonym.push(new synonym({ id: data, name: translation, languageId: $('#language').val() }));
+            }
+            else
+                alert("Test with Id=" + activeTestId + " was not found")
+        };
+        ajaxLoad("api/Test/TranslationInsert", { testId: activeTestId, languageId: $('#language').val(), translation: translation }, addTranslationDone);
+    
+        $('#dialog-add-translation').dialog("close");
+    };
+    self.confirmTest = function () {
+        ajaxGet("/api/Test/Confirm", { testId: activeTest.id });
+        self.testList.remove(activeTest);
+        $('#dialog-confirm-test').dialog("close");
+    };
 };
 
 ko.applyBindings(new ViewModel(testList, uomList, materialList, methodList, languageList, pageList));
@@ -219,30 +201,17 @@ $("#dialog-add-translation").dialog({
     width: 400,
     position: { my: "center center", at: "center top" }
 });
-
-$('#createTestTranslation').click(function () {
-    var j = 0;
-    var translation = $('#newTranslation').val();
-
-    $.get("api/Test/TranslationInsert", { testId: activeTestId, languageId: $('#language').val(), translation: translation })
-    .done(function (data) {
-        for (var i = 0; i < arr().length - 1; i++) {
-            if (arr()[i].id == activeTestId)
-                j = i;
-        }
-        if (j == 0) {
-            testList()[j].synonym.push(new synonym({ id: data, name: translation, languageId: $('#language').val() }));
-        }
-        else
-            alert("Test with Id=" + activeTestId + " was not found")
-    });
-
-    $('#dialog-add-translation').dialog("close");
+$("#dialog-confirm-test").dialog({
+    modal: true,
+    autoOpen: false,
+    width: 400,
+    position: { my: "center center", at: "center top" }
 });
-//uom and methods will be triggered recursively
-ajaxLoad("material");
-ajaxLoad("method");
-ajaxLoad("uom");
-ajaxLoad("language");
+
+
+loadReference("material");
+loadReference("method");
+loadReference("uom");
+loadReference("language");
 
 

@@ -57,6 +57,20 @@ namespace UMTD.Controllers
             }
         }
         [HttpGet]
+        [ActionName("Confirm")]
+        public HttpResponseMessage Confirm(int testId)
+        {
+            try
+            {
+                dbContext.prcTestConfirm(testId);
+                return new HttpResponseMessage(HttpStatusCode.OK);
+            }
+            catch (Exception e)
+            {
+                return Request.CreateResponse<string>(HttpStatusCode.InternalServerError, e.Message);
+            }
+        }
+        [HttpGet]
         [ActionName("TranslationInsert")]
         public HttpResponseMessage TranslationInsert(int testId, int languageId, string translation)
         {

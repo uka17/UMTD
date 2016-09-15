@@ -15,6 +15,14 @@
 <div id="dialog-message" title="">
     <img src="/Images/ajax-loader.gif" alt="Loading..." title="Loading..." class="ajax-loader">
 </div>
+<div id="dialog-confirm-test" title="Confirm test">
+    <div class="grid-full">
+        Are you sure you want to confirm this test (this action will hide test)?
+    </div>
+    <div class=".grid-third .offset-fourth">
+        <button class="btn" data-bind="click: confirmTest">Confirm</button>
+    </div>
+</div>
 <div id="dialog-add-translation" title="Add translation">
     <form>
         <div class="row">
@@ -35,7 +43,7 @@
         </div>
         <div class="row">
             <div class="grid-three-fourths offset-fourth">
-                <button class="btn" id="createTestTranslation">Created</button>
+                <button class="btn" data-bind="click: createTranslation">Create</button>
             </div>
         </div>
     </form>
@@ -55,13 +63,14 @@
             <td class="attribute">
                 <!-- ko foreach: synonym -->
                 <div class="test-synonym">
-                    <div class="item-delete"><img src="/Images/item-delete.png" data-bind="click: $parent.removeSynonym.bind($parent, $data)" /></div>
+                    <div class="item-delete"><img src="/Images/item-delete.png" data-bind="click: $parent.removeTranslation.bind($parent, $data)" /></div>
                     <span class="item-text" data-bind="text: name"></span>
                     <div class="item-lang"><img data-bind="attr: { src: languageIcon}" /></div>
                 </div>
                 <!-- /ko -->
                 <br />
                 <button data-bind="attr: { href: '#'}, click: addTestTranslation" class="btn">Add translation</button>
+                <button data-bind="attr: { href: '#'}, click: confirm" class="btn btn-secondary">Confirm</button>
             </td>
             <td class="attribute">
                 <!-- ko foreach: uom -->
@@ -70,7 +79,7 @@
                     <span data-bind="text: name"></span>
                 </div>
                 <!-- /ko -->
-                <select data-bind='options: uomList, optionsText: "name", optionsCaption: "Select...", selectedOptions: selectedUom, optionsValue: "id"'> </select>
+                <select data-bind='options: uomList, optionsText: "name", optionsCaption: "Add...", selectedOptions: selectedUom, optionsValue: "id"'> </select>
             </td>
             <td class="attribute">
                 <!-- ko foreach: material -->
@@ -79,7 +88,7 @@
                     <span data-bind="text: name"></span>
                 </div>
                 <!-- /ko -->
-                <select data-bind='options: materialList, optionsText: "name", optionsCaption: "Select...", selectedOptions: selectedMaterial, optionsValue: "id"'> </select>
+                <select data-bind='options: materialList, optionsText: "name", optionsCaption: "Add...", selectedOptions: selectedMaterial, optionsValue: "id"'> </select>
             </td>
             <td class="attribute">
                 <!-- ko foreach: method -->
@@ -88,7 +97,7 @@
                     <span data-bind="text: name"></span>
                 </div>
                 <!-- /ko -->
-                <select data-bind='options: methodList, optionsText: "name", optionsCaption: "Select...", selectedOptions: selectedMethod, optionsValue: "id"'> </select>
+                <select data-bind='options: methodList, optionsText: "name", optionsCaption: "Add...", selectedOptions: selectedMethod, optionsValue: "id"'> </select>
             </td>
         </tr>
     </tbody>

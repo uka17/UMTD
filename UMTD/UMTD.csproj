@@ -230,7 +230,6 @@
     <Content Include="Models\Test.edmx.diagram">
       <DependentUpon>Test.edmx</DependentUpon>
     </Content>
-    <Content Include="Views\Shared\Pagination.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <None Include="Web.Debug.config">
