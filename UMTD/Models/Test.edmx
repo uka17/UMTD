@@ -38,6 +38,10 @@
           <Parameter Name="TestId" Type="int" Mode="In" />
           <Parameter Name="MethodId" Type="int" Mode="In" />
         </Function>
+        <Function Name="prcTestSelect" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserKey" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="TestId" Type="int" Mode="In" />
+        </Function>
         <Function Name="prcTestSelectAll" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="LanguageId" Type="int" Mode="In" />
           <Parameter Name="Filter" Type="nvarchar(max)" Mode="In" />
@@ -46,6 +50,10 @@
         <Function Name="prcTestSelectAllPageCount" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Filter" Type="nvarchar(max)" Mode="In" />
           <Parameter Name="LanguageId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="prcTestSelectAllSummary" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserKey" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="Filter" Type="nvarchar(max)" Mode="In" />
         </Function>
         <Function Name="prcTestTranslationDelete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="TestTranslationId" Type="int" Mode="In" />
@@ -133,6 +141,14 @@
             <Parameter Name="LanguageId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="prcTestConfirm">
+          <Parameter Name="TestId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="prcTestSelectAllSummary" ReturnType="Collection(TestModel.prcTestSelectAllSummary_Result)">
+            <Parameter Name="UserKey" Mode="In" Type="String" />
+            <Parameter Name="Filter" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="prcTestSelect" ReturnType="Collection(TestModel.prcTestSelect_Result)">
+            <Parameter Name="UserKey" Mode="In" Type="String" />
             <Parameter Name="TestId" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
@@ -157,6 +173,29 @@
           <Property Type="Int32" Name="Id" Nullable="false" />
           <Property Type="String" Name="Code" Nullable="true" />
           <Property Type="String" Name="Synonym" Nullable="true" />
+          <Property Type="String" Name="Material" Nullable="true" />
+          <Property Type="String" Name="Method" Nullable="true" />
+          <Property Type="String" Name="Uom" Nullable="true" />
+          <Property Type="DateTime" Name="ModifiedOn" Nullable="false" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="prcTestSelectAllSummary_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="String" Name="Code" Nullable="true" />
+          <Property Type="String" Name="Name" Nullable="true" />
+          <Property Type="Int32" Name="Translation" Nullable="true" />
+          <Property Type="Int32" Name="TranslationCount" Nullable="true" />
+          <Property Type="Int32" Name="Material" Nullable="true" />
+          <Property Type="Int32" Name="MaterialCount" Nullable="true" />
+          <Property Type="Int32" Name="Method" Nullable="true" />
+          <Property Type="Int32" Name="MethodCount" Nullable="true" />
+          <Property Type="Int32" Name="Uom" Nullable="true" />
+          <Property Type="Int32" Name="UomCount" Nullable="true" />
+          <Property Type="DateTime" Name="ModifiedOn" Nullable="false" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="prcTestSelect_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="String" Name="Code" Nullable="true" />
+          <Property Type="String" Name="Translation" Nullable="true" />
           <Property Type="String" Name="Material" Nullable="true" />
           <Property Type="String" Name="Method" Nullable="true" />
           <Property Type="String" Name="Uom" Nullable="true" />
@@ -226,6 +265,37 @@
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="prcTestSelectAllPageCount" FunctionName="TestModel.Store.prcTestSelectAllPageCount" />
           <FunctionImportMapping FunctionImportName="prcTestConfirm" FunctionName="TestModel.Store.prcTestConfirm" />
+          <FunctionImportMapping FunctionImportName="prcTestSelectAllSummary" FunctionName="TestModel.Store.prcTestSelectAllSummary">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TestModel.prcTestSelectAllSummary_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Translation" ColumnName="Translation" />
+                <ScalarProperty Name="TranslationCount" ColumnName="TranslationCount" />
+                <ScalarProperty Name="Material" ColumnName="Material" />
+                <ScalarProperty Name="MaterialCount" ColumnName="MaterialCount" />
+                <ScalarProperty Name="Method" ColumnName="Method" />
+                <ScalarProperty Name="MethodCount" ColumnName="MethodCount" />
+                <ScalarProperty Name="Uom" ColumnName="Uom" />
+                <ScalarProperty Name="UomCount" ColumnName="UomCount" />
+                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="prcTestSelect" FunctionName="TestModel.Store.prcTestSelect">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TestModel.prcTestSelect_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Translation" ColumnName="Translation" />
+                <ScalarProperty Name="Material" ColumnName="Material" />
+                <ScalarProperty Name="Method" ColumnName="Method" />
+                <ScalarProperty Name="Uom" ColumnName="Uom" />
+                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

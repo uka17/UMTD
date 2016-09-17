@@ -195,7 +195,13 @@
     <Compile Include="Models\prcMethodList_Result.cs">
       <DependentUpon>Test.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\prcTestSelectAllSummary_Result.cs">
+      <DependentUpon>Test.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\prcTestSelectAll_Result.cs">
+      <DependentUpon>Test.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\prcTestSelect_Result.cs">
       <DependentUpon>Test.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\prcUomList_Result.cs">

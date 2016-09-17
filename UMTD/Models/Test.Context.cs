@@ -228,5 +228,31 @@ namespace UMTD.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("prcTestConfirm", testIdParameter);
         }
+    
+        public virtual ObjectResult<prcTestSelectAllSummary_Result> prcTestSelectAllSummary(string userKey, string filter)
+        {
+            var userKeyParameter = userKey != null ?
+                new ObjectParameter("UserKey", userKey) :
+                new ObjectParameter("UserKey", typeof(string));
+    
+            var filterParameter = filter != null ?
+                new ObjectParameter("Filter", filter) :
+                new ObjectParameter("Filter", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<prcTestSelectAllSummary_Result>("prcTestSelectAllSummary", userKeyParameter, filterParameter);
+        }
+    
+        public virtual ObjectResult<prcTestSelect_Result> prcTestSelect(string userKey, Nullable<int> testId)
+        {
+            var userKeyParameter = userKey != null ?
+                new ObjectParameter("UserKey", userKey) :
+                new ObjectParameter("UserKey", typeof(string));
+    
+            var testIdParameter = testId.HasValue ?
+                new ObjectParameter("TestId", testId) :
+                new ObjectParameter("TestId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<prcTestSelect_Result>("prcTestSelect", userKeyParameter, testIdParameter);
+        }
     }
 }

@@ -33,6 +33,10 @@
     <Parameter Name="TestId" Type="int" Mode="In" />
     <Parameter Name="MethodId" Type="int" Mode="In" />
   </Function>
+  <Function Name="prcTestSelect" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="UserKey" Type="nvarchar(max)" Mode="In" />
+    <Parameter Name="TestId" Type="int" Mode="In" />
+  </Function>
   <Function Name="prcTestSelectAll" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="LanguageId" Type="int" Mode="In" />
     <Parameter Name="Filter" Type="nvarchar(max)" Mode="In" />
@@ -41,6 +45,10 @@
   <Function Name="prcTestSelectAllPageCount" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="Filter" Type="nvarchar(max)" Mode="In" />
     <Parameter Name="LanguageId" Type="int" Mode="In" />
+  </Function>
+  <Function Name="prcTestSelectAllSummary" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="UserKey" Type="nvarchar(max)" Mode="In" />
+    <Parameter Name="Filter" Type="nvarchar(max)" Mode="In" />
   </Function>
   <Function Name="prcTestTranslationDelete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="TestTranslationId" Type="int" Mode="In" />

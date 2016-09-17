@@ -1,29 +1,12 @@
-﻿var activeTestId = 0;
-var activeTest = null;
-
-function loadTestList(pageNumber) {    
+﻿function loadTestList() {
     loadTestDone = function (data) {
-        loadPageCount($('#filter').val());
-        testList.removeAll();
+        summaryTestList.removeAll();
         data.map(function (e) {
-            testList.push(new test(e));
+            summaryTestList.push(new summaryTest(e));
         });
     };
-    ajaxLoad("/api/Test/List", { filter: $('#filter').val(), pageNumber: pageNumber }, loadTestDone);
+    ajaxLoad("/api/Test/Summary", { userKey: 'key', filter: $('#filter').val()}, loadTestDone);
 }
-
-function loadPageCount(filter) {   
-    loadPageCountDone = function (data) {
-        if (pageList().length != data) {
-            pageList.removeAll();
-            for (var i = 1; i < data + 1; i++) {
-                pageList.push(i);
-            }
-        }
-    };
-    ajaxLoad("/api/Test/PageCount", { filter: filter }, loadPageCountDone);
-}
-
 function loadReference(type) {
     switch (type) {
         case "material":
@@ -52,30 +35,45 @@ function loadReference(type) {
     }
 }
 
-var testList = ko.observableArray();
 var uomList = ko.observableArray();
 var materialList = ko.observableArray();
 var methodList = ko.observableArray();
 var languageList = ko.observableArray();
-var pageList = ko.observableArray();
+var summaryTestList = ko.observableArray();
+var currentTest = ko.observable();
 
 //Object for saving data
+var summaryTest = function (t) {
+    var self = this;
+    self.name = t.Name;
+    self.id = t.Id;
+    self.translationCount = t.TranslationCount;    
+    self.materialCount = t.MaterialCount;
+    self.methodCount = t.MethodCount;
+    self.uomCount = t.UomCount;
+    self.showTest = function (obj) {
+        loadCurrentTestDone = function (data) {
+            currentTest(test(data));
+        };
+        ajaxLoad("/api/Test/Get", { userKey: 'key', testId: obj.id}, loadCurrentTestDone);
+    }
+}
 var test = function (t) {
     var self = this;
     self.id = t.Id;
-    self.synonym = ko.observableArray();
-    var synonymJSON = jQuery.parseJSON(t.Synonym);
-    synonymJSON.map(function (e) {
-        self.synonym.push(new synonym(e));
+    self.translation = ko.observableArray();
+    var translationJSON = jQuery.parseJSON(t.Translation);
+    translationJSON.map(function (e) {
+        self.translation.push(new testTranslation(e));
     });
     self.uom = ko.observableArray(jQuery.parseJSON(t.Uom));
     self.method = ko.observableArray(jQuery.parseJSON(t.Method));
     self.material = ko.observableArray(jQuery.parseJSON(t.Material));
 
-    //Synonym
+    //translation
     self.removeTranslation = function (obj) {
         //Remove item
-        self.synonym.remove(obj);
+        self.translation.remove(obj);
         ajaxGet("api/Test/TranslationDelete", { translationId: obj.id });
     }
     //Uom
@@ -138,23 +136,19 @@ var test = function (t) {
     }
 }
 //Model itself
-var ViewModel = function (testList, uomList, materialList, methodList, languageList, pageList) {
+var ViewModel = function (uomList, materialList, methodList, languageList, summaryTestList, currentTest) {
     var self = this;
-    self.testList = testList;
+    self.summaryTestList = summaryTestList;
+    self.currentTest = currentTest;
     self.uomList = uomList;
     self.materialList = materialList;
     self.methodList = methodList;
     self.languageList = languageList;
+    //not used yet
     self.removeTest = function (test) {
         self.testList.remove(test);
         ajaxGet("/api/Test/Delete", { testId: test.id });
     };
-    self.gotoPage = function (pageNumber) {
-        loadTestList(pageNumber);
-        self.currentPage(pageNumber);
-    }
-    self.pageList = pageList;
-    self.currentPage = ko.observable(1);
     self.filter = function (data, event) {
         if (event.keyCode == 13) {
             loadTestList(self.currentPage);
@@ -163,19 +157,19 @@ var ViewModel = function (testList, uomList, materialList, methodList, languageL
         else
             return true;
     }
-    self.createTranslation = function() {
+    self.createTranslation = function () {
         var j = 0;
         var translation = $('#newTranslation').val();
 
         var addTranslationDone = function (data) {
             if (findIndexById(activeTestId, self.testList) != null) {
-                testList()[j].synonym.push(new synonym({ id: data, name: translation, languageId: $('#language').val() }));
+                testList()[j].translation.push(new translation({ id: data, name: translation, languageId: $('#language').val() }));
             }
             else
                 alert("Test with Id=" + activeTestId + " was not found")
         };
         ajaxLoad("api/Test/TranslationInsert", { testId: activeTestId, languageId: $('#language').val(), translation: translation }, addTranslationDone);
-    
+
         $('#dialog-add-translation').dialog("close");
     };
     self.confirmTest = function () {
@@ -185,10 +179,15 @@ var ViewModel = function (testList, uomList, materialList, methodList, languageL
     };
 };
 
-ko.applyBindings(new ViewModel(testList, uomList, materialList, methodList, languageList, pageList));
+ko.applyBindings(new ViewModel(uomList, materialList, methodList, languageList, summaryTestList, currentTest));
 
 //Test list
-loadTestList(1);
+loadTestList();
+
+loadReference("material");
+loadReference("method");
+loadReference("uom");
+loadReference("language");
 
 $("#dialog-message").dialog({
     modal: true,
@@ -207,11 +206,3 @@ $("#dialog-confirm-test").dialog({
     width: 400,
     position: { my: "center center", at: "center top" }
 });
-
-
-loadReference("material");
-loadReference("method");
-loadReference("uom");
-loadReference("language");
-
-

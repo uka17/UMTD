@@ -11,7 +11,7 @@ var material = function (t) {
     this.id = t.Id;
     this.name = t.Name;
 }
-var synonym = function (t) {
+var testTranslation = function (t) {
     var self = this;
     self.id = t.id;
     self.languageId = t.languageId;

@@ -1,4 +1,4 @@
-﻿.test-uom, .test-material, .test-method, .test-synonym {
+﻿.test-uom, .test-material, .test-method, .test-synonym, .test-summary {
     display:inline-block;
     margin-top: 3px;
     margin-bottom: 3px;
@@ -21,6 +21,7 @@
 .test-uom { background-color: #C6DF7E; }
 .test-material { background-color: #99CCFF; }
 .test-method { background-color: #FFC373; }
+.test-summary { background-color: #7ea566; cursor: pointer}
 
 .item-delete {
     position: absolute;
