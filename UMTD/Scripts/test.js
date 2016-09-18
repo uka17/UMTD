@@ -23,7 +23,7 @@ function loadReference(type) {
             break;
         case "language":
             var languageLoadDone = function (data) {
-                data.map(function (e) { languageList.push({ id: e.Id, name: e.Name }); });
+                data.map(function (e) { languageList.push({ id: e.Id, name: e.Name, code: e.Code }); });
             };
             ajaxLoad("/api/Language/List", {}, languageLoadDone);
             break;
@@ -31,7 +31,7 @@ function loadReference(type) {
             var uomLoadDone = function (data) {
                 data.map(function (e) { uomList.push({ id: e.Id, name: e.FullName }); });
             };
-            ajaxLoad("/api/Language/List", {}, uomLoadDone);
+            ajaxLoad("/api/Uom/List", {}, uomLoadDone);
     }
 }
 
@@ -40,146 +40,62 @@ var materialList = ko.observableArray();
 var methodList = ko.observableArray();
 var languageList = ko.observableArray();
 var summaryTestList = ko.observableArray();
-var currentTest = ko.observable();
+var activeTest = ko.observable(new test({ Id: 0, Translation: "[]", Uom: "[]", Method: "[]", Material: "[]" }));
+var activeLanguage = ko.observable('ru');
+var languageListVisible = ko.observable(false);
 
-//Object for saving data
-var summaryTest = function (t) {
-    var self = this;
-    self.name = t.Name;
-    self.id = t.Id;
-    self.translationCount = t.TranslationCount;    
-    self.materialCount = t.MaterialCount;
-    self.methodCount = t.MethodCount;
-    self.uomCount = t.UomCount;
-    self.showTest = function (obj) {
-        loadCurrentTestDone = function (data) {
-            currentTest(test(data));
-        };
-        ajaxLoad("/api/Test/Get", { userKey: 'key', testId: obj.id}, loadCurrentTestDone);
-    }
-}
-var test = function (t) {
-    var self = this;
-    self.id = t.Id;
-    self.translation = ko.observableArray();
-    var translationJSON = jQuery.parseJSON(t.Translation);
-    translationJSON.map(function (e) {
-        self.translation.push(new testTranslation(e));
-    });
-    self.uom = ko.observableArray(jQuery.parseJSON(t.Uom));
-    self.method = ko.observableArray(jQuery.parseJSON(t.Method));
-    self.material = ko.observableArray(jQuery.parseJSON(t.Material));
-
-    //translation
-    self.removeTranslation = function (obj) {
-        //Remove item
-        self.translation.remove(obj);
-        ajaxGet("api/Test/TranslationDelete", { translationId: obj.id });
-    }
-    //Uom
-    self.removeUom = function (obj) {
-        //Remove item
-        self.uom.remove(obj);
-        $.get("/api/Uom/Delete", { testId: self.id, uomId: obj.id });
-    }
-    self.selectedUom = ko.observableArray();
-
-    self.selectedUom.subscribe(function (value) {
-        var name = findNameById(value, uomList);
-        if (name != null) {
-            self.uom.push({ id: self.selectedUom()[0], name: name });
-            ajaxGet("/api/Uom/Insert", { testId: self.id, uomId: self.selectedUom()[0] });
-        }
-    });
-    //Material
-    self.removeMaterial = function (obj) {
-        //Remove item
-        self.material.remove(obj);
-        ajaxGet("/api/Material/Delete", { testId: self.id, materialId: obj.id });
-    }
-    self.selectedMaterial = ko.observableArray();
-
-    self.selectedMaterial.subscribe(function (value) {
-        var name = findNameById(value, materialList);
-        if (name != null) {
-            self.material.push({ id: self.selectedMaterial()[0], name: name });
-            ajaxGet("api/Material/Insert", { testId: self.id, materialId: self.selectedMaterial()[0] });
-        }
-    });
-    //Method
-    self.removeMethod = function (obj) {
-        //Remove item
-        self.method.remove(obj);
-        ajaxGet("/api/Method/Delete", { testId: self.id, methodId: obj.id });
-    }
-    self.selectedMethod = ko.observableArray();
-
-    self.selectedMethod.subscribe(function (value) {
-        var name = findNameById(value, methodList);
-        if (name != null) {
-            self.method.push({ id: self.selectedMethod()[0], name: name });
-            ajaxGet("/api/Method/Insert", { testId: self.id, methodId: self.selectedMethod()[0] });
-        }
-    });
-
-    //Test translation
-    self.addTestTranslation = function (obj) {
-        activeTestId = self.id;
-        $('#newTranslation').val('');
-        $("#dialog-add-translation").dialog("open");
-    }
-
-    //Confirm test correct
-    self.confirm = function (obj) {
-        activeTest = self;
-        $("#dialog-confirm-test").dialog("open");
-    }
-}
 //Model itself
-var ViewModel = function (uomList, materialList, methodList, languageList, summaryTestList, currentTest) {
+var ViewModel = function (uomList, materialList, methodList, languageList, summaryTestList, activeTest, activeLanguage, languageListVisible) {
     var self = this;
     self.summaryTestList = summaryTestList;
-    self.currentTest = currentTest;
+    self.activeTest = activeTest;
     self.uomList = uomList;
     self.materialList = materialList;
     self.methodList = methodList;
     self.languageList = languageList;
-    //not used yet
-    self.removeTest = function (test) {
-        self.testList.remove(test);
-        ajaxGet("/api/Test/Delete", { testId: test.id });
-    };
+    self.activeLanguage = activeLanguage;
+    self.languageListVisible = languageListVisible;
+
     self.filter = function (data, event) {
         if (event.keyCode == 13) {
-            loadTestList(self.currentPage);
+            loadTestList();
             return false;
         }
         else
             return true;
     }
+    self.toggleLanguageList = function () {
+        self.languageListVisible(!languageListVisible());
+    };
+    self.selectLanguage = function (data) {
+        activeLanguage(data.code);
+        self.toggleLanguageList();
+    };
+
+    //Add translation
+    self.addTranslation = function () {
+        $("#dialog-add-translation").dialog("open");
+    }
     self.createTranslation = function () {
-        var j = 0;
-        var translation = $('#newTranslation').val();
-
-        var addTranslationDone = function (data) {
-            if (findIndexById(activeTestId, self.testList) != null) {
-                testList()[j].translation.push(new translation({ id: data, name: translation, languageId: $('#language').val() }));
-            }
-            else
-                alert("Test with Id=" + activeTestId + " was not found")
+        var createTranslationDone = function (data) {
+            activeTest().translation.push(new testTranslation({ id: data, languageId: $('#language').val(), name: $('#newTranslation').val() }));
+            $("#dialog-add-translation").dialog("close");
         };
-        ajaxLoad("api/Test/TranslationInsert", { testId: activeTestId, languageId: $('#language').val(), translation: translation }, addTranslationDone);
+        ajaxLoad("/api/Test/TranslationInsert", { testId: activeTest().id, languageId: $('#language').val(), translation: $('#newTranslation').val() }, createTranslationDone);
 
-        $('#dialog-add-translation').dialog("close");
     };
     self.confirmTest = function () {
-        ajaxGet("/api/Test/Confirm", { testId: activeTest.id });
-        self.testList.remove(activeTest);
+        ajaxGet("/api/Test/Confirm", { testId: activeTest().id });
+        self.summaryTestList.remove(function (item) { return item.id == activeTest().id; });
         $('#dialog-confirm-test').dialog("close");
+        $('#dialog-edit-test').dialog("close");
+    };
+    self.hideTest = function () {
+        $('#dialog-edit-test').dialog("close");
     };
 };
 
-ko.applyBindings(new ViewModel(uomList, materialList, methodList, languageList, summaryTestList, currentTest));
+ko.applyBindings(new ViewModel(uomList, materialList, methodList, languageList, summaryTestList, activeTest, activeLanguage, languageListVisible));
 
 //Test list
 loadTestList();
@@ -194,6 +110,12 @@ $("#dialog-message").dialog({
     autoOpen: false,
     width: 280
 });
+$("#dialog-edit-test").dialog({
+    modal: true,
+    autoOpen: false,
+    width: 700
+});
+
 $("#dialog-add-translation").dialog({
     modal: true,
     autoOpen: false,
@@ -203,6 +125,6 @@ $("#dialog-add-translation").dialog({
 $("#dialog-confirm-test").dialog({
     modal: true,
     autoOpen: false,
-    width: 400,
-    position: { my: "center center", at: "center top" }
+    width: 420,
+    position: { my: "center center", at: "center center" }
 });

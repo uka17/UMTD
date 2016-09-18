@@ -41,7 +41,6 @@
     <FunctionImport Name="prcUomList" ReturnType="Collection(TestModel.prcUomList_Result)">
       <Parameter Name="LanguageId" Mode="In" Type="Int32" />
     </FunctionImport>
-    <FunctionImport Name="prcLanguageList" ReturnType="Collection(TestModel.prcLanguageList_Result)" />
     <FunctionImport Name="prcTestTranslationInsert" ReturnType="Collection(Int32)">
       <Parameter Name="TestId" Mode="In" Type="Int32" />
       <Parameter Name="LanguageId" Mode="In" Type="Int32" />
@@ -71,6 +70,7 @@
       <Parameter Name="UserKey" Mode="In" Type="String" />
       <Parameter Name="TestId" Mode="In" Type="Int32" />
     </FunctionImport>
+    <FunctionImport Name="prcLanguageList" ReturnType="Collection(TestModel.prcLanguageList_Result)" />
   </EntityContainer>
   <ComplexType Name="prcMaterialList_Result">
     <Property Type="Int32" Name="Id" Nullable="false" />
@@ -84,10 +84,6 @@
     <Property Type="Int32" Name="Id" Nullable="false" />
     <Property Type="String" Name="ShortName" Nullable="true" />
     <Property Type="String" Name="FullName" Nullable="true" />
-  </ComplexType>
-  <ComplexType Name="prcLanguageList_Result">
-    <Property Type="Int32" Name="Id" Nullable="false" />
-    <Property Type="String" Name="Name" Nullable="false" />
   </ComplexType>
   <ComplexType Name="prcTestSelectAll_Result">
     <Property Type="Int32" Name="Id" Nullable="false" />
@@ -120,5 +116,10 @@
     <Property Type="String" Name="Method" Nullable="true" />
     <Property Type="String" Name="Uom" Nullable="true" />
     <Property Type="DateTime" Name="ModifiedOn" Nullable="false" Precision="23" />
+  </ComplexType>
+  <ComplexType Name="prcLanguageList_Result">
+    <Property Type="Int32" Name="Id" Nullable="false" />
+    <Property Type="String" Name="Name" Nullable="false" />
+    <Property Type="String" Name="Code" Nullable="true" />
   </ComplexType>
 </Schema>

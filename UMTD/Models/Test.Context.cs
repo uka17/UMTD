@@ -155,11 +155,6 @@ namespace UMTD.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<prcUomList_Result>("prcUomList", languageIdParameter);
         }
     
-        public virtual ObjectResult<prcLanguageList_Result> prcLanguageList()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<prcLanguageList_Result>("prcLanguageList");
-        }
-    
         public virtual ObjectResult<Nullable<int>> prcTestTranslationInsert(Nullable<int> testId, Nullable<int> languageId, string translation, string modifiedBy)
         {
             var testIdParameter = testId.HasValue ?
@@ -253,6 +248,11 @@ namespace UMTD.Models
                 new ObjectParameter("TestId", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<prcTestSelect_Result>("prcTestSelect", userKeyParameter, testIdParameter);
+        }
+    
+        public virtual ObjectResult<prcLanguageList_Result> prcLanguageList()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<prcLanguageList_Result>("prcLanguageList");
         }
     }
 }

@@ -146,6 +146,7 @@
     <Content Include="Scripts\jquery-ui.min.js" />
     <Content Include="Scripts\knockout-3.4.0.js" />
     <Content Include="Scripts\test.js" />
+    <Content Include="Styles\amazium.css" />
     <Content Include="Styles\images\asc.gif" />
     <Content Include="Styles\images\bg.gif" />
     <Content Include="Styles\images\calendar.png" />

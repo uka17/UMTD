@@ -26,8 +26,8 @@ namespace UMTD
                       "~/Styles/jquery-ui.structure.css"));
             bundles.Add(new StyleBundle("~/Styles/jquery-ui-theme-css").Include(
                       "~/Styles/jquery-ui.theme.css"));
-            bundles.Add(new StyleBundle("~/Styles/kraken").Include(
-                      "~/Styles/kraken.css"));
+            bundles.Add(new StyleBundle("~/Styles/amazium").Include(
+                      "~/Styles/amazium.css"));
             bundles.Add(new StyleBundle("~/Styles/site").Include(
                       "~/Styles/site.css"));
         }

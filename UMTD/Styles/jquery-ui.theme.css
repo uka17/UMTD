@@ -14,20 +14,10 @@
 
 /* Component containers
 ----------------------------------*/
-.ui-widget {
-	font-family: "Segoe UI", Verdana, Helvetica, Sans-Serif;
-	font-size: 1em;
-}
-.ui-widget .ui-widget {
-	font-size: 1em;
-}
 .ui-widget input,
 .ui-widget select,
 .ui-widget textarea,
-.ui-widget button {
-	font-family: Verdana,Arial,sans-serif;
-	font-size: 1em;
-}
+
 .ui-widget-content {
 	border: 1px solid #999999;
 	background: #ffffff url("images/ui-bg_flat_75_ffffff_40x100.png") 50% 50% repeat-x;
@@ -37,7 +27,7 @@
 	border: 1px solid #75C22A;
 	background: #75C22A url("images/ui-bg_flat_100_75C22A_40x100.png") 50% 50% repeat-x;
 	color: #ffffff;
-	font-weight: bold;
+    font-size: 10pt;
 }
 .ui-widget-header a {
 	color: #ffffff;
@@ -127,11 +117,7 @@
 .ui-widget-header .ui-state-error-text {
 	color: #cd0a0a;
 }
-.ui-priority-primary,
-.ui-widget-content .ui-priority-primary,
-.ui-widget-header .ui-priority-primary {
-	font-weight: bold;
-}
+
 .ui-priority-secondary,
 .ui-widget-content .ui-priority-secondary,
 .ui-widget-header .ui-priority-secondary {
