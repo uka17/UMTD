@@ -86,14 +86,6 @@
         </div>
     </div>
 </div>
-<div id="language-menu">
-    <img class="language-list-item" id="language-list-button" data-bind="attr: {src: '/Images/' + activeLanguage() + '.png'}, click: toggleLanguageList" />
-    <ul id="language-list" data-bind="if: languageListVisible">
-        <!-- ko foreach: languageList -->
-        <li><div><img class="language-list-item" data-bind="click: $root.selectLanguage, attr: {src: '/Images/' + code + '.png'}" /></div></li>
-        <!-- /ko -->
-    </ul>
-</div>
 
 <div id="dialog-add-translation" title="Add translation">
     <form>

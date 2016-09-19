@@ -126,8 +126,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
+    <Content Include="Images\add.png" />
     <Content Include="Images\ajax-loader.gif" />
     <Content Include="Images\en.png" />
+    <Content Include="Images\item-delete.png" />
     <Content Include="Images\ru.png" />
     <Content Include="index.html" />
     <Content Include="Models\Test.Context.tt">

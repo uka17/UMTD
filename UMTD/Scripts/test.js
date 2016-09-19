@@ -41,11 +41,9 @@ var methodList = ko.observableArray();
 var languageList = ko.observableArray();
 var summaryTestList = ko.observableArray();
 var activeTest = ko.observable(new test({ Id: 0, Translation: "[]", Uom: "[]", Method: "[]", Material: "[]" }));
-var activeLanguage = ko.observable('ru');
-var languageListVisible = ko.observable(false);
 
 //Model itself
-var ViewModel = function (uomList, materialList, methodList, languageList, summaryTestList, activeTest, activeLanguage, languageListVisible) {
+var ViewModel = function (uomList, materialList, methodList, languageList, summaryTestList, activeTest) {
     var self = this;
     self.summaryTestList = summaryTestList;
     self.activeTest = activeTest;
@@ -53,8 +51,6 @@ var ViewModel = function (uomList, materialList, methodList, languageList, summa
     self.materialList = materialList;
     self.methodList = methodList;
     self.languageList = languageList;
-    self.activeLanguage = activeLanguage;
-    self.languageListVisible = languageListVisible;
 
     self.filter = function (data, event) {
         if (event.keyCode == 13) {
@@ -64,13 +60,6 @@ var ViewModel = function (uomList, materialList, methodList, languageList, summa
         else
             return true;
     }
-    self.toggleLanguageList = function () {
-        self.languageListVisible(!languageListVisible());
-    };
-    self.selectLanguage = function (data) {
-        activeLanguage(data.code);
-        self.toggleLanguageList();
-    };
 
     //Add translation
     self.addTranslation = function () {
@@ -95,7 +84,7 @@ var ViewModel = function (uomList, materialList, methodList, languageList, summa
     };
 };
 
-ko.applyBindings(new ViewModel(uomList, materialList, methodList, languageList, summaryTestList, activeTest, activeLanguage, languageListVisible));
+ko.applyBindings(new ViewModel(uomList, materialList, methodList, languageList, summaryTestList, activeTest));
 
 //Test list
 loadTestList();
