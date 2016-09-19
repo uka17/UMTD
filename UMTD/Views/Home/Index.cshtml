@@ -33,12 +33,22 @@
     </div>
     <!-- ko foreach: activeTest().translation -->
     <div class="test-translation">
-        <div class="item-delete"><img src="/Images/item-delete.png" data-bind="click: activeTest().removeTranslation.bind(activeTest(), $data)" /></div>
-        <span class="lang-item-text" data-bind="text: name"></span>
-        <div class="item-lang"><img data-bind="attr: { src: languageIcon}" /></div>
+        <div data-bind="if: !editState(), click: edit">
+            <div class="item-delete"><img alt="Delete" title="Delete" src="/Images/item-delete.png" data-bind="click: activeTest().removeTranslation.bind(activeTest(), $data)" /></div>
+            <span class="translation-item-text" data-bind="text: name"></span>
+            <div class="item-lang"><img alt="Language" title="Language" data-bind="attr: { src: languageIcon}" /></div>
+        </div>
+        <div data-bind="if: editState()">
+            <textarea cols="50" rows="3" class="translation-input" name="comment" data-bind="value: name"></textarea>
+            <div class="edit-translation-buttons">
+                <img class="input-button" src="~/Images/save.png" alt="Save" title="Save" data-bind="" />
+                <img class="input-button" src="~/Images/cancel.png" alt="Cancel" title="Cancel" data-bind="click: cancelEdit" />
+            </div>
+        </div>
     </div>
     <!-- /ko -->
     <span class="info-text" data-bind="if: activeTest().translation().length == 0">No items</span>
+    <br />
     <button class="btn btn--size-s btn--style-ghost" data-bind="click: addTranslation">Add...</button>
     <div class="uom-field-header">
         <span class="uom-field-label">Units of measurement</span>
@@ -46,7 +56,7 @@
     <!-- ko foreach: activeTest().uom -->
     <div class="test-uom">
         <div class="item-delete"><img src="/Images/item-delete.png" data-bind="click: activeTest().removeUom.bind(activeTest(), $data)" /></div>
-        <span data-bind="text: name"></span>
+        <span class="attribute-item-text" data-bind="text: name"></span>
     </div>
     <!-- /ko -->
     <span class="info-text" data-bind="if: activeTest().uom().length == 0">No items</span>
@@ -58,7 +68,7 @@
     <!-- ko foreach: activeTest().material -->
     <div class="test-material">
         <div class="item-delete"><img src="/Images/item-delete.png" data-bind="click: activeTest().removeMaterial.bind(activeTest(), $data)" /></div>
-        <span data-bind="text: name"></span>
+        <span class="attribute-item-text" data-bind="text: name"></span>
     </div>
     <!-- /ko -->
     <span class="info-text" data-bind="if: activeTest().material().length == 0">No items</span>
@@ -70,7 +80,7 @@
     <!-- ko foreach: activeTest().method -->
     <div class="test-method">
         <div class="item-delete"><img src="/Images/item-delete.png" data-bind="click: activeTest().removeMethod.bind(activeTest(), $data)" /></div>
-        <span data-bind="text: name"></span>
+        <span class="attribute-item-text" data-bind="text: name"></span>
     </div>
     <!-- /ko -->
     <span class="info-text" data-bind="if: activeTest().method().length == 0">No items</span>
@@ -80,7 +90,7 @@
     <div width="100%">
         <div align="left" style="float: left">
             <button data-bind="click: activeTest().confirm" class="btn btn--color-positive">Confirm test</button>
-        </div> 
+        </div>
         <div align="right">
             <button class="btn btn btn--color-info" data-bind="click: hideTest">Close</button>
         </div>

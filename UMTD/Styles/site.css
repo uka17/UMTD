@@ -10,10 +10,9 @@
     font-size: 12px;
     font-weight: 400;
     position: relative;
-    padding-right: 20px;
 }
 
-.test-translation { background-color: #A5C882; border: 1px solid #597C36; color: #264903;}
+.test-translation { background-color: #A5C882; border: 1px solid #597C36; color: #264903; }
 .test-uom { background-color: #EDB183; border: 1px solid #C83C3B; color: #7B0000;}
 .test-material { background-color: #FBD643; border: 1px solid #AE8900; color: #623D00;}
 .test-method { background-color: #9182C8; border: 1px solid #44357B; color: #2B1C62;}
@@ -28,8 +27,11 @@
 .item-delete:hover {
     opacity: 1;
 }
-.lang-item-text {
+.attribute-item-text, .translation-item-text { margin-right: 15px;}
+.translation-item-text {
     margin-left: 17px;
+    cursor: pointer;
+    border-bottom: 1px dashed #597C36;
 }
 .info-text {
     font-size: 12px;
@@ -55,7 +57,7 @@
     margin-top: 10px;
 }
 
-.translation-field-label { color: #264903;}
+.translation-field-label { color: #264903; }
 .translation-field-header { border-bottom: 1px solid #8CAF69;}
 
 .uom-field-label { color: #C83C3B; }
@@ -95,3 +97,17 @@ ul#language-list li {
     background-color: #eee;
 }
 /*Language bar*/
+.edit-translation-buttons {
+    text-align: right;
+    margin-bottom: 3px;
+}
+textarea.translation-input {
+    padding: 2px;
+    margin-top: 5px;
+    font-size: 8pt;
+    line-height: normal;
+    min-height: 70px
+}
+.input-button {
+    cursor: pointer;
+}

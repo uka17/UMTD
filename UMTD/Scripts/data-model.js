@@ -13,12 +13,22 @@ var material = function (t) {
 }
 var testTranslation = function (t) {
     var self = this;
+    self.editState = ko.observable(false);
     self.id = t.id;
     self.languageId = t.languageId;
     self.name = t.name;
     self.languageIcon = ko.pureComputed(function () {
         return self.languageId == 1 ? "/Images/ru.png" : "/Images/en.png";
     });
+    self.edit = function (obj) {
+        for (var i = 0; i < activeTest().translation().length; i++) {
+            activeTest().translation()[i].editState(false);
+        }
+        self.editState(!self.editState());
+    }
+    self.cancelEdit = function () {
+        self.editState(false);
+    }
 }
 
 var summaryTest = function (t) {
@@ -101,8 +111,7 @@ var test = function (t) {
         }
     });
 
-    //Confirm test correct
-    self.confirm = function (obj) {
+    self.confirm = function () {
         $("#dialog-confirm-test").dialog("open");
     }
 }
