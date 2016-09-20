@@ -69,6 +69,15 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="prcLanguageList" FunctionName="TestModel.Store.prcLanguageList">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="TestModel.prcLanguageList_Result">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
     <FunctionImportMapping FunctionImportName="prcTestSelect" FunctionName="TestModel.Store.prcTestSelect">
       <ResultMapping>
         <ComplexTypeMapping TypeName="TestModel.prcTestSelect_Result">
@@ -82,14 +91,6 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
-    <FunctionImportMapping FunctionImportName="prcLanguageList" FunctionName="TestModel.Store.prcLanguageList">
-      <ResultMapping>
-        <ComplexTypeMapping TypeName="TestModel.prcLanguageList_Result">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
-          <ScalarProperty Name="Code" ColumnName="Code" />
-        </ComplexTypeMapping>
-      </ResultMapping>
-    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="prcTestTranslationUpdate" FunctionName="TestModel.Store.prcTestTranslationUpdate" />
   </EntityContainerMapping>
 </Mapping>

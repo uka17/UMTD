@@ -13,20 +13,42 @@ var material = function (t) {
 }
 var testTranslation = function (t) {
     var self = this;
+    self.languageListVisible = ko.observable(false);
     self.editState = ko.observable(false);
     self.id = t.id;
-    self.languageId = t.languageId;
-    self.name = t.name;
+    self.languageId = ko.observable(t.languageId);
+    self.languageCode = ko.observable(t.languageCode);
+    self.name = ko.observable(t.name);
+    self.oldName = self.name;
     self.languageIcon = ko.pureComputed(function () {
-        return self.languageId == 1 ? "/Images/ru.png" : "/Images/en.png";
+        return "/Images/" + self.languageCode() + ".png";
     });
     self.edit = function (obj) {
         for (var i = 0; i < activeTest().translation().length; i++) {
             activeTest().translation()[i].editState(false);
         }
         self.editState(!self.editState());
+        self.oldName = self.name();
     }
     self.cancelEdit = function () {
+        self.editState(false);
+        self.name(self.oldName);
+    }
+    self.toggleLanguageList = function () {
+        for (var i = 0; i < activeTest().translation().length; i++) {
+            activeTest().translation()[i].languageListVisible(false);
+        }
+        self.languageListVisible(!self.languageListVisible());
+    };
+    self.setLanguage = function (data) {
+        self.languageId(data.id);
+        self.languageCode(data.code);
+        self.updateTranslation();
+        self.languageListVisible(false);
+    };
+   
+    self.updateTranslation = function () {
+        $.get("/api/Test/TranslationUpdate", { userKey: 'key', translationId: self.id, languageId: self.languageId, translation: self.name });
         self.editState(false);
     }
 }

@@ -128,9 +128,11 @@
     <Content Include="Global.asax" />
     <Content Include="Images\add.png" />
     <Content Include="Images\ajax-loader.gif" />
+    <Content Include="Images\cancel.png" />
     <Content Include="Images\en.png" />
     <Content Include="Images\item-delete.png" />
     <Content Include="Images\ru.png" />
+    <Content Include="Images\save.png" />
     <Content Include="index.html" />
     <Content Include="Models\Test.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

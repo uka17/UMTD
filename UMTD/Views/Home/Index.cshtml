@@ -33,15 +33,22 @@
     </div>
     <!-- ko foreach: activeTest().translation -->
     <div class="test-translation">
-        <div data-bind="if: !editState(), click: edit">
-            <div class="item-delete"><img alt="Delete" title="Delete" src="/Images/item-delete.png" data-bind="click: activeTest().removeTranslation.bind(activeTest(), $data)" /></div>
-            <span class="translation-item-text" data-bind="text: name"></span>
-            <div class="item-lang"><img alt="Language" title="Language" data-bind="attr: { src: languageIcon}" /></div>
+        <div data-bind="if: !editState()">
+            <div class="item-delete"><img alt="Delete" class="input-button" title="Delete" src="/Images/item-delete.png" data-bind="click: activeTest().removeTranslation.bind(activeTest(), $data)" /></div>
+            <span class="translation-item-text" data-bind="text: name, click: edit"></span>
+            <div id="language-menu" alt="Language" title="Language">
+                <img id="language-list-button" data-bind="attr: { src: languageIcon}, click: toggleLanguageList" />
+                <ul id="language-list" data-bind="if: languageListVisible()">
+                    <!-- ko foreach: languageList -->
+                    <li><div><img class="language-list-item" data-bind="click: $parent.setLanguage, attr: {src: '/Images/' + code + '.png'}" /></div></li>
+                    <!-- /ko -->
+                </ul>
+            </div>
         </div>
         <div data-bind="if: editState()">
             <textarea cols="50" rows="3" class="translation-input" name="comment" data-bind="value: name"></textarea>
             <div class="edit-translation-buttons">
-                <img class="input-button" src="~/Images/save.png" alt="Save" title="Save" data-bind="" />
+                <img class="input-button" src="~/Images/save.png" alt="Save" title="Save" data-bind="click: updateTranslation" />
                 <img class="input-button" src="~/Images/cancel.png" alt="Cancel" title="Cancel" data-bind="click: cancelEdit" />
             </div>
         </div>
@@ -55,7 +62,7 @@
     </div>
     <!-- ko foreach: activeTest().uom -->
     <div class="test-uom">
-        <div class="item-delete"><img src="/Images/item-delete.png" data-bind="click: activeTest().removeUom.bind(activeTest(), $data)" /></div>
+        <div class="item-delete"><img src="/Images/item-delete.png" class="input-button" data-bind="click: activeTest().removeUom.bind(activeTest(), $data)" /></div>
         <span class="attribute-item-text" data-bind="text: name"></span>
     </div>
     <!-- /ko -->
@@ -67,7 +74,7 @@
     </div>
     <!-- ko foreach: activeTest().material -->
     <div class="test-material">
-        <div class="item-delete"><img src="/Images/item-delete.png" data-bind="click: activeTest().removeMaterial.bind(activeTest(), $data)" /></div>
+        <div class="item-delete"><img src="/Images/item-delete.png" class="input-button" data-bind="click: activeTest().removeMaterial.bind(activeTest(), $data)" /></div>
         <span class="attribute-item-text" data-bind="text: name"></span>
     </div>
     <!-- /ko -->
@@ -79,7 +86,7 @@
     </div>
     <!-- ko foreach: activeTest().method -->
     <div class="test-method">
-        <div class="item-delete"><img src="/Images/item-delete.png" data-bind="click: activeTest().removeMethod.bind(activeTest(), $data)" /></div>
+        <div class="item-delete"><img src="/Images/item-delete.png" class="input-button" data-bind="click: activeTest().removeMethod.bind(activeTest(), $data)" /></div>
         <span class="attribute-item-text" data-bind="text: name"></span>
     </div>
     <!-- /ko -->

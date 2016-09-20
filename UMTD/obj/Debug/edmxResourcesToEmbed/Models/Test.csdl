@@ -66,11 +66,17 @@
       <Parameter Name="UserKey" Mode="In" Type="String" />
       <Parameter Name="Filter" Mode="In" Type="String" />
     </FunctionImport>
+    <FunctionImport Name="prcLanguageList" ReturnType="Collection(TestModel.prcLanguageList_Result)" />
     <FunctionImport Name="prcTestSelect" ReturnType="Collection(TestModel.prcTestSelect_Result)">
       <Parameter Name="UserKey" Mode="In" Type="String" />
       <Parameter Name="TestId" Mode="In" Type="Int32" />
     </FunctionImport>
-    <FunctionImport Name="prcLanguageList" ReturnType="Collection(TestModel.prcLanguageList_Result)" />
+    <FunctionImport Name="prcTestTranslationUpdate">
+      <Parameter Name="UserKey" Mode="In" Type="String" />
+      <Parameter Name="TranslationId" Mode="In" Type="Int32" />
+      <Parameter Name="Translation" Mode="In" Type="String" />
+      <Parameter Name="LanguageId" Mode="In" Type="Int32" />
+    </FunctionImport>
   </EntityContainer>
   <ComplexType Name="prcMaterialList_Result">
     <Property Type="Int32" Name="Id" Nullable="false" />
@@ -108,6 +114,11 @@
     <Property Type="Int32" Name="UomCount" Nullable="true" />
     <Property Type="DateTime" Name="ModifiedOn" Nullable="false" Precision="23" />
   </ComplexType>
+  <ComplexType Name="prcLanguageList_Result">
+    <Property Type="Int32" Name="Id" Nullable="false" />
+    <Property Type="String" Name="Name" Nullable="false" />
+    <Property Type="String" Name="Code" Nullable="true" />
+  </ComplexType>
   <ComplexType Name="prcTestSelect_Result">
     <Property Type="Int32" Name="Id" Nullable="false" />
     <Property Type="String" Name="Code" Nullable="true" />
@@ -116,10 +127,5 @@
     <Property Type="String" Name="Method" Nullable="true" />
     <Property Type="String" Name="Uom" Nullable="true" />
     <Property Type="DateTime" Name="ModifiedOn" Nullable="false" Precision="23" />
-  </ComplexType>
-  <ComplexType Name="prcLanguageList_Result">
-    <Property Type="Int32" Name="Id" Nullable="false" />
-    <Property Type="String" Name="Name" Nullable="false" />
-    <Property Type="String" Name="Code" Nullable="true" />
   </ComplexType>
 </Schema>

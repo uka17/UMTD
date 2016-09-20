@@ -21,26 +21,19 @@
 .item-delete {
     position: absolute;
     right: 0px;
-    opacity: 0.7;
+    top: -1px;
+    right: 1px;
     cursor: pointer;
 }
-.item-delete:hover {
-    opacity: 1;
-}
-.attribute-item-text, .translation-item-text { margin-right: 15px;}
+.attribute-item-text, .translation-item-text { margin-right: 15px; }
 .translation-item-text {
-    margin-left: 17px;
+    margin-left: 24px;
     cursor: pointer;
     border-bottom: 1px dashed #597C36;
 }
 .info-text {
     font-size: 12px;
     color: #CCC;
-}
-.item-lang {
-    position: absolute;
-    left: 3px;
-    top: -2px;  
 }
 
 .ajax-loader {
@@ -69,34 +62,58 @@
 .method-field-label { color: #44357B; }
 .method-field-header { border-bottom: 1px solid #44357B; }
 
-/*Language bar*/
-.language-list-item {
-    padding-left: 3px;
+/*Language bar start*/
+#language-menu {
+    border-radius: 2px;
+    width: 24px; 
+    height: 20px; 
+    margin-top: 2px;
+    float: left;
+    position: absolute;
+    z-index: 1000;
+    border: 1px solid #666;
+    position: absolute;
+    left: 1px;
+    top: -1px;  
 }
 #language-menu, ul#language-list {
     background-color: #ccc;
-    width: 23px;   
 }
-
-#language-menu {
-    border-radius: 2px;
-    box-shadow: 1px 1px 5px rgba(0,0,0,0.5);
-    cursor: pointer;
-    width: 25px; 
-}
-
-#language-menu { border: 1px solid #666; margin-left: 10px;}
-
 ul#language-list {
     list-style-type: none;
+    width: 24px;
     margin: 0;
+    margin-left: -1px;
+    margin-top: -2px;
     padding: 0;
+    background-color: #eee;
 }
+
+#language-list-button {
+    margin-left: 3px;
+    margin-top: -5px;
+    cursor: pointer;
+}
+.language-list-item {
+    padding-left: 4px;
+    padding-top: 1px;
+    cursor: pointer;
+}
+
 ul#language-list li {
     margin-bottom: 0px;
     background-color: #eee;
 }
-/*Language bar*/
+/*Language bar end */
+
+/*Buttons opacity start*/
+ul#language-list li, #language-list-button, .input-button {
+    opacity: 1;
+}
+ul#language-list li:hover, #language-list-button:hover, .input-button:hover {
+    opacity: 0.5;
+}
+/*Buttons opacity end*/
 .edit-translation-buttons {
     text-align: right;
     margin-bottom: 3px;

@@ -17,7 +17,7 @@ namespace UMTD.Controllers
         /// </summary>
         /// <param name="filter">Part of Test translation, method, material or uom name</param>
         /// <param name="pageNumber">Which page to show</param>
-        /// <returns>HttpStatusCode and Test list in case of success, InternalServerError and error description i ncase of error</returns>
+        /// <returns>HttpStatusCode.OK and Test list in case of success, InternalServerError and error description i ncase of error</returns>
         [HttpGet]
         [ActionName("Get")]
         public HttpResponseMessage Get(string userKey, int testId)
@@ -38,7 +38,7 @@ namespace UMTD.Controllers
         /// </summary>
         /// <param name="filter">Part of Test translation, method, material or uom name</param>
         /// <param name="pageNumber">Which page to show</param>
-        /// <returns>HttpStatusCode and Test list in case of success, InternalServerError and error description i ncase of error</returns>
+        /// <returns>HttpStatusCode.OK and Test list in case of success, InternalServerError and error description i ncase of error</returns>
         [HttpGet]
         [ActionName("List")]
         public HttpResponseMessage List(string filter, int pageNumber = 0)
@@ -58,7 +58,7 @@ namespace UMTD.Controllers
         /// Returns number of pages for filter value
         /// </summary>
         /// <param name="filter">Part of Test translation, method, material or uom name</param>
-        /// <returns>HttpStatusCode and number of records in case of success, InternalServerError and error description i ncase of error</returns>
+        /// <returns>HttpStatusCode.OK and number of records in case of success, InternalServerError and error description i ncase of error</returns>
         [HttpGet]
         [ActionName("PageCount")]
         public HttpResponseMessage PageCount(string filter)
@@ -79,7 +79,7 @@ namespace UMTD.Controllers
         /// </summary>
         /// <param name="userKey">Authorization user key</param>
         /// <param name="filter">Part of Test translation, method, material or uom name</param>
-        /// <returns>HttpStatusCode and Test list in case of success, InternalServerError and error description i ncase of error</returns>
+        /// <returns>HttpStatusCode.OK and Test list in case of success, InternalServerError and error description i ncase of error</returns>
         [HttpGet]
         [ActionName("Summary")]
         public HttpResponseMessage Summary(string userKey, string filter)
@@ -99,7 +99,7 @@ namespace UMTD.Controllers
         /// Deletes Test from database
         /// </summary>
         /// <param name="testId">Id of Test</param>
-        /// <returns>HttpStatusCode in case of success, InternalServerError and error description i ncase of error</returns>
+        /// <returns>HttpStatusCode.OK in case of success, InternalServerError and error description i ncase of error</returns>
         [HttpGet]
         [ActionName("Delete")]
         public HttpResponseMessage Delete(int testId)
@@ -118,7 +118,7 @@ namespace UMTD.Controllers
         /// Set Confirmed attribute of test to True
         /// </summary>
         /// <param name="testId">Id of Test</param>
-        /// <returns>HttpStatusCode in case of success, InternalServerError and error description i ncase of error</returns>
+        /// <returns>HttpStatusCode.OK in case of success, InternalServerError and error description i ncase of error</returns>
         [HttpGet]
         [ActionName("Confirm")]
         public HttpResponseMessage Confirm(int testId)
@@ -149,6 +149,28 @@ namespace UMTD.Controllers
                 int Result = (from s in dbContext.prcTestTranslationInsert(testId, languageId, translation, "system")
                               select s.Value).FirstOrDefault();
                 return Request.CreateResponse<int>(HttpStatusCode.OK, Result);
+            }
+            catch (Exception e)
+            {
+                return Request.CreateResponse<string>(HttpStatusCode.InternalServerError, e.Message);
+            }
+        }
+        /// <summary>
+        /// Modify existing translation
+        /// </summary>
+        /// <param name="userKey">Identifier of modifier</param>
+        /// <param name="translationId">Id of Translation</param>
+        /// <param name="languageId">Id of language for translation</param>
+        /// <param name="translation">Translation text</param>
+        /// <returns>HttpStatusCode.OK in case of success, InternalServerError and error description i ncase of error</returns>
+        [HttpGet]
+        [ActionName("TranslationUpdate")]
+        public HttpResponseMessage TranslationUpdate(string userKey, int translationId, int languageId, string translation)
+        {
+            try
+            {
+                dbContext.prcTestTranslationUpdate(userKey, translationId, translation, languageId);
+                return Request.CreateResponse(HttpStatusCode.OK);
             }
             catch (Exception e)
             {

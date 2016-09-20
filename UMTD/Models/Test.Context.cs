@@ -237,6 +237,11 @@ namespace UMTD.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<prcTestSelectAllSummary_Result>("prcTestSelectAllSummary", userKeyParameter, filterParameter);
         }
     
+        public virtual ObjectResult<prcLanguageList_Result> prcLanguageList()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<prcLanguageList_Result>("prcLanguageList");
+        }
+    
         public virtual ObjectResult<prcTestSelect_Result> prcTestSelect(string userKey, Nullable<int> testId)
         {
             var userKeyParameter = userKey != null ?
@@ -250,9 +255,25 @@ namespace UMTD.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<prcTestSelect_Result>("prcTestSelect", userKeyParameter, testIdParameter);
         }
     
-        public virtual ObjectResult<prcLanguageList_Result> prcLanguageList()
+        public virtual int prcTestTranslationUpdate(string userKey, Nullable<int> translationId, string translation, Nullable<int> languageId)
         {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<prcLanguageList_Result>("prcLanguageList");
+            var userKeyParameter = userKey != null ?
+                new ObjectParameter("UserKey", userKey) :
+                new ObjectParameter("UserKey", typeof(string));
+    
+            var translationIdParameter = translationId.HasValue ?
+                new ObjectParameter("TranslationId", translationId) :
+                new ObjectParameter("TranslationId", typeof(int));
+    
+            var translationParameter = translation != null ?
+                new ObjectParameter("Translation", translation) :
+                new ObjectParameter("Translation", typeof(string));
+    
+            var languageIdParameter = languageId.HasValue ?
+                new ObjectParameter("LanguageId", languageId) :
+                new ObjectParameter("LanguageId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("prcTestTranslationUpdate", userKeyParameter, translationIdParameter, translationParameter, languageIdParameter);
         }
     }
 }
