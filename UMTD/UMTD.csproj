@@ -134,15 +134,15 @@
     <Content Include="Images\ru.png" />
     <Content Include="Images\save.png" />
     <Content Include="index.html" />
-    <Content Include="Models\Test.Context.tt">
+    <Content Include="Models\UMTD.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Test.edmx</DependentUpon>
-      <LastGenOutput>Test.Context.cs</LastGenOutput>
+      <DependentUpon>UMTD.edmx</DependentUpon>
+      <LastGenOutput>UMTD.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\Test.tt">
+    <Content Include="Models\UMTD.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Test.edmx</DependentUpon>
-      <LastGenOutput>Test.cs</LastGenOutput>
+      <DependentUpon>UMTD.edmx</DependentUpon>
+      <LastGenOutput>UMTD.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\data-model.js" />
     <Content Include="Scripts\helper.js" />
@@ -192,40 +192,40 @@
     </Compile>
     <Compile Include="Controllers\LanguageController.cs" />
     <Compile Include="Models\prcLanguageList_Result.cs">
-      <DependentUpon>Test.tt</DependentUpon>
+      <DependentUpon>UMTD.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\prcMaterialList_Result.cs">
-      <DependentUpon>Test.tt</DependentUpon>
+      <DependentUpon>UMTD.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\prcMethodList_Result.cs">
-      <DependentUpon>Test.tt</DependentUpon>
+      <DependentUpon>UMTD.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\prcTestSelectAllSummary_Result.cs">
-      <DependentUpon>Test.tt</DependentUpon>
+      <DependentUpon>UMTD.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\prcTestSelectAll_Result.cs">
-      <DependentUpon>Test.tt</DependentUpon>
+      <DependentUpon>UMTD.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\prcTestSelect_Result.cs">
-      <DependentUpon>Test.tt</DependentUpon>
+      <DependentUpon>UMTD.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\prcUomList_Result.cs">
-      <DependentUpon>Test.tt</DependentUpon>
+      <DependentUpon>UMTD.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Test.Context.cs">
+    <Compile Include="Models\UMTD.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Test.Context.tt</DependentUpon>
+      <DependentUpon>UMTD.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Test.cs">
+    <Compile Include="Models\UMTD.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Test.tt</DependentUpon>
+      <DependentUpon>UMTD.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Test.Designer.cs">
+    <Compile Include="Models\UMTD.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Test.edmx</DependentUpon>
+      <DependentUpon>UMTD.edmx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -234,15 +234,15 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="packages.config" />
-    <EntityDeploy Include="Models\Test.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Test.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\Test.edmx.diagram">
-      <DependentUpon>Test.edmx</DependentUpon>
-    </Content>
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <EntityDeploy Include="Models\UMTD.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>UMTD.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\UMTD.edmx.diagram">
+      <DependentUpon>UMTD.edmx</DependentUpon>
+    </Content>
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

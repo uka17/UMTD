@@ -10,7 +10,7 @@ namespace UMTD.Controllers
 {
     public class TestController : ApiController
     {
-        private TestEntities dbContext = new TestEntities();
+        private UMTDEntities dbContext = new UMTDEntities();
         #region Test
         /// <summary>
         /// Returns list of Test entities for filter and page number

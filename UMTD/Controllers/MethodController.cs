@@ -10,7 +10,7 @@ namespace UMTD.Controllers
 {
     public class MethodController : ApiController
     {
-        private TestEntities dbContext = new TestEntities();
+        private UMTDEntities dbContext = new UMTDEntities();
         #region Method
         [HttpGet]
         [ActionName("List")]

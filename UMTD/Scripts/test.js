@@ -67,7 +67,14 @@ var ViewModel = function (uomList, materialList, methodList, languageList, summa
     }
     self.createTranslation = function () {
         var createTranslationDone = function (data) {
-            activeTest().translation.push(new testTranslation({ id: data, languageId: $('#language').val(), name: $('#newTranslation').val() }));
+            activeTest().translation.push(new testTranslation({
+                id: data,
+                languageId: $('#language').val(),
+                name: $('#newTranslation').val(),
+                languageCode: self.languageList().find(function (obj) {
+                    return obj.id == $('#language').val();
+                }).code
+            }));
             $("#dialog-add-translation").dialog("close");
         };
         ajaxLoad("/api/Test/TranslationInsert", { testId: activeTest().id, languageId: $('#language').val(), translation: $('#newTranslation').val() }, createTranslationDone);

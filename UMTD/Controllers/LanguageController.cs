@@ -10,7 +10,7 @@ namespace UMTD.Controllers
 {
     public class LanguageController : ApiController
     {
-        private TestEntities dbContext = new TestEntities();
+        private UMTDEntities dbContext = new UMTDEntities();
 
         [HttpGet]
         [ActionName("List")]

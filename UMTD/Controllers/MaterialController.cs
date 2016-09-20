@@ -10,7 +10,7 @@ namespace UMTD.Controllers
 {
     public class MaterialController : ApiController
     {
-        private TestEntities dbContext = new TestEntities();
+        private UMTDEntities dbContext = new UMTDEntities();
         #region Material
         [HttpGet]
         [ActionName("List")]

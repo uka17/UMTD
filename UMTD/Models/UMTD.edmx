@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="TestModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="UMTDModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <Function Name="prcLanguageList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="prcMaterialList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="LanguageId" Type="int" Mode="In" />
@@ -81,20 +81,25 @@
         <Function Name="prcUomList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="LanguageId" Type="int" Mode="In" />
         </Function>
-        <EntityContainer Name="TestModelStoreContainer" />
-      </Schema></edmx:StorageModels>
+        <EntityContainer Name="UMTDModelStoreContainer" />
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="TestModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityContainer Name="TestEntities" annotation:LazyLoadingEnabled="true" >
-          <FunctionImport Name="prcMaterialList" ReturnType="Collection(TestModel.prcMaterialList_Result)">
-          <Parameter Name="LanguageId" Mode="In" Type="Int32" />
+      <Schema Namespace="UMTDModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="UMTDEntities" annotation:LazyLoadingEnabled="true" >
+          <FunctionImport Name="prcLanguageList" ReturnType="Collection(UMTDModel.prcLanguageList_Result)" />
+          <FunctionImport Name="prcMaterialList" ReturnType="Collection(UMTDModel.prcMaterialList_Result)">
+            <Parameter Name="LanguageId" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="prcMethodList" ReturnType="Collection(TestModel.prcMethodList_Result)">
-          <Parameter Name="LanguageId" Mode="In" Type="Int32" />
+          <FunctionImport Name="prcMethodList" ReturnType="Collection(UMTDModel.prcMethodList_Result)">
+            <Parameter Name="LanguageId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="prcTestConfirm">
+            <Parameter Name="TestId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="prcTestDelete">
-          <Parameter Name="TestId" Mode="In" Type="Int32" />
+            <Parameter Name="TestId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="prcTestInsert">
             <Parameter Name="Name" Mode="In" Type="String" />
@@ -116,27 +121,11 @@
             <Parameter Name="TestId" Mode="In" Type="Int32" />
             <Parameter Name="MethodId" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="prcTestUomDelete">
+          <FunctionImport Name="prcTestSelect" ReturnType="Collection(UMTDModel.prcTestSelect_Result)">
+            <Parameter Name="UserKey" Mode="In" Type="String" />
             <Parameter Name="TestId" Mode="In" Type="Int32" />
-            <Parameter Name="UomId" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="prcTestUomInsert">
-            <Parameter Name="TestId" Mode="In" Type="Int32" />
-            <Parameter Name="UomId" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="prcUomList" ReturnType="Collection(TestModel.prcUomList_Result)">
-          <Parameter Name="LanguageId" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="prcTestTranslationInsert" ReturnType="Collection(Int32)">
-            <Parameter Name="TestId" Mode="In" Type="Int32" />
-            <Parameter Name="LanguageId" Mode="In" Type="Int32" />
-            <Parameter Name="Translation" Mode="In" Type="String" />
-            <Parameter Name="ModifiedBy" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="prcTestTranslationDelete">
-          <Parameter Name="TestTranslationId" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="prcTestSelectAll" ReturnType="Collection(TestModel.prcTestSelectAll_Result)">
+          <FunctionImport Name="prcTestSelectAll" ReturnType="Collection(UMTDModel.prcTestSelectAll_Result)">
             <Parameter Name="LanguageId" Mode="In" Type="Int32" />
             <Parameter Name="Filter" Mode="In" Type="String" />
             <Parameter Name="PageNumber" Mode="In" Type="Int32" />
@@ -145,17 +134,18 @@
             <Parameter Name="Filter" Mode="In" Type="String" />
             <Parameter Name="LanguageId" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="prcTestConfirm">
-          <Parameter Name="TestId" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="prcTestSelectAllSummary" ReturnType="Collection(TestModel.prcTestSelectAllSummary_Result)">
+          <FunctionImport Name="prcTestSelectAllSummary" ReturnType="Collection(UMTDModel.prcTestSelectAllSummary_Result)">
             <Parameter Name="UserKey" Mode="In" Type="String" />
             <Parameter Name="Filter" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="prcLanguageList" ReturnType="Collection(TestModel.prcLanguageList_Result)" />
-          <FunctionImport Name="prcTestSelect" ReturnType="Collection(TestModel.prcTestSelect_Result)">
-            <Parameter Name="UserKey" Mode="In" Type="String" />
+          <FunctionImport Name="prcTestTranslationDelete">
+            <Parameter Name="TestTranslationId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="prcTestTranslationInsert" ReturnType="Collection(Int32)">
             <Parameter Name="TestId" Mode="In" Type="Int32" />
+            <Parameter Name="LanguageId" Mode="In" Type="Int32" />
+            <Parameter Name="Translation" Mode="In" Type="String" />
+            <Parameter Name="ModifiedBy" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="prcTestTranslationUpdate">
             <Parameter Name="UserKey" Mode="In" Type="String" />
@@ -163,7 +153,23 @@
             <Parameter Name="Translation" Mode="In" Type="String" />
             <Parameter Name="LanguageId" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="prcTestUomDelete">
+            <Parameter Name="TestId" Mode="In" Type="Int32" />
+            <Parameter Name="UomId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="prcTestUomInsert">
+            <Parameter Name="TestId" Mode="In" Type="Int32" />
+            <Parameter Name="UomId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="prcUomList" ReturnType="Collection(UMTDModel.prcUomList_Result)">
+            <Parameter Name="LanguageId" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
+        <ComplexType Name="prcLanguageList_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" />
+          <Property Type="String" Name="Code" Nullable="true" />
+        </ComplexType>
         <ComplexType Name="prcMaterialList_Result">
           <Property Type="Int32" Name="Id" Nullable="false" />
           <Property Type="String" Name="Name" Nullable="true" />
@@ -172,10 +178,14 @@
           <Property Type="Int32" Name="Id" Nullable="false" />
           <Property Type="String" Name="Name" Nullable="true" />
         </ComplexType>
-        <ComplexType Name="prcUomList_Result">
+        <ComplexType Name="prcTestSelect_Result">
           <Property Type="Int32" Name="Id" Nullable="false" />
-          <Property Type="String" Name="ShortName" Nullable="true" />
-          <Property Type="String" Name="FullName" Nullable="true" />
+          <Property Type="String" Name="Code" Nullable="true" />
+          <Property Type="String" Name="Translation" Nullable="true" />
+          <Property Type="String" Name="Material" Nullable="true" />
+          <Property Type="String" Name="Method" Nullable="true" />
+          <Property Type="String" Name="Uom" Nullable="true" />
+          <Property Type="DateTime" Name="ModifiedOn" Nullable="false" Precision="23" />
         </ComplexType>
         <ComplexType Name="prcTestSelectAll_Result">
           <Property Type="Int32" Name="Id" Nullable="false" />
@@ -200,64 +210,65 @@
           <Property Type="Int32" Name="UomCount" Nullable="true" />
           <Property Type="DateTime" Name="ModifiedOn" Nullable="false" Precision="23" />
         </ComplexType>
-        <ComplexType Name="prcLanguageList_Result">
+        <ComplexType Name="prcUomList_Result">
           <Property Type="Int32" Name="Id" Nullable="false" />
-          <Property Type="String" Name="Name" Nullable="false" />
-          <Property Type="String" Name="Code" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="prcTestSelect_Result">
-          <Property Type="Int32" Name="Id" Nullable="false" />
-          <Property Type="String" Name="Code" Nullable="true" />
-          <Property Type="String" Name="Translation" Nullable="true" />
-          <Property Type="String" Name="Material" Nullable="true" />
-          <Property Type="String" Name="Method" Nullable="true" />
-          <Property Type="String" Name="Uom" Nullable="true" />
-          <Property Type="DateTime" Name="ModifiedOn" Nullable="false" Precision="23" />
+          <Property Type="String" Name="ShortName" Nullable="true" />
+          <Property Type="String" Name="FullName" Nullable="true" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="TestModelStoreContainer" CdmEntityContainer="TestEntities" >
-          <FunctionImportMapping FunctionImportName="prcMaterialList" FunctionName="TestModel.Store.prcMaterialList">
+        <EntityContainerMapping StorageEntityContainer="UMTDModelStoreContainer" CdmEntityContainer="UMTDEntities" >
+          <FunctionImportMapping FunctionImportName="prcLanguageList" FunctionName="UMTDModel.Store.prcLanguageList">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="TestModel.prcMaterialList_Result">
+              <ComplexTypeMapping TypeName="UMTDModel.prcLanguageList_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="prcMaterialList" FunctionName="UMTDModel.Store.prcMaterialList">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="UMTDModel.prcMaterialList_Result">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="prcMethodList" FunctionName="TestModel.Store.prcMethodList">
+          <FunctionImportMapping FunctionImportName="prcMethodList" FunctionName="UMTDModel.Store.prcMethodList">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="TestModel.prcMethodList_Result">
+              <ComplexTypeMapping TypeName="UMTDModel.prcMethodList_Result">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="prcTestDelete" FunctionName="TestModel.Store.prcTestDelete" />
-          <FunctionImportMapping FunctionImportName="prcTestInsert" FunctionName="TestModel.Store.prcTestInsert" />
-          <FunctionImportMapping FunctionImportName="prcTestMaterialDelete" FunctionName="TestModel.Store.prcTestMaterialDelete" />
-          <FunctionImportMapping FunctionImportName="prcTestMaterialInsert" FunctionName="TestModel.Store.prcTestMaterialInsert" />
-          <FunctionImportMapping FunctionImportName="prcTestMethodDelete" FunctionName="TestModel.Store.prcTestMethodDelete" />
-          <FunctionImportMapping FunctionImportName="prcTestMethodInsert" FunctionName="TestModel.Store.prcTestMethodInsert" />
-          <FunctionImportMapping FunctionImportName="prcTestUomDelete" FunctionName="TestModel.Store.prcTestUomDelete" />
-          <FunctionImportMapping FunctionImportName="prcTestUomInsert" FunctionName="TestModel.Store.prcTestUomInsert" />
-          <FunctionImportMapping FunctionImportName="prcUomList" FunctionName="TestModel.Store.prcUomList">
+          <FunctionImportMapping FunctionImportName="prcTestConfirm" FunctionName="UMTDModel.Store.prcTestConfirm" />
+          <FunctionImportMapping FunctionImportName="prcTestDelete" FunctionName="UMTDModel.Store.prcTestDelete" />
+          <FunctionImportMapping FunctionImportName="prcTestInsert" FunctionName="UMTDModel.Store.prcTestInsert" />
+          <FunctionImportMapping FunctionImportName="prcTestMaterialDelete" FunctionName="UMTDModel.Store.prcTestMaterialDelete" />
+          <FunctionImportMapping FunctionImportName="prcTestMaterialInsert" FunctionName="UMTDModel.Store.prcTestMaterialInsert" />
+          <FunctionImportMapping FunctionImportName="prcTestMethodDelete" FunctionName="UMTDModel.Store.prcTestMethodDelete" />
+          <FunctionImportMapping FunctionImportName="prcTestMethodInsert" FunctionName="UMTDModel.Store.prcTestMethodInsert" />
+          <FunctionImportMapping FunctionImportName="prcTestSelect" FunctionName="UMTDModel.Store.prcTestSelect">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="TestModel.prcUomList_Result">
+              <ComplexTypeMapping TypeName="UMTDModel.prcTestSelect_Result">
                 <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="ShortName" ColumnName="ShortName" />
-                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Translation" ColumnName="Translation" />
+                <ScalarProperty Name="Material" ColumnName="Material" />
+                <ScalarProperty Name="Method" ColumnName="Method" />
+                <ScalarProperty Name="Uom" ColumnName="Uom" />
+                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="prcTestTranslationInsert" FunctionName="TestModel.Store.prcTestTranslationInsert" />
-          <FunctionImportMapping FunctionImportName="prcTestTranslationDelete" FunctionName="TestModel.Store.prcTestTranslationDelete" />
-          <FunctionImportMapping FunctionImportName="prcTestSelectAll" FunctionName="TestModel.Store.prcTestSelectAll">
+          <FunctionImportMapping FunctionImportName="prcTestSelectAll" FunctionName="UMTDModel.Store.prcTestSelectAll">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="TestModel.prcTestSelectAll_Result">
+              <ComplexTypeMapping TypeName="UMTDModel.prcTestSelectAll_Result">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Code" ColumnName="Code" />
                 <ScalarProperty Name="Synonym" ColumnName="Synonym" />
@@ -268,11 +279,10 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="prcTestSelectAllPageCount" FunctionName="TestModel.Store.prcTestSelectAllPageCount" />
-          <FunctionImportMapping FunctionImportName="prcTestConfirm" FunctionName="TestModel.Store.prcTestConfirm" />
-          <FunctionImportMapping FunctionImportName="prcTestSelectAllSummary" FunctionName="TestModel.Store.prcTestSelectAllSummary">
+          <FunctionImportMapping FunctionImportName="prcTestSelectAllPageCount" FunctionName="UMTDModel.Store.prcTestSelectAllPageCount" />
+          <FunctionImportMapping FunctionImportName="prcTestSelectAllSummary" FunctionName="UMTDModel.Store.prcTestSelectAllSummary">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="TestModel.prcTestSelectAllSummary_Result">
+              <ComplexTypeMapping TypeName="UMTDModel.prcTestSelectAllSummary_Result">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Code" ColumnName="Code" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -288,29 +298,20 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="prcLanguageList" FunctionName="TestModel.Store.prcLanguageList">
+          <FunctionImportMapping FunctionImportName="prcTestTranslationDelete" FunctionName="UMTDModel.Store.prcTestTranslationDelete" />
+          <FunctionImportMapping FunctionImportName="prcTestTranslationInsert" FunctionName="UMTDModel.Store.prcTestTranslationInsert" />
+          <FunctionImportMapping FunctionImportName="prcTestTranslationUpdate" FunctionName="UMTDModel.Store.prcTestTranslationUpdate" />
+          <FunctionImportMapping FunctionImportName="prcTestUomDelete" FunctionName="UMTDModel.Store.prcTestUomDelete" />
+          <FunctionImportMapping FunctionImportName="prcTestUomInsert" FunctionName="UMTDModel.Store.prcTestUomInsert" />
+          <FunctionImportMapping FunctionImportName="prcUomList" FunctionName="UMTDModel.Store.prcUomList">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="TestModel.prcLanguageList_Result">
+              <ComplexTypeMapping TypeName="UMTDModel.prcUomList_Result">
                 <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="ShortName" ColumnName="ShortName" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="prcTestSelect" FunctionName="TestModel.Store.prcTestSelect">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="TestModel.prcTestSelect_Result">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Code" ColumnName="Code" />
-                <ScalarProperty Name="Translation" ColumnName="Translation" />
-                <ScalarProperty Name="Material" ColumnName="Material" />
-                <ScalarProperty Name="Method" ColumnName="Method" />
-                <ScalarProperty Name="Uom" ColumnName="Uom" />
-                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="prcTestTranslationUpdate" FunctionName="TestModel.Store.prcTestTranslationUpdate" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
