@@ -15,15 +15,22 @@ namespace UMTD.Controllers
         /// <summary>
         /// Returns list of Test entities for filter and page number
         /// </summary>
-        /// <param name="filter">Part of Test translation, method, material or uom name</param>
-        /// <param name="pageNumber">Which page to show</param>
+        /// <param name="userKey">Requestor identifier</param>
+        /// <param name="testId">Id of Test</param>
         /// <returns>HttpStatusCode.OK and Test list in case of success, InternalServerError and error description i ncase of error</returns>
         [HttpGet]
         [ActionName("Get")]
+        [Authorize]
         public HttpResponseMessage Get(string userKey, int testId)
         {
             try
-            {
+           {
+                //TODO: error translations and maybe separate function
+                if (!dbContext.prcKeyCheck(userKey, Request.RequestUri.AbsolutePath).FirstOrDefault().Value)
+                    throw new Exception("UserKey is incorrect or used with wrong IP address");
+                if (!dbContext.prcPrivilegeCheck(userKey, "test.get").FirstOrDefault().Value)
+                    throw new Exception("Forbidden");
+
                 prcTestSelect_Result Test = (from s in dbContext.prcTestSelect(userKey, testId)
                                              select s).FirstOrDefault();
                 return Request.CreateResponse<prcTestSelect_Result>(HttpStatusCode.OK, Test);
@@ -34,14 +41,14 @@ namespace UMTD.Controllers
             }
         }
         /// <summary>
-        /// Returns list of Test entities for filter and page number
+        /// Returns list of Test entities for filter and page number (obsolete)
         /// </summary>
         /// <param name="filter">Part of Test translation, method, material or uom name</param>
         /// <param name="pageNumber">Which page to show</param>
         /// <returns>HttpStatusCode.OK and Test list in case of success, InternalServerError and error description i ncase of error</returns>
         [HttpGet]
         [ActionName("List")]
-        public HttpResponseMessage List(string filter, int pageNumber = 0)
+        private HttpResponseMessage List(string userKey, string filter, int pageNumber = 0)
         {
             try
             {
@@ -55,13 +62,13 @@ namespace UMTD.Controllers
             }
         }
         /// <summary>
-        /// Returns number of pages for filter value
+        /// Returns number of pages for filter value (obsolete)
         /// </summary>
         /// <param name="filter">Part of Test translation, method, material or uom name</param>
         /// <returns>HttpStatusCode.OK and number of records in case of success, InternalServerError and error description i ncase of error</returns>
         [HttpGet]
         [ActionName("PageCount")]
-        public HttpResponseMessage PageCount(string filter)
+        private HttpResponseMessage PageCount(string filter)
         {
             try
             {
@@ -86,6 +93,9 @@ namespace UMTD.Controllers
         {
             try
             {
+                if (!dbContext.prcKeyCheck(userKey, Request.RequestUri.AbsolutePath).FirstOrDefault().Value)
+                    throw new Exception("userKey is incorrect or used with wrong IP address");
+
                 List<prcTestSelectAllSummary_Result> TestList = (from s in dbContext.prcTestSelectAllSummary(userKey, filter)
                                                           select s).ToList();
                 return Request.CreateResponse<IEnumerable<prcTestSelectAllSummary_Result>>(HttpStatusCode.OK, TestList);
@@ -98,15 +108,19 @@ namespace UMTD.Controllers
         /// <summary>
         /// Deletes Test from database
         /// </summary>
+        /// <param name="userKey">Requestor identifier</param>
         /// <param name="testId">Id of Test</param>
         /// <returns>HttpStatusCode.OK in case of success, InternalServerError and error description i ncase of error</returns>
         [HttpGet]
         [ActionName("Delete")]
-        public HttpResponseMessage Delete(int testId)
+        public HttpResponseMessage Delete(string userKey, int testId)
         {
             try
             {
-                dbContext.prcTestDelete(testId);
+                if (!dbContext.prcKeyCheck(userKey, Request.RequestUri.AbsolutePath).FirstOrDefault().Value)
+                    throw new Exception("userKey is incorrect or used with wrong IP address");
+
+                dbContext.prcTestDelete(userKey, testId);
                 return new HttpResponseMessage(HttpStatusCode.OK);
             }
             catch (Exception e)
@@ -117,15 +131,19 @@ namespace UMTD.Controllers
         /// <summary>
         /// Set Confirmed attribute of test to True
         /// </summary>
+        /// <param name="userKey">Requestor identifier</param>
         /// <param name="testId">Id of Test</param>
         /// <returns>HttpStatusCode.OK in case of success, InternalServerError and error description i ncase of error</returns>
         [HttpGet]
         [ActionName("Confirm")]
-        public HttpResponseMessage Confirm(int testId)
+        public HttpResponseMessage Confirm(string userKey, int testId)
         {
             try
             {
-                dbContext.prcTestConfirm(testId);
+                if (!dbContext.prcKeyCheck(userKey, Request.RequestUri.AbsolutePath).FirstOrDefault().Value)
+                    throw new Exception("userKey is incorrect or used with wrong IP address");
+
+                dbContext.prcTestConfirm(userKey, testId);
                 return new HttpResponseMessage(HttpStatusCode.OK);
             }
             catch (Exception e)
@@ -136,17 +154,21 @@ namespace UMTD.Controllers
         /// <summary>
         /// Add new translation to test
         /// </summary>
+        /// <param name="userKey">Requestor identifier</param>
         /// <param name="testId">Id of Test</param>
         /// <param name="languageId">Id of language for translation</param>
         /// <param name="translation">Translation text</param>
         /// <returns>HttpStatusCode in case of success, InternalServerError and error description i ncase of error</returns>
         [HttpGet]
         [ActionName("TranslationInsert")]
-        public HttpResponseMessage TranslationInsert(int testId, int languageId, string translation)
+        public HttpResponseMessage TranslationInsert(string userKey, int testId, int languageId, string translation)
         {
             try
             {
-                int Result = (from s in dbContext.prcTestTranslationInsert(testId, languageId, translation, "system")
+                if (!dbContext.prcKeyCheck(userKey, Request.RequestUri.AbsolutePath).FirstOrDefault().Value)
+                    throw new Exception("userKey is incorrect or used with wrong IP address");
+
+                int Result = (from s in dbContext.prcTestTranslationInsert(userKey, testId, languageId, translation)
                               select s.Value).FirstOrDefault();
                 return Request.CreateResponse<int>(HttpStatusCode.OK, Result);
             }
@@ -158,7 +180,7 @@ namespace UMTD.Controllers
         /// <summary>
         /// Modify existing translation
         /// </summary>
-        /// <param name="userKey">Identifier of modifier</param>
+        /// <param name="userKey">Requestor identifier</param>
         /// <param name="translationId">Id of Translation</param>
         /// <param name="languageId">Id of language for translation</param>
         /// <param name="translation">Translation text</param>
@@ -169,6 +191,9 @@ namespace UMTD.Controllers
         {
             try
             {
+                if (!dbContext.prcKeyCheck(userKey, Request.RequestUri.AbsolutePath).FirstOrDefault().Value)
+                    throw new Exception("userKey is incorrect or used with wrong IP address");
+
                 dbContext.prcTestTranslationUpdate(userKey, translationId, translation, languageId);
                 return Request.CreateResponse(HttpStatusCode.OK);
             }
@@ -180,14 +205,18 @@ namespace UMTD.Controllers
         /// <summary>
         /// Delete translation 
         /// </summary>
+        /// <param name="userKey">Requestor identifier</param>
         /// <param name="translationId">Id of translation</param>
         /// <returns>HttpStatusCode in case of success, InternalServerError and error description i ncase of error</returns>
         [HttpGet]
         [ActionName("TranslationDelete")]
-        public HttpResponseMessage TranslationDelete(int translationId)
+        public HttpResponseMessage TranslationDelete(string userKey, int translationId)
         {
             try
             {
+                if (!dbContext.prcKeyCheck(userKey, Request.RequestUri.AbsolutePath).FirstOrDefault().Value)
+                    throw new Exception("userKey is incorrect or used with wrong IP address");
+
                 dbContext.prcTestTranslationDelete(translationId);
                 return new HttpResponseMessage(HttpStatusCode.OK);
             }

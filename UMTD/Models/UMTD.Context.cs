@@ -51,24 +51,6 @@ namespace UMTD.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<prcMethodList_Result>("prcMethodList", languageIdParameter);
         }
     
-        public virtual int prcTestConfirm(Nullable<int> testId)
-        {
-            var testIdParameter = testId.HasValue ?
-                new ObjectParameter("TestId", testId) :
-                new ObjectParameter("TestId", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("prcTestConfirm", testIdParameter);
-        }
-    
-        public virtual int prcTestDelete(Nullable<int> testId)
-        {
-            var testIdParameter = testId.HasValue ?
-                new ObjectParameter("TestId", testId) :
-                new ObjectParameter("TestId", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("prcTestDelete", testIdParameter);
-        }
-    
         public virtual int prcTestInsert(string name, string code)
         {
             var nameParameter = name != null ?
@@ -190,57 +172,6 @@ namespace UMTD.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<prcTestSelectAllSummary_Result>("prcTestSelectAllSummary", userKeyParameter, filterParameter);
         }
     
-        public virtual int prcTestTranslationDelete(Nullable<int> testTranslationId)
-        {
-            var testTranslationIdParameter = testTranslationId.HasValue ?
-                new ObjectParameter("TestTranslationId", testTranslationId) :
-                new ObjectParameter("TestTranslationId", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("prcTestTranslationDelete", testTranslationIdParameter);
-        }
-    
-        public virtual ObjectResult<Nullable<int>> prcTestTranslationInsert(Nullable<int> testId, Nullable<int> languageId, string translation, string modifiedBy)
-        {
-            var testIdParameter = testId.HasValue ?
-                new ObjectParameter("TestId", testId) :
-                new ObjectParameter("TestId", typeof(int));
-    
-            var languageIdParameter = languageId.HasValue ?
-                new ObjectParameter("LanguageId", languageId) :
-                new ObjectParameter("LanguageId", typeof(int));
-    
-            var translationParameter = translation != null ?
-                new ObjectParameter("Translation", translation) :
-                new ObjectParameter("Translation", typeof(string));
-    
-            var modifiedByParameter = modifiedBy != null ?
-                new ObjectParameter("ModifiedBy", modifiedBy) :
-                new ObjectParameter("ModifiedBy", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("prcTestTranslationInsert", testIdParameter, languageIdParameter, translationParameter, modifiedByParameter);
-        }
-    
-        public virtual int prcTestTranslationUpdate(string userKey, Nullable<int> translationId, string translation, Nullable<int> languageId)
-        {
-            var userKeyParameter = userKey != null ?
-                new ObjectParameter("UserKey", userKey) :
-                new ObjectParameter("UserKey", typeof(string));
-    
-            var translationIdParameter = translationId.HasValue ?
-                new ObjectParameter("TranslationId", translationId) :
-                new ObjectParameter("TranslationId", typeof(int));
-    
-            var translationParameter = translation != null ?
-                new ObjectParameter("Translation", translation) :
-                new ObjectParameter("Translation", typeof(string));
-    
-            var languageIdParameter = languageId.HasValue ?
-                new ObjectParameter("LanguageId", languageId) :
-                new ObjectParameter("LanguageId", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("prcTestTranslationUpdate", userKeyParameter, translationIdParameter, translationParameter, languageIdParameter);
-        }
-    
         public virtual int prcTestUomDelete(Nullable<int> testId, Nullable<int> uomId)
         {
             var testIdParameter = testId.HasValue ?
@@ -274,6 +205,109 @@ namespace UMTD.Models
                 new ObjectParameter("LanguageId", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<prcUomList_Result>("prcUomList", languageIdParameter);
+        }
+    
+        public virtual int prcTestConfirm(string userKey, Nullable<int> testId)
+        {
+            var userKeyParameter = userKey != null ?
+                new ObjectParameter("UserKey", userKey) :
+                new ObjectParameter("UserKey", typeof(string));
+    
+            var testIdParameter = testId.HasValue ?
+                new ObjectParameter("TestId", testId) :
+                new ObjectParameter("TestId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("prcTestConfirm", userKeyParameter, testIdParameter);
+        }
+    
+        public virtual int prcTestDelete(string userKey, Nullable<int> testId)
+        {
+            var userKeyParameter = userKey != null ?
+                new ObjectParameter("UserKey", userKey) :
+                new ObjectParameter("UserKey", typeof(string));
+    
+            var testIdParameter = testId.HasValue ?
+                new ObjectParameter("TestId", testId) :
+                new ObjectParameter("TestId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("prcTestDelete", userKeyParameter, testIdParameter);
+        }
+    
+        public virtual int prcTestTranslationDelete(Nullable<int> testTranslationId)
+        {
+            var testTranslationIdParameter = testTranslationId.HasValue ?
+                new ObjectParameter("TestTranslationId", testTranslationId) :
+                new ObjectParameter("TestTranslationId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("prcTestTranslationDelete", testTranslationIdParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<int>> prcTestTranslationInsert(string userKey, Nullable<int> testId, Nullable<int> languageId, string translation)
+        {
+            var userKeyParameter = userKey != null ?
+                new ObjectParameter("UserKey", userKey) :
+                new ObjectParameter("UserKey", typeof(string));
+    
+            var testIdParameter = testId.HasValue ?
+                new ObjectParameter("TestId", testId) :
+                new ObjectParameter("TestId", typeof(int));
+    
+            var languageIdParameter = languageId.HasValue ?
+                new ObjectParameter("LanguageId", languageId) :
+                new ObjectParameter("LanguageId", typeof(int));
+    
+            var translationParameter = translation != null ?
+                new ObjectParameter("Translation", translation) :
+                new ObjectParameter("Translation", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("prcTestTranslationInsert", userKeyParameter, testIdParameter, languageIdParameter, translationParameter);
+        }
+    
+        public virtual int prcTestTranslationUpdate(string userKey, Nullable<int> translationId, string translation, Nullable<int> languageId)
+        {
+            var userKeyParameter = userKey != null ?
+                new ObjectParameter("UserKey", userKey) :
+                new ObjectParameter("UserKey", typeof(string));
+    
+            var translationIdParameter = translationId.HasValue ?
+                new ObjectParameter("TranslationId", translationId) :
+                new ObjectParameter("TranslationId", typeof(int));
+    
+            var translationParameter = translation != null ?
+                new ObjectParameter("Translation", translation) :
+                new ObjectParameter("Translation", typeof(string));
+    
+            var languageIdParameter = languageId.HasValue ?
+                new ObjectParameter("LanguageId", languageId) :
+                new ObjectParameter("LanguageId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("prcTestTranslationUpdate", userKeyParameter, translationIdParameter, translationParameter, languageIdParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<bool>> prcKeyCheck(string userKey, string iP)
+        {
+            var userKeyParameter = userKey != null ?
+                new ObjectParameter("UserKey", userKey) :
+                new ObjectParameter("UserKey", typeof(string));
+    
+            var iPParameter = iP != null ?
+                new ObjectParameter("IP", iP) :
+                new ObjectParameter("IP", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<bool>>("prcKeyCheck", userKeyParameter, iPParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<bool>> prcPrivilegeCheck(string userKey, string privilege)
+        {
+            var userKeyParameter = userKey != null ?
+                new ObjectParameter("UserKey", userKey) :
+                new ObjectParameter("UserKey", typeof(string));
+    
+            var privilegeParameter = privilege != null ?
+                new ObjectParameter("Privilege", privilege) :
+                new ObjectParameter("Privilege", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<bool>>("prcPrivilegeCheck", userKeyParameter, privilegeParameter);
         }
     }
 }

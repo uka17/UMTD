@@ -8,12 +8,6 @@
     <FunctionImport Name="prcMethodList" ReturnType="Collection(UMTDModel.prcMethodList_Result)">
       <Parameter Name="LanguageId" Mode="In" Type="Int32" />
     </FunctionImport>
-    <FunctionImport Name="prcTestConfirm">
-      <Parameter Name="TestId" Mode="In" Type="Int32" />
-    </FunctionImport>
-    <FunctionImport Name="prcTestDelete">
-      <Parameter Name="TestId" Mode="In" Type="Int32" />
-    </FunctionImport>
     <FunctionImport Name="prcTestInsert">
       <Parameter Name="Name" Mode="In" Type="String" />
       <Parameter Name="Code" Mode="In" Type="String" />
@@ -51,21 +45,6 @@
       <Parameter Name="UserKey" Mode="In" Type="String" />
       <Parameter Name="Filter" Mode="In" Type="String" />
     </FunctionImport>
-    <FunctionImport Name="prcTestTranslationDelete">
-      <Parameter Name="TestTranslationId" Mode="In" Type="Int32" />
-    </FunctionImport>
-    <FunctionImport Name="prcTestTranslationInsert" ReturnType="Collection(Int32)">
-      <Parameter Name="TestId" Mode="In" Type="Int32" />
-      <Parameter Name="LanguageId" Mode="In" Type="Int32" />
-      <Parameter Name="Translation" Mode="In" Type="String" />
-      <Parameter Name="ModifiedBy" Mode="In" Type="String" />
-    </FunctionImport>
-    <FunctionImport Name="prcTestTranslationUpdate">
-      <Parameter Name="UserKey" Mode="In" Type="String" />
-      <Parameter Name="TranslationId" Mode="In" Type="Int32" />
-      <Parameter Name="Translation" Mode="In" Type="String" />
-      <Parameter Name="LanguageId" Mode="In" Type="Int32" />
-    </FunctionImport>
     <FunctionImport Name="prcTestUomDelete">
       <Parameter Name="TestId" Mode="In" Type="Int32" />
       <Parameter Name="UomId" Mode="In" Type="Int32" />
@@ -76,6 +55,37 @@
     </FunctionImport>
     <FunctionImport Name="prcUomList" ReturnType="Collection(UMTDModel.prcUomList_Result)">
       <Parameter Name="LanguageId" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="prcTestConfirm">
+      <Parameter Name="UserKey" Mode="In" Type="String" />
+      <Parameter Name="TestId" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="prcTestDelete">
+      <Parameter Name="UserKey" Mode="In" Type="String" />
+      <Parameter Name="TestId" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="prcTestTranslationDelete">
+      <Parameter Name="TestTranslationId" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="prcTestTranslationInsert" ReturnType="Collection(Int32)">
+      <Parameter Name="UserKey" Mode="In" Type="String" />
+      <Parameter Name="TestId" Mode="In" Type="Int32" />
+      <Parameter Name="LanguageId" Mode="In" Type="Int32" />
+      <Parameter Name="Translation" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="prcTestTranslationUpdate">
+      <Parameter Name="UserKey" Mode="In" Type="String" />
+      <Parameter Name="TranslationId" Mode="In" Type="Int32" />
+      <Parameter Name="Translation" Mode="In" Type="String" />
+      <Parameter Name="LanguageId" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="prcKeyCheck" ReturnType="Collection(Boolean)">
+      <Parameter Name="UserKey" Mode="In" Type="String" />
+      <Parameter Name="IP" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="prcPrivilegeCheck" ReturnType="Collection(Boolean)">
+      <Parameter Name="UserKey" Mode="In" Type="String" />
+      <Parameter Name="Privilege" Mode="In" Type="String" />
     </FunctionImport>
   </EntityContainer>
   <ComplexType Name="prcLanguageList_Result">

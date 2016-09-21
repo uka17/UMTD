@@ -4,7 +4,11 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="UMTDModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="UMTDModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <Function Name="prcKeyCheck" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserKey" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="IP" Type="nvarchar(max)" Mode="In" />
+        </Function>
         <Function Name="prcLanguageList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="prcMaterialList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="LanguageId" Type="int" Mode="In" />
@@ -12,10 +16,16 @@
         <Function Name="prcMethodList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="LanguageId" Type="int" Mode="In" />
         </Function>
+        <Function Name="prcPrivilegeCheck" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserKey" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="Privilege" Type="nvarchar(max)" Mode="In" />
+        </Function>
         <Function Name="prcTestConfirm" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserKey" Type="nvarchar(max)" Mode="In" />
           <Parameter Name="TestId" Type="int" Mode="In" />
         </Function>
         <Function Name="prcTestDelete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserKey" Type="nvarchar(max)" Mode="In" />
           <Parameter Name="TestId" Type="int" Mode="In" />
         </Function>
         <Function Name="prcTestInsert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -59,10 +69,10 @@
           <Parameter Name="TestTranslationId" Type="int" Mode="In" />
         </Function>
         <Function Name="prcTestTranslationInsert" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserKey" Type="nvarchar(max)" Mode="In" />
           <Parameter Name="TestId" Type="int" Mode="In" />
           <Parameter Name="LanguageId" Type="int" Mode="In" />
           <Parameter Name="Translation" Type="nvarchar(max)" Mode="In" />
-          <Parameter Name="ModifiedBy" Type="nvarchar(max)" Mode="In" />
         </Function>
         <Function Name="prcTestTranslationUpdate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="UserKey" Type="nvarchar(max)" Mode="In" />
@@ -82,24 +92,17 @@
           <Parameter Name="LanguageId" Type="int" Mode="In" />
         </Function>
         <EntityContainer Name="UMTDModelStoreContainer" />
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="UMTDModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="UMTDEntities" annotation:LazyLoadingEnabled="true" >
           <FunctionImport Name="prcLanguageList" ReturnType="Collection(UMTDModel.prcLanguageList_Result)" />
           <FunctionImport Name="prcMaterialList" ReturnType="Collection(UMTDModel.prcMaterialList_Result)">
-            <Parameter Name="LanguageId" Mode="In" Type="Int32" />
+          <Parameter Name="LanguageId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="prcMethodList" ReturnType="Collection(UMTDModel.prcMethodList_Result)">
-            <Parameter Name="LanguageId" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="prcTestConfirm">
-            <Parameter Name="TestId" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="prcTestDelete">
-            <Parameter Name="TestId" Mode="In" Type="Int32" />
+          <Parameter Name="LanguageId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="prcTestInsert">
             <Parameter Name="Name" Mode="In" Type="String" />
@@ -138,21 +141,6 @@
             <Parameter Name="UserKey" Mode="In" Type="String" />
             <Parameter Name="Filter" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="prcTestTranslationDelete">
-            <Parameter Name="TestTranslationId" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="prcTestTranslationInsert" ReturnType="Collection(Int32)">
-            <Parameter Name="TestId" Mode="In" Type="Int32" />
-            <Parameter Name="LanguageId" Mode="In" Type="Int32" />
-            <Parameter Name="Translation" Mode="In" Type="String" />
-            <Parameter Name="ModifiedBy" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="prcTestTranslationUpdate">
-            <Parameter Name="UserKey" Mode="In" Type="String" />
-            <Parameter Name="TranslationId" Mode="In" Type="Int32" />
-            <Parameter Name="Translation" Mode="In" Type="String" />
-            <Parameter Name="LanguageId" Mode="In" Type="Int32" />
-          </FunctionImport>
           <FunctionImport Name="prcTestUomDelete">
             <Parameter Name="TestId" Mode="In" Type="Int32" />
             <Parameter Name="UomId" Mode="In" Type="Int32" />
@@ -162,7 +150,38 @@
             <Parameter Name="UomId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="prcUomList" ReturnType="Collection(UMTDModel.prcUomList_Result)">
+          <Parameter Name="LanguageId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="prcTestConfirm">
+            <Parameter Name="UserKey" Mode="In" Type="String" />
+            <Parameter Name="TestId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="prcTestDelete">
+            <Parameter Name="UserKey" Mode="In" Type="String" />
+            <Parameter Name="TestId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="prcTestTranslationDelete">
+          <Parameter Name="TestTranslationId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="prcTestTranslationInsert" ReturnType="Collection(Int32)">
+            <Parameter Name="UserKey" Mode="In" Type="String" />
+            <Parameter Name="TestId" Mode="In" Type="Int32" />
             <Parameter Name="LanguageId" Mode="In" Type="Int32" />
+            <Parameter Name="Translation" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="prcTestTranslationUpdate">
+            <Parameter Name="UserKey" Mode="In" Type="String" />
+            <Parameter Name="TranslationId" Mode="In" Type="Int32" />
+            <Parameter Name="Translation" Mode="In" Type="String" />
+            <Parameter Name="LanguageId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="prcKeyCheck" ReturnType="Collection(Boolean)">
+            <Parameter Name="UserKey" Mode="In" Type="String" />
+            <Parameter Name="IP" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="prcPrivilegeCheck" ReturnType="Collection(Boolean)">
+            <Parameter Name="UserKey" Mode="In" Type="String" />
+            <Parameter Name="Privilege" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="prcLanguageList_Result">
@@ -246,8 +265,6 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="prcTestConfirm" FunctionName="UMTDModel.Store.prcTestConfirm" />
-          <FunctionImportMapping FunctionImportName="prcTestDelete" FunctionName="UMTDModel.Store.prcTestDelete" />
           <FunctionImportMapping FunctionImportName="prcTestInsert" FunctionName="UMTDModel.Store.prcTestInsert" />
           <FunctionImportMapping FunctionImportName="prcTestMaterialDelete" FunctionName="UMTDModel.Store.prcTestMaterialDelete" />
           <FunctionImportMapping FunctionImportName="prcTestMaterialInsert" FunctionName="UMTDModel.Store.prcTestMaterialInsert" />
@@ -298,9 +315,6 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="prcTestTranslationDelete" FunctionName="UMTDModel.Store.prcTestTranslationDelete" />
-          <FunctionImportMapping FunctionImportName="prcTestTranslationInsert" FunctionName="UMTDModel.Store.prcTestTranslationInsert" />
-          <FunctionImportMapping FunctionImportName="prcTestTranslationUpdate" FunctionName="UMTDModel.Store.prcTestTranslationUpdate" />
           <FunctionImportMapping FunctionImportName="prcTestUomDelete" FunctionName="UMTDModel.Store.prcTestUomDelete" />
           <FunctionImportMapping FunctionImportName="prcTestUomInsert" FunctionName="UMTDModel.Store.prcTestUomInsert" />
           <FunctionImportMapping FunctionImportName="prcUomList" FunctionName="UMTDModel.Store.prcUomList">
@@ -312,6 +326,13 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="prcTestConfirm" FunctionName="UMTDModel.Store.prcTestConfirm" />
+          <FunctionImportMapping FunctionImportName="prcTestDelete" FunctionName="UMTDModel.Store.prcTestDelete" />
+          <FunctionImportMapping FunctionImportName="prcTestTranslationDelete" FunctionName="UMTDModel.Store.prcTestTranslationDelete" />
+          <FunctionImportMapping FunctionImportName="prcTestTranslationInsert" FunctionName="UMTDModel.Store.prcTestTranslationInsert" />
+          <FunctionImportMapping FunctionImportName="prcTestTranslationUpdate" FunctionName="UMTDModel.Store.prcTestTranslationUpdate" />
+          <FunctionImportMapping FunctionImportName="prcKeyCheck" FunctionName="UMTDModel.Store.prcKeyCheck" />
+          <FunctionImportMapping FunctionImportName="prcPrivilegeCheck" FunctionName="UMTDModel.Store.prcPrivilegeCheck" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
