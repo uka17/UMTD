@@ -17,10 +17,9 @@ namespace UMTD.Controllers
         /// </summary>
         /// <param name="userKey">Requestor identifier</param>
         /// <param name="testId">Id of Test</param>
-        /// <returns>HttpStatusCode.OK and Test list in case of success, InternalServerError and error description i ncase of error</returns>
+        /// <returns>HttpStatusCode.OK and Test list in case of success, InternalServerError and error description in case of error</returns>
         [HttpGet]
         [ActionName("Get")]
-        [Authorize]
         public HttpResponseMessage Get(string userKey, int testId)
         {
             try
@@ -41,52 +40,11 @@ namespace UMTD.Controllers
             }
         }
         /// <summary>
-        /// Returns list of Test entities for filter and page number (obsolete)
-        /// </summary>
-        /// <param name="filter">Part of Test translation, method, material or uom name</param>
-        /// <param name="pageNumber">Which page to show</param>
-        /// <returns>HttpStatusCode.OK and Test list in case of success, InternalServerError and error description i ncase of error</returns>
-        [HttpGet]
-        [ActionName("List")]
-        private HttpResponseMessage List(string userKey, string filter, int pageNumber = 0)
-        {
-            try
-            {
-                List<prcTestSelectAll_Result> TestList = (from s in dbContext.prcTestSelectAll(1, filter, pageNumber)
-                                                          select s).ToList();
-                return Request.CreateResponse<IEnumerable<prcTestSelectAll_Result>>(HttpStatusCode.OK, TestList);
-            }
-            catch(Exception e)
-            {
-                return Request.CreateResponse<string>(HttpStatusCode.InternalServerError, e.Message);
-            }
-        }
-        /// <summary>
-        /// Returns number of pages for filter value (obsolete)
-        /// </summary>
-        /// <param name="filter">Part of Test translation, method, material or uom name</param>
-        /// <returns>HttpStatusCode.OK and number of records in case of success, InternalServerError and error description i ncase of error</returns>
-        [HttpGet]
-        [ActionName("PageCount")]
-        private HttpResponseMessage PageCount(string filter)
-        {
-            try
-            {
-                int PageCount = (from s in dbContext.prcTestSelectAllPageCount(filter, 1)
-                                 select s.Value).FirstOrDefault();
-                return Request.CreateResponse<int>(HttpStatusCode.OK, PageCount);
-            }
-            catch (Exception e)
-            {
-                return Request.CreateResponse<string>(HttpStatusCode.InternalServerError, e.Message);
-            }
-        }
-        /// <summary>
         /// Returns list of Test entities for filter
         /// </summary>
         /// <param name="userKey">Authorization user key</param>
         /// <param name="filter">Part of Test translation, method, material or uom name</param>
-        /// <returns>HttpStatusCode.OK and Test list in case of success, InternalServerError and error description i ncase of error</returns>
+        /// <returns>HttpStatusCode.OK and Test list in case of success, InternalServerError and error description in case of error</returns>
         [HttpGet]
         [ActionName("Summary")]
         public HttpResponseMessage Summary(string userKey, string filter)
@@ -110,7 +68,7 @@ namespace UMTD.Controllers
         /// </summary>
         /// <param name="userKey">Requestor identifier</param>
         /// <param name="testId">Id of Test</param>
-        /// <returns>HttpStatusCode.OK in case of success, InternalServerError and error description i ncase of error</returns>
+        /// <returns>HttpStatusCode.OK in case of success, InternalServerError and error description in case of error</returns>
         [HttpGet]
         [ActionName("Delete")]
         public HttpResponseMessage Delete(string userKey, int testId)
@@ -133,7 +91,7 @@ namespace UMTD.Controllers
         /// </summary>
         /// <param name="userKey">Requestor identifier</param>
         /// <param name="testId">Id of Test</param>
-        /// <returns>HttpStatusCode.OK in case of success, InternalServerError and error description i ncase of error</returns>
+        /// <returns>HttpStatusCode.OK in case of success, InternalServerError and error description in case of error</returns>
         [HttpGet]
         [ActionName("Confirm")]
         public HttpResponseMessage Confirm(string userKey, int testId)
@@ -150,7 +108,9 @@ namespace UMTD.Controllers
             {
                 return Request.CreateResponse<string>(HttpStatusCode.InternalServerError, e.Message);
             }
-        }
+        }        
+        #endregion
+        #region Test translation
         /// <summary>
         /// Add new translation to test
         /// </summary>
@@ -158,7 +118,7 @@ namespace UMTD.Controllers
         /// <param name="testId">Id of Test</param>
         /// <param name="languageId">Id of language for translation</param>
         /// <param name="translation">Translation text</param>
-        /// <returns>HttpStatusCode in case of success, InternalServerError and error description i ncase of error</returns>
+        /// <returns>HttpStatusCode in case of success, InternalServerError and error description in case of error</returns>
         [HttpGet]
         [ActionName("TranslationInsert")]
         public HttpResponseMessage TranslationInsert(string userKey, int testId, int languageId, string translation)
@@ -184,7 +144,7 @@ namespace UMTD.Controllers
         /// <param name="translationId">Id of Translation</param>
         /// <param name="languageId">Id of language for translation</param>
         /// <param name="translation">Translation text</param>
-        /// <returns>HttpStatusCode.OK in case of success, InternalServerError and error description i ncase of error</returns>
+        /// <returns>HttpStatusCode.OK in case of success, InternalServerError and error description in case of error</returns>
         [HttpGet]
         [ActionName("TranslationUpdate")]
         public HttpResponseMessage TranslationUpdate(string userKey, int translationId, int languageId, string translation)
@@ -207,7 +167,7 @@ namespace UMTD.Controllers
         /// </summary>
         /// <param name="userKey">Requestor identifier</param>
         /// <param name="translationId">Id of translation</param>
-        /// <returns>HttpStatusCode in case of success, InternalServerError and error description i ncase of error</returns>
+        /// <returns>HttpStatusCode in case of success, InternalServerError and error description in case of error</returns>
         [HttpGet]
         [ActionName("TranslationDelete")]
         public HttpResponseMessage TranslationDelete(string userKey, int translationId)
@@ -218,6 +178,138 @@ namespace UMTD.Controllers
                     throw new Exception("userKey is incorrect or used with wrong IP address");
 
                 dbContext.prcTestTranslationDelete(translationId);
+                return new HttpResponseMessage(HttpStatusCode.OK);
+            }
+            catch (Exception e)
+            {
+                return Request.CreateResponse<string>(HttpStatusCode.InternalServerError, e.Message);
+            }
+        }
+        #endregion
+        #region Test uom
+        /// <summary>
+        /// Remove Uom from Test
+        /// </summary>
+        /// <param name="userKey">Requestor identifier</param>
+        /// <param name="testId">Id of Test</param>
+        /// <param name="uomId">Id of Uom</param>
+        /// <returns>HttpStatusCode.OK in case of success, InternalServerError and error description in case of error</returns>
+        [HttpGet]
+        [ActionName("UomDelete")]
+        public HttpResponseMessage UomDelete(string userKey, int testId, int uomId)
+        {
+            try
+            {
+                dbContext.prcTestUomDelete(testId, uomId);
+                return new HttpResponseMessage(HttpStatusCode.OK);
+            }
+            catch (Exception e)
+            {
+                return Request.CreateResponse<string>(HttpStatusCode.InternalServerError, e.Message);
+            }
+        }
+        /// <summary>
+        /// Add Uom to Test
+        /// </summary>
+        /// <param name="userKey">Requestor identifier</param>
+        /// <param name="testId">Id of Test</param>
+        /// <param name="uomId">Id of Uom</param>
+        /// <returns>HttpStatusCode.OK in case of success, InternalServerError and error description in case of error</returns>
+        [HttpGet]
+        [ActionName("UomInsert")]
+        public HttpResponseMessage UomInsert(string userKey, int testId, int uomId)
+        {
+            try
+            {
+                dbContext.prcTestUomInsert(userKey, testId, uomId);
+                return new HttpResponseMessage(HttpStatusCode.OK);
+            }
+            catch (Exception e)
+            {
+                return Request.CreateResponse<string>(HttpStatusCode.InternalServerError, e.Message);
+            }
+        }
+        #endregion
+        #region Test material
+        /// <summary>
+        /// Remove Material from Test
+        /// </summary>
+        /// <param name="userKey">Requestor identifier</param>
+        /// <param name="testId">Id of Test</param>
+        /// <param name="materialId">Id of Material</param>
+        /// <returns>HttpStatusCode.OK in case of success, InternalServerError and error description in case of error</returns>
+        [HttpGet]
+        [ActionName("MaterialDelete")]
+        public HttpResponseMessage MaterialDelete(string userKey, int testId, int materialId)
+        {
+            try
+            {
+                dbContext.prcTestMaterialDelete(testId, materialId);
+                return new HttpResponseMessage(HttpStatusCode.OK);
+            }
+            catch (Exception e)
+            {
+                return Request.CreateResponse<string>(HttpStatusCode.InternalServerError, e.Message);
+            }
+        }
+        /// <summary>
+        /// Add Material to Test
+        /// </summary>
+        /// <param name="userKey">Requestor identifier</param>
+        /// <param name="testId">Id of Test</param>
+        /// <param name="materialId">Id of Material</param>
+        /// <returns>HttpStatusCode.OK in case of success, InternalServerError and error description in case of error</returns>
+        [HttpGet]
+        [ActionName("MaterialInsert")]
+        public HttpResponseMessage MaterialInsert(string userKey, int testId, int materialId)
+        {
+            try
+            {
+                dbContext.prcTestMaterialInsert(userKey, testId, materialId);
+                return new HttpResponseMessage(HttpStatusCode.OK);
+            }
+            catch (Exception e)
+            {
+                return Request.CreateResponse<string>(HttpStatusCode.InternalServerError, e.Message);
+            }
+        }
+        #endregion
+        #region Test method
+        /// <summary>
+        /// Remove Method from Test
+        /// </summary>
+        /// <param name="userKey">Requestor identifier</param>
+        /// <param name="testId">Id of Test</param>
+        /// <param name="materialId">Id of Method</param>
+        /// <returns>HttpStatusCode.OK in case of success, InternalServerError and error description in case of error</returns>
+        [HttpGet]
+        [ActionName("MethodDelete")]
+        public HttpResponseMessage MethodDelete(string userKey, int testId, int methodId)
+        {
+            try
+            {
+                dbContext.prcTestMethodDelete(testId, methodId);
+                return new HttpResponseMessage(HttpStatusCode.OK);
+            }
+            catch (Exception e)
+            {
+                return Request.CreateResponse<string>(HttpStatusCode.InternalServerError, e.Message);
+            }
+        }
+        /// <summary>
+        /// Add Method to Test
+        /// </summary>
+        /// <param name="userKey">Requestor identifier</param>
+        /// <param name="testId">Id of Test</param>
+        /// <param name="materialId">Id of Method</param>
+        /// <returns>HttpStatusCode.OK in case of success, InternalServerError and error description in case of error</returns>
+        [HttpGet]
+        [ActionName("MethodInsert")]
+        public HttpResponseMessage MethodInsert(string userKey, int testId, int methodId)
+        {
+            try
+            {
+                dbContext.prcTestMethodInsert(userKey, testId, methodId);
                 return new HttpResponseMessage(HttpStatusCode.OK);
             }
             catch (Exception e)

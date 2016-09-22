@@ -12,45 +12,20 @@ namespace UMTD.Controllers
     {
         private UMTDEntities dbContext = new UMTDEntities();
         #region Material
+        /// <summary>
+        /// Return list of all available Materials
+        /// </summary>
+        /// <param name="userKey">Requestor identifier</param>
+        /// <returns>HttpStatusCode.OK and Material list in case of success, InternalServerError and error description in case of error</returns>
         [HttpGet]
         [ActionName("List")]
-        public HttpResponseMessage List()
+        public HttpResponseMessage List(string userKey)
         {
             try
             {
-                List<prcMaterialList_Result> MaterialList = (from s in dbContext.prcMaterialList(1)
+                List<prcMaterialList_Result> MaterialList = (from s in dbContext.prcMaterialList(userKey)
                                                              select s).ToList();
                 return Request.CreateResponse<IEnumerable<prcMaterialList_Result>>(HttpStatusCode.OK, MaterialList);
-            }
-            catch (Exception e)
-            {
-                return Request.CreateResponse<string>(HttpStatusCode.InternalServerError, e.Message);
-            }
-        }
-
-        [HttpGet]
-        [ActionName("Delete")]
-        public HttpResponseMessage Delete(int testId, int materialId)
-        {
-            try
-            {
-                dbContext.prcTestMaterialDelete(testId, materialId);
-                return new HttpResponseMessage(HttpStatusCode.OK);
-            }
-            catch (Exception e)
-            {
-                return Request.CreateResponse<string>(HttpStatusCode.InternalServerError, e.Message);
-            }
-        }
-
-        [HttpGet]
-        [ActionName("Insert")]
-        public HttpResponseMessage MaterialInsert(int testId, int materialId)
-        {
-            try
-            {
-                dbContext.prcTestMaterialInsert(testId, materialId);
-                return new HttpResponseMessage(HttpStatusCode.OK);
             }
             catch (Exception e)
             {

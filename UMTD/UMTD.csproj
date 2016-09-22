@@ -203,9 +203,6 @@
     <Compile Include="Models\prcTestSelectAllSummary_Result.cs">
       <DependentUpon>UMTD.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\prcTestSelectAll_Result.cs">
-      <DependentUpon>UMTD.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\prcTestSelect_Result.cs">
       <DependentUpon>UMTD.tt</DependentUpon>
     </Compile>

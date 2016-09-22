@@ -23,6 +23,7 @@ var testTranslation = function (t) {
     self.languageIcon = ko.pureComputed(function () {
         return "/Images/" + self.languageCode() + ".png";
     });
+    //Edit
     self.edit = function (obj) {
         for (var i = 0; i < activeTest().translation().length; i++) {
             activeTest().translation()[i].editState(false);
@@ -34,6 +35,7 @@ var testTranslation = function (t) {
         self.editState(false);
         self.name(self.oldName);
     }
+    //Language
     self.toggleLanguageList = function () {
         for (var i = 0; i < activeTest().translation().length; i++) {
             activeTest().translation()[i].languageListVisible(false);
@@ -46,9 +48,8 @@ var testTranslation = function (t) {
         self.updateTranslation();
         self.languageListVisible(false);
     };
-   
-    self.updateTranslation = function () {
-        $.get("/api/Test/TranslationUpdate", { userKey: 'key', translationId: self.id, languageId: self.languageId, translation: self.name });
+    self.update = function () {
+        $.get("/api/Test/TranslationUpdate", { userKey: $('#user-key').val(), translationId: self.id, languageId: self.languageId, translation: self.name });
         self.editState(false);
     }
 }
@@ -66,7 +67,7 @@ var summaryTest = function (t) {
             activeTest(new test(data));
             $("#dialog-edit-test").dialog("open");
         };
-        ajaxLoad("/api/Test/Get", { userKey: 'key', testId: obj.id }, loadCurrentTestDone);
+        ajaxLoad("/api/Test/Get", { userKey: $('#user-key').val(), testId: obj.id }, loadCurrentTestDone);
     }
 }
 var test = function (t) {
@@ -82,54 +83,75 @@ var test = function (t) {
     self.material = ko.observableArray(jQuery.parseJSON(t.Material));
 
     //translation
+    self.addTranslation = function () {
+        $("#dialog-add-translation").dialog("open");
+    }
+    self.createTranslation = function () {
+        var createTranslationDone = function (data) {
+            activeTest().translation.push(new testTranslation({
+                id: data,
+                languageId: $('#language').val(),
+                name: $('#newTranslation').val(),
+                languageCode: languageList().find(function (obj) {
+                    return obj.id == $('#language').val();
+                }).code
+            }));
+            $("#dialog-add-translation").dialog("close");
+        };
+        ajaxLoad("/api/Test/TranslationInsert", { userKey: $('#user-key').val(), testId: activeTest().id, languageId: $('#language').val(), translation: $('#newTranslation').val() }, createTranslationDone);
+
+    };
     self.removeTranslation = function (obj) {
         //Remove item
         self.translation.remove(obj);
-        ajaxGet("api/Test/TranslationDelete", { translationId: obj.id });
+        ajaxGet("api/Test/TranslationDelete", { userKey: $('#user-key').val(), translationId: obj.id });
     }
     //Uom
     self.removeUom = function (obj) {
         //Remove item
         self.uom.remove(obj);
-        $.get("/api/Uom/Delete", { testId: self.id, uomId: obj.id });
+        $.get("/api/Test/UomDelete", { testId: self.id, uomId: obj.id });
     }
     self.selectedUom = ko.observableArray();
 
     self.selectedUom.subscribe(function (value) {
         var name = findNameById(value, uomList);
+        //TODO: Do not allow to add duplicates
         if (name != null) {
             self.uom.push({ id: self.selectedUom()[0], name: name });
-            ajaxGet("/api/Uom/Insert", { testId: self.id, uomId: self.selectedUom()[0] });
+            ajaxGet("/api/Test/UomInsert", { userKey: $('#user-key').val(), testId: self.id, uomId: self.selectedUom()[0] });
         }
     });
     //Material
     self.removeMaterial = function (obj) {
         //Remove item
         self.material.remove(obj);
-        ajaxGet("/api/Material/Delete", { testId: self.id, materialId: obj.id });
+        ajaxGet("/api/Test/MaterialDelete", { userKey: $('#user-key').val(), testId: self.id, materialId: obj.id });
     }
     self.selectedMaterial = ko.observableArray();
 
     self.selectedMaterial.subscribe(function (value) {
         var name = findNameById(value, materialList);
+        //TODO: Do not allow to add duplicates
         if (name != null) {
             self.material.push({ id: self.selectedMaterial()[0], name: name });
-            ajaxGet("api/Material/Insert", { testId: self.id, materialId: self.selectedMaterial()[0] });
+            ajaxGet("api/Test/MaterialInsert", { userKey: $('#user-key').val(), testId: self.id, materialId: self.selectedMaterial()[0] });
         }
     });
     //Method
     self.removeMethod = function (obj) {
         //Remove item
         self.method.remove(obj);
-        ajaxGet("/api/Method/Delete", { testId: self.id, methodId: obj.id });
+        ajaxGet("/api/Test/MethodDelete", { userKey: $('#user-key').val(), testId: self.id, methodId: obj.id });
     }
     self.selectedMethod = ko.observableArray();
 
     self.selectedMethod.subscribe(function (value) {
         var name = findNameById(value, methodList);
+        //TODO: Do not allow to add duplicates
         if (name != null) {
             self.method.push({ id: self.selectedMethod()[0], name: name });
-            ajaxGet("/api/Method/Insert", { testId: self.id, methodId: self.selectedMethod()[0] });
+            ajaxGet("/api/Test/MethodInsert", { userKey: $('#user-key').val(), testId: self.id, methodId: self.selectedMethod()[0] });
         }
     });
 

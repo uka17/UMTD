@@ -12,45 +12,20 @@ namespace UMTD.Controllers
     {
         private UMTDEntities dbContext = new UMTDEntities();
         #region Method
+        /// <summary>
+        /// Return list of all available research Methods
+        /// </summary>
+        /// <param name="userKey">Requestor identifier</param>
+        /// <returns>HttpStatusCode.OK and Method list in case of success, InternalServerError and error description in case of error</returns>
         [HttpGet]
         [ActionName("List")]
-        public HttpResponseMessage List()
+        public HttpResponseMessage List(string userKey)
         {
             try
             {
-                List<prcMethodList_Result> MethodList = (from s in dbContext.prcMethodList(1)
+                List<prcMethodList_Result> MethodList = (from s in dbContext.prcMethodList(userKey)
                                                          select s).ToList();
                 return Request.CreateResponse<IEnumerable<prcMethodList_Result>>(HttpStatusCode.OK, MethodList);
-            }
-            catch (Exception e)
-            {
-                return Request.CreateResponse<string>(HttpStatusCode.InternalServerError, e.Message);
-            }
-        }
-
-        [HttpGet]
-        [ActionName("Delete")]
-        public HttpResponseMessage Delete(int testId, int methodId)
-        {
-            try
-            {
-                dbContext.prcTestMethodDelete(testId, methodId);
-                return new HttpResponseMessage(HttpStatusCode.OK);
-            }
-            catch (Exception e)
-            {
-                return Request.CreateResponse<string>(HttpStatusCode.InternalServerError, e.Message);
-            }
-        }
-
-        [HttpGet]
-        [ActionName("Insert")]
-        public HttpResponseMessage Insert(int testId, int methodId)
-        {
-            try
-            {
-                dbContext.prcTestMethodInsert(testId, methodId);
-                return new HttpResponseMessage(HttpStatusCode.OK);
             }
             catch (Exception e)
             {

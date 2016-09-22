@@ -5,7 +5,7 @@
             summaryTestList.push(new summaryTest(e));
         });
     };
-    ajaxLoad("/api/Test/Summary", { userKey: 'key', filter: $('#filter').val()}, loadTestDone);
+    ajaxLoad("/api/Test/Summary", { userKey: $('#user-key').val(), filter: $('#filter').val() }, loadTestDone);
 }
 function loadReference(type) {
     switch (type) {
@@ -13,25 +13,25 @@ function loadReference(type) {
             var materialLoadDone = function (data) {
                 data.map(function (e) { materialList.push({ id: e.Id, name: e.Name }); });
             };
-            ajaxLoad("/api/Material/List", {}, materialLoadDone);
+            ajaxLoad("/api/Material/List", { userKey: $('#user-key').val() }, materialLoadDone);
             break;
         case "method":
             var methodLoadDone = function (data) {
                 data.map(function (e) { methodList.push({ id: e.Id, name: e.Name }); });
             };
-            ajaxLoad("/api/Method/List", {}, methodLoadDone);
+            ajaxLoad("/api/Method/List", { userKey: $('#user-key').val() }, methodLoadDone);
             break;
         case "language":
             var languageLoadDone = function (data) {
                 data.map(function (e) { languageList.push({ id: e.Id, name: e.Name, code: e.Code }); });
             };
-            ajaxLoad("/api/Language/List", {}, languageLoadDone);
+            ajaxLoad("/api/Language/List", { userKey: $('#user-key').val() }, languageLoadDone);
             break;
         case "uom":
             var uomLoadDone = function (data) {
                 data.map(function (e) { uomList.push({ id: e.Id, name: e.FullName }); });
             };
-            ajaxLoad("/api/Uom/List", {}, uomLoadDone);
+            ajaxLoad("/api/Uom/List", { userKey: $('#user-key').val() }, uomLoadDone);
     }
 }
 
@@ -61,25 +61,6 @@ var ViewModel = function (uomList, materialList, methodList, languageList, summa
             return true;
     }
 
-    //Add translation
-    self.addTranslation = function () {
-        $("#dialog-add-translation").dialog("open");
-    }
-    self.createTranslation = function () {
-        var createTranslationDone = function (data) {
-            activeTest().translation.push(new testTranslation({
-                id: data,
-                languageId: $('#language').val(),
-                name: $('#newTranslation').val(),
-                languageCode: self.languageList().find(function (obj) {
-                    return obj.id == $('#language').val();
-                }).code
-            }));
-            $("#dialog-add-translation").dialog("close");
-        };
-        ajaxLoad("/api/Test/TranslationInsert", { testId: activeTest().id, languageId: $('#language').val(), translation: $('#newTranslation').val() }, createTranslationDone);
-
-    };
     self.confirmTest = function () {
         ajaxGet("/api/Test/Confirm", { testId: activeTest().id });
         self.summaryTestList.remove(function (item) { return item.id == activeTest().id; });

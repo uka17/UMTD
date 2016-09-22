@@ -12,13 +12,18 @@ namespace UMTD.Controllers
     {
         private UMTDEntities dbContext = new UMTDEntities();
         #region Uom
+        /// <summary>
+        /// Return list of all available unit of measurement
+        /// </summary>
+        /// <param name="userKey">Requestor identifier</param>
+        /// <returns>HttpStatusCode.OK and Uom list in case of success, InternalServerError and error description in case of error</returns>
         [HttpGet]
         [ActionName("List")]
-        public HttpResponseMessage List()
+        public HttpResponseMessage List(string userKey)
         {
             try
             {
-                List<prcUomList_Result> UomList = (from s in dbContext.prcUomList(1)
+                List<prcUomList_Result> UomList = (from s in dbContext.prcUomList(userKey)
                                                    select s).ToList();
                 return Request.CreateResponse<IEnumerable<prcUomList_Result>>(HttpStatusCode.OK, UomList);
             }
@@ -26,37 +31,7 @@ namespace UMTD.Controllers
             {
                 return Request.CreateResponse<string>(HttpStatusCode.InternalServerError, e.Message);
             }
-        }
-
-        [HttpGet]
-        [ActionName("Delete")]
-        public HttpResponseMessage Delete(int testId, int uomId)
-        {
-            try
-            {
-                dbContext.prcTestUomDelete(testId, uomId);
-                return new HttpResponseMessage(HttpStatusCode.OK);
-            }
-            catch (Exception e)
-            {
-                return Request.CreateResponse<string>(HttpStatusCode.InternalServerError, e.Message);
-            }
-        }
-
-        [HttpGet]
-        [ActionName("Insert")]
-        public HttpResponseMessage UomInsert(int testId, int uomId)
-        {
-            try
-            {
-                dbContext.prcTestUomInsert(testId, uomId);
-                return new HttpResponseMessage(HttpStatusCode.OK);
-            }
-            catch (Exception e)
-            {
-                return Request.CreateResponse<string>(HttpStatusCode.InternalServerError, e.Message);
-            }
-        }
+        }        
         #endregion 
     }
 }

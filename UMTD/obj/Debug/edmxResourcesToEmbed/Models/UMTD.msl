@@ -10,27 +10,9 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
-    <FunctionImportMapping FunctionImportName="prcMaterialList" FunctionName="UMTDModel.Store.prcMaterialList">
-      <ResultMapping>
-        <ComplexTypeMapping TypeName="UMTDModel.prcMaterialList_Result">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
-        </ComplexTypeMapping>
-      </ResultMapping>
-    </FunctionImportMapping>
-    <FunctionImportMapping FunctionImportName="prcMethodList" FunctionName="UMTDModel.Store.prcMethodList">
-      <ResultMapping>
-        <ComplexTypeMapping TypeName="UMTDModel.prcMethodList_Result">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
-        </ComplexTypeMapping>
-      </ResultMapping>
-    </FunctionImportMapping>
     <FunctionImportMapping FunctionImportName="prcTestInsert" FunctionName="UMTDModel.Store.prcTestInsert" />
     <FunctionImportMapping FunctionImportName="prcTestMaterialDelete" FunctionName="UMTDModel.Store.prcTestMaterialDelete" />
-    <FunctionImportMapping FunctionImportName="prcTestMaterialInsert" FunctionName="UMTDModel.Store.prcTestMaterialInsert" />
     <FunctionImportMapping FunctionImportName="prcTestMethodDelete" FunctionName="UMTDModel.Store.prcTestMethodDelete" />
-    <FunctionImportMapping FunctionImportName="prcTestMethodInsert" FunctionName="UMTDModel.Store.prcTestMethodInsert" />
     <FunctionImportMapping FunctionImportName="prcTestSelect" FunctionName="UMTDModel.Store.prcTestSelect">
       <ResultMapping>
         <ComplexTypeMapping TypeName="UMTDModel.prcTestSelect_Result">
@@ -44,20 +26,6 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
-    <FunctionImportMapping FunctionImportName="prcTestSelectAll" FunctionName="UMTDModel.Store.prcTestSelectAll">
-      <ResultMapping>
-        <ComplexTypeMapping TypeName="UMTDModel.prcTestSelectAll_Result">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="Code" ColumnName="Code" />
-          <ScalarProperty Name="Synonym" ColumnName="Synonym" />
-          <ScalarProperty Name="Material" ColumnName="Material" />
-          <ScalarProperty Name="Method" ColumnName="Method" />
-          <ScalarProperty Name="Uom" ColumnName="Uom" />
-          <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
-        </ComplexTypeMapping>
-      </ResultMapping>
-    </FunctionImportMapping>
-    <FunctionImportMapping FunctionImportName="prcTestSelectAllPageCount" FunctionName="UMTDModel.Store.prcTestSelectAllPageCount" />
     <FunctionImportMapping FunctionImportName="prcTestSelectAllSummary" FunctionName="UMTDModel.Store.prcTestSelectAllSummary">
       <ResultMapping>
         <ComplexTypeMapping TypeName="UMTDModel.prcTestSelectAllSummary_Result">
@@ -77,7 +45,31 @@
       </ResultMapping>
     </FunctionImportMapping>
     <FunctionImportMapping FunctionImportName="prcTestUomDelete" FunctionName="UMTDModel.Store.prcTestUomDelete" />
-    <FunctionImportMapping FunctionImportName="prcTestUomInsert" FunctionName="UMTDModel.Store.prcTestUomInsert" />
+    <FunctionImportMapping FunctionImportName="prcTestConfirm" FunctionName="UMTDModel.Store.prcTestConfirm" />
+    <FunctionImportMapping FunctionImportName="prcTestDelete" FunctionName="UMTDModel.Store.prcTestDelete" />
+    <FunctionImportMapping FunctionImportName="prcTestTranslationDelete" FunctionName="UMTDModel.Store.prcTestTranslationDelete" />
+    <FunctionImportMapping FunctionImportName="prcTestTranslationInsert" FunctionName="UMTDModel.Store.prcTestTranslationInsert" />
+    <FunctionImportMapping FunctionImportName="prcTestTranslationUpdate" FunctionName="UMTDModel.Store.prcTestTranslationUpdate" />
+    <FunctionImportMapping FunctionImportName="prcKeyCheck" FunctionName="UMTDModel.Store.prcKeyCheck" />
+    <FunctionImportMapping FunctionImportName="prcPrivilegeCheck" FunctionName="UMTDModel.Store.prcPrivilegeCheck" />
+    <FunctionImportMapping FunctionImportName="prcMaterialList" FunctionName="UMTDModel.Store.prcMaterialList">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="UMTDModel.prcMaterialList_Result">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="prcMethodList" FunctionName="UMTDModel.Store.prcMethodList">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="UMTDModel.prcMethodList_Result">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="prcTestMaterialInsert" FunctionName="UMTDModel.Store.prcTestMaterialInsert" />
+    <FunctionImportMapping FunctionImportName="prcTestMethodInsert" FunctionName="UMTDModel.Store.prcTestMethodInsert" />
     <FunctionImportMapping FunctionImportName="prcUomList" FunctionName="UMTDModel.Store.prcUomList">
       <ResultMapping>
         <ComplexTypeMapping TypeName="UMTDModel.prcUomList_Result">
@@ -87,12 +79,6 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
-    <FunctionImportMapping FunctionImportName="prcTestConfirm" FunctionName="UMTDModel.Store.prcTestConfirm" />
-    <FunctionImportMapping FunctionImportName="prcTestDelete" FunctionName="UMTDModel.Store.prcTestDelete" />
-    <FunctionImportMapping FunctionImportName="prcTestTranslationDelete" FunctionName="UMTDModel.Store.prcTestTranslationDelete" />
-    <FunctionImportMapping FunctionImportName="prcTestTranslationInsert" FunctionName="UMTDModel.Store.prcTestTranslationInsert" />
-    <FunctionImportMapping FunctionImportName="prcTestTranslationUpdate" FunctionName="UMTDModel.Store.prcTestTranslationUpdate" />
-    <FunctionImportMapping FunctionImportName="prcKeyCheck" FunctionName="UMTDModel.Store.prcKeyCheck" />
-    <FunctionImportMapping FunctionImportName="prcPrivilegeCheck" FunctionName="UMTDModel.Store.prcPrivilegeCheck" />
+    <FunctionImportMapping FunctionImportName="prcTestUomInsert" FunctionName="UMTDModel.Store.prcTestUomInsert" />
   </EntityContainerMapping>
 </Mapping>

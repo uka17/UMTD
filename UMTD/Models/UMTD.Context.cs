@@ -33,24 +33,6 @@ namespace UMTD.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<prcLanguageList_Result>("prcLanguageList");
         }
     
-        public virtual ObjectResult<prcMaterialList_Result> prcMaterialList(Nullable<int> languageId)
-        {
-            var languageIdParameter = languageId.HasValue ?
-                new ObjectParameter("LanguageId", languageId) :
-                new ObjectParameter("LanguageId", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<prcMaterialList_Result>("prcMaterialList", languageIdParameter);
-        }
-    
-        public virtual ObjectResult<prcMethodList_Result> prcMethodList(Nullable<int> languageId)
-        {
-            var languageIdParameter = languageId.HasValue ?
-                new ObjectParameter("LanguageId", languageId) :
-                new ObjectParameter("LanguageId", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<prcMethodList_Result>("prcMethodList", languageIdParameter);
-        }
-    
         public virtual int prcTestInsert(string name, string code)
         {
             var nameParameter = name != null ?
@@ -77,19 +59,6 @@ namespace UMTD.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("prcTestMaterialDelete", testIdParameter, materialIdParameter);
         }
     
-        public virtual int prcTestMaterialInsert(Nullable<int> testId, Nullable<int> materialId)
-        {
-            var testIdParameter = testId.HasValue ?
-                new ObjectParameter("TestId", testId) :
-                new ObjectParameter("TestId", typeof(int));
-    
-            var materialIdParameter = materialId.HasValue ?
-                new ObjectParameter("MaterialId", materialId) :
-                new ObjectParameter("MaterialId", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("prcTestMaterialInsert", testIdParameter, materialIdParameter);
-        }
-    
         public virtual int prcTestMethodDelete(Nullable<int> testId, Nullable<int> methodId)
         {
             var testIdParameter = testId.HasValue ?
@@ -103,19 +72,6 @@ namespace UMTD.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("prcTestMethodDelete", testIdParameter, methodIdParameter);
         }
     
-        public virtual int prcTestMethodInsert(Nullable<int> testId, Nullable<int> methodId)
-        {
-            var testIdParameter = testId.HasValue ?
-                new ObjectParameter("TestId", testId) :
-                new ObjectParameter("TestId", typeof(int));
-    
-            var methodIdParameter = methodId.HasValue ?
-                new ObjectParameter("MethodId", methodId) :
-                new ObjectParameter("MethodId", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("prcTestMethodInsert", testIdParameter, methodIdParameter);
-        }
-    
         public virtual ObjectResult<prcTestSelect_Result> prcTestSelect(string userKey, Nullable<int> testId)
         {
             var userKeyParameter = userKey != null ?
@@ -127,36 +83,6 @@ namespace UMTD.Models
                 new ObjectParameter("TestId", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<prcTestSelect_Result>("prcTestSelect", userKeyParameter, testIdParameter);
-        }
-    
-        public virtual ObjectResult<prcTestSelectAll_Result> prcTestSelectAll(Nullable<int> languageId, string filter, Nullable<int> pageNumber)
-        {
-            var languageIdParameter = languageId.HasValue ?
-                new ObjectParameter("LanguageId", languageId) :
-                new ObjectParameter("LanguageId", typeof(int));
-    
-            var filterParameter = filter != null ?
-                new ObjectParameter("Filter", filter) :
-                new ObjectParameter("Filter", typeof(string));
-    
-            var pageNumberParameter = pageNumber.HasValue ?
-                new ObjectParameter("PageNumber", pageNumber) :
-                new ObjectParameter("PageNumber", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<prcTestSelectAll_Result>("prcTestSelectAll", languageIdParameter, filterParameter, pageNumberParameter);
-        }
-    
-        public virtual ObjectResult<Nullable<int>> prcTestSelectAllPageCount(string filter, Nullable<int> languageId)
-        {
-            var filterParameter = filter != null ?
-                new ObjectParameter("Filter", filter) :
-                new ObjectParameter("Filter", typeof(string));
-    
-            var languageIdParameter = languageId.HasValue ?
-                new ObjectParameter("LanguageId", languageId) :
-                new ObjectParameter("LanguageId", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("prcTestSelectAllPageCount", filterParameter, languageIdParameter);
         }
     
         public virtual ObjectResult<prcTestSelectAllSummary_Result> prcTestSelectAllSummary(string userKey, string filter)
@@ -183,28 +109,6 @@ namespace UMTD.Models
                 new ObjectParameter("UomId", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("prcTestUomDelete", testIdParameter, uomIdParameter);
-        }
-    
-        public virtual int prcTestUomInsert(Nullable<int> testId, Nullable<int> uomId)
-        {
-            var testIdParameter = testId.HasValue ?
-                new ObjectParameter("TestId", testId) :
-                new ObjectParameter("TestId", typeof(int));
-    
-            var uomIdParameter = uomId.HasValue ?
-                new ObjectParameter("UomId", uomId) :
-                new ObjectParameter("UomId", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("prcTestUomInsert", testIdParameter, uomIdParameter);
-        }
-    
-        public virtual ObjectResult<prcUomList_Result> prcUomList(Nullable<int> languageId)
-        {
-            var languageIdParameter = languageId.HasValue ?
-                new ObjectParameter("LanguageId", languageId) :
-                new ObjectParameter("LanguageId", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<prcUomList_Result>("prcUomList", languageIdParameter);
         }
     
         public virtual int prcTestConfirm(string userKey, Nullable<int> testId)
@@ -308,6 +212,84 @@ namespace UMTD.Models
                 new ObjectParameter("Privilege", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<bool>>("prcPrivilegeCheck", userKeyParameter, privilegeParameter);
+        }
+    
+        public virtual ObjectResult<prcMaterialList_Result> prcMaterialList(string userKey)
+        {
+            var userKeyParameter = userKey != null ?
+                new ObjectParameter("UserKey", userKey) :
+                new ObjectParameter("UserKey", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<prcMaterialList_Result>("prcMaterialList", userKeyParameter);
+        }
+    
+        public virtual ObjectResult<prcMethodList_Result> prcMethodList(string userKey)
+        {
+            var userKeyParameter = userKey != null ?
+                new ObjectParameter("UserKey", userKey) :
+                new ObjectParameter("UserKey", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<prcMethodList_Result>("prcMethodList", userKeyParameter);
+        }
+    
+        public virtual int prcTestMaterialInsert(string userKey, Nullable<int> testId, Nullable<int> materialId)
+        {
+            var userKeyParameter = userKey != null ?
+                new ObjectParameter("UserKey", userKey) :
+                new ObjectParameter("UserKey", typeof(string));
+    
+            var testIdParameter = testId.HasValue ?
+                new ObjectParameter("TestId", testId) :
+                new ObjectParameter("TestId", typeof(int));
+    
+            var materialIdParameter = materialId.HasValue ?
+                new ObjectParameter("MaterialId", materialId) :
+                new ObjectParameter("MaterialId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("prcTestMaterialInsert", userKeyParameter, testIdParameter, materialIdParameter);
+        }
+    
+        public virtual int prcTestMethodInsert(string userKey, Nullable<int> testId, Nullable<int> methodId)
+        {
+            var userKeyParameter = userKey != null ?
+                new ObjectParameter("UserKey", userKey) :
+                new ObjectParameter("UserKey", typeof(string));
+    
+            var testIdParameter = testId.HasValue ?
+                new ObjectParameter("TestId", testId) :
+                new ObjectParameter("TestId", typeof(int));
+    
+            var methodIdParameter = methodId.HasValue ?
+                new ObjectParameter("MethodId", methodId) :
+                new ObjectParameter("MethodId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("prcTestMethodInsert", userKeyParameter, testIdParameter, methodIdParameter);
+        }
+    
+        public virtual ObjectResult<prcUomList_Result> prcUomList(string userKey)
+        {
+            var userKeyParameter = userKey != null ?
+                new ObjectParameter("UserKey", userKey) :
+                new ObjectParameter("UserKey", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<prcUomList_Result>("prcUomList", userKeyParameter);
+        }
+    
+        public virtual int prcTestUomInsert(string userKey, Nullable<int> testId, Nullable<int> uomId)
+        {
+            var userKeyParameter = userKey != null ?
+                new ObjectParameter("UserKey", userKey) :
+                new ObjectParameter("UserKey", typeof(string));
+    
+            var testIdParameter = testId.HasValue ?
+                new ObjectParameter("TestId", testId) :
+                new ObjectParameter("TestId", typeof(int));
+    
+            var uomIdParameter = uomId.HasValue ?
+                new ObjectParameter("UomId", uomId) :
+                new ObjectParameter("UomId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("prcTestUomInsert", userKeyParameter, testIdParameter, uomIdParameter);
         }
     }
 }

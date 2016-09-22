@@ -11,10 +11,14 @@ namespace UMTD.Controllers
     public class LanguageController : ApiController
     {
         private UMTDEntities dbContext = new UMTDEntities();
-
+        /// <summary>
+        /// Return list of all available Languages
+        /// </summary>
+        /// <param name="userKey">Requestor identifier</param>
+        /// <returns>HttpStatusCode.OK and Material list in case of success, InternalServerError and error description in case of error</returns>
         [HttpGet]
         [ActionName("List")]
-        public HttpResponseMessage List()
+        public HttpResponseMessage List(string userKey)
         {
             try
             {
