@@ -15,6 +15,9 @@
     <Parameter Name="UserKey" Type="nvarchar(max)" Mode="In" />
     <Parameter Name="Privilege" Type="nvarchar(max)" Mode="In" />
   </Function>
+  <Function Name="prcSettingSelect" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Name" Type="nvarchar(max)" Mode="In" />
+  </Function>
   <Function Name="prcTestConfirm" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="UserKey" Type="nvarchar(max)" Mode="In" />
     <Parameter Name="TestId" Type="int" Mode="In" />
@@ -79,6 +82,18 @@
   </Function>
   <Function Name="prcUomList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="UserKey" Type="nvarchar(max)" Mode="In" />
+  </Function>
+  <Function Name="prcUserCheck" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Email" Type="nvarchar(max)" Mode="In" />
+    <Parameter Name="Password" Type="nvarchar(max)" Mode="In" />
+  </Function>
+  <Function Name="prcUserRegister" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Name" Type="nvarchar(max)" Mode="In" />
+    <Parameter Name="Email" Type="nvarchar(max)" Mode="In" />
+    <Parameter Name="Password" Type="nvarchar(max)" Mode="In" />
+  </Function>
+  <Function Name="prcUserSelect" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Email" Type="nvarchar(max)" Mode="In" />
   </Function>
   <EntityContainer Name="UMTDModelStoreContainer" />
 </Schema>

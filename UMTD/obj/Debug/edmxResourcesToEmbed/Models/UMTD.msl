@@ -80,5 +80,22 @@
       </ResultMapping>
     </FunctionImportMapping>
     <FunctionImportMapping FunctionImportName="prcTestUomInsert" FunctionName="UMTDModel.Store.prcTestUomInsert" />
+    <FunctionImportMapping FunctionImportName="prcUserCheck" FunctionName="UMTDModel.Store.prcUserCheck" />
+    <FunctionImportMapping FunctionImportName="prcUserRegister" FunctionName="UMTDModel.Store.prcUserRegister" />
+    <FunctionImportMapping FunctionImportName="prcSettingSelect" FunctionName="UMTDModel.Store.prcSettingSelect" />
+    <FunctionImportMapping FunctionImportName="prcUserSelect" FunctionName="UMTDModel.Store.prcUserSelect">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="UMTDModel.prcUserSelect_Result">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="LanguageId" ColumnName="LanguageId" />
+          <ScalarProperty Name="Confirmed" ColumnName="Confirmed" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+          <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
   </EntityContainerMapping>
 </Mapping>

@@ -13,7 +13,9 @@ namespace UMTD
             bundles.Add(new ScriptBundle("~/bundles/knockout").Include(
                         "~/Scripts/knockout-3.4.0.js"));
             bundles.Add(new ScriptBundle("~/bundles/test").Include(
-                        "~/Scripts/test.js"));            
+                        "~/Scripts/test.js"));
+            bundles.Add(new ScriptBundle("~/bundles/layout").Include(
+                        "~/Scripts/layout.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/helper").Include(
                         "~/Scripts/helper.js"));

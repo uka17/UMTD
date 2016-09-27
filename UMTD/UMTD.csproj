@@ -149,6 +149,7 @@
     <Content Include="Scripts\jquery-2.2.3.min.js" />
     <Content Include="Scripts\jquery-ui.min.js" />
     <Content Include="Scripts\knockout-3.4.0.js" />
+    <Content Include="Scripts\layout.js" />
     <Content Include="Scripts\test.js" />
     <Content Include="Styles\amazium.css" />
     <Content Include="Styles\images\asc.gif" />
@@ -181,12 +182,13 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Classes\uPagination.cs" />
+    <Compile Include="Classes\uController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\UomController.cs" />
     <Compile Include="Controllers\MaterialController.cs" />
     <Compile Include="Controllers\MethodController.cs" />
     <Compile Include="Controllers\TestController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -207,6 +209,9 @@
       <DependentUpon>UMTD.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\prcUomList_Result.cs">
+      <DependentUpon>UMTD.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\prcUserSelect_Result.cs">
       <DependentUpon>UMTD.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\UMTD.Context.cs">

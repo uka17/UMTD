@@ -1,4 +1,7 @@
-﻿.test-uom, .test-material, .test-method, .test-translation, .test-summary {
+﻿body {
+    font-family: 'Roboto', Helvetica, Arial, sans-serif;
+}
+.test-uom, .test-material, .test-method, .test-translation, .test-summary {
     display:inline-block;
     margin-top: 2px;
     margin-bottom: 2px;
@@ -35,11 +38,15 @@
     font-size: 12px;
     color: #CCC;
 }
-
-.ajax-loader {
-
+.spa-link {
+    text-decoration: none;
+    border-bottom: 1px dotted;
+    cursor: pointer;
 }
-
+.form-error {
+    color: #C83C3B;
+    text-align: center;
+}
 .test-content th, .pagination-table td {
     border: 0px;    
     text-align: center;

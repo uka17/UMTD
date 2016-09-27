@@ -1,5 +1,4 @@
-﻿ 
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -8,8 +7,10 @@
     @Scripts.Render("~/bundles/jquery-min")
     @Scripts.Render("~/bundles/jquery-ui-min")
     @Scripts.Render("~/bundles/knockout")
+
     @Scripts.Render("~/bundles/helper")
     @Scripts.Render("~/bundles/datamodel")
+    @Scripts.Render("~/bundles/layout")
 
     @Styles.Render("~/Styles/jquery-ui-css")
     @Styles.Render("~/Styles/jquery-ui-theme-css")
@@ -18,6 +19,46 @@
     @Styles.Render("~/Styles/site")
 </head>
 <body>        
+    @if (Session["user"] == null)
+    {
+        <div id="login-link">
+            <a class="spa-link" id="show-login-dialog">Login</a>
+            <div id="dialog-login" title="Login">
+                <div class="form-error"></div>
+                <form>
+                    <fieldset>
+                        <label for="email">Email</label>
+                        <input type="text" id="email" />
+                    </fieldset>
+                    <fieldset>
+                        <label for="password">Password</label>
+                        <input type="text" id="password" />
+                    </fieldset>
+                    <div width="100%">
+                        <div align="left" style="float: left">
+                            <fieldset>
+                                <span class="checkbox">
+                                    <span>
+                                        <input type="checkbox" id="remember">
+                                        <label for="remember">Remember me</label>
+                                    </span>
+                                </span>
+                            </fieldset>
+                        </div>
+                        <div align="right">
+                            <button class="btn btn--color-positive" id="do-login">Login</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div id="profile-link">
+
+        </div>
+    }
     @RenderBody()
 </body>
 </html>

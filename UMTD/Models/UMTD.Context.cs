@@ -291,5 +291,53 @@ namespace UMTD.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("prcTestUomInsert", userKeyParameter, testIdParameter, uomIdParameter);
         }
+    
+        public virtual ObjectResult<Nullable<int>> prcUserCheck(string email, string password)
+        {
+            var emailParameter = email != null ?
+                new ObjectParameter("Email", email) :
+                new ObjectParameter("Email", typeof(string));
+    
+            var passwordParameter = password != null ?
+                new ObjectParameter("Password", password) :
+                new ObjectParameter("Password", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("prcUserCheck", emailParameter, passwordParameter);
+        }
+    
+        public virtual int prcUserRegister(string name, string email, string password)
+        {
+            var nameParameter = name != null ?
+                new ObjectParameter("Name", name) :
+                new ObjectParameter("Name", typeof(string));
+    
+            var emailParameter = email != null ?
+                new ObjectParameter("Email", email) :
+                new ObjectParameter("Email", typeof(string));
+    
+            var passwordParameter = password != null ?
+                new ObjectParameter("Password", password) :
+                new ObjectParameter("Password", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("prcUserRegister", nameParameter, emailParameter, passwordParameter);
+        }
+    
+        public virtual ObjectResult<string> prcSettingSelect(string name)
+        {
+            var nameParameter = name != null ?
+                new ObjectParameter("Name", name) :
+                new ObjectParameter("Name", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("prcSettingSelect", nameParameter);
+        }
+    
+        public virtual ObjectResult<prcUserSelect_Result> prcUserSelect(string email)
+        {
+            var emailParameter = email != null ?
+                new ObjectParameter("Email", email) :
+                new ObjectParameter("Email", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<prcUserSelect_Result>("prcUserSelect", emailParameter);
+        }
     }
 }
