@@ -18,47 +18,110 @@
     @Styles.Render("~/Styles/amazium")
     @Styles.Render("~/Styles/site")
 </head>
+@{ 
+    UMTD.Models.prcUserSelect_Result user = (UMTD.Models.prcUserSelect_Result)Session["user"];
+}
 <body>        
-    @if (Session["user"] == null)
-    {
-        <div id="login-link">
-            <a class="spa-link" id="show-login-dialog">Login</a>
-            <div id="dialog-login" title="Login">
+    <div id="profile-box">
+        @if (Session["user"] == null)
+        {
+            <div id="login-link">
+                <a class="spa-link" id="show-login-dialog">Login</a>
+                <div id="dialog-login" title="Login">
+                    <div class="form-error"></div>
+                    <form>
+                        <fieldset>
+                            <label for="email">Email</label>
+                            <input type="text" id="email" />
+                        </fieldset>
+                        <fieldset>
+                            <label for="password">Password</label>
+                            <input type="text" id="password" />
+                        </fieldset>
+                        <div width="100%">
+                            <div align="left" style="float: left">
+                                <fieldset>
+                                    <span class="checkbox">
+                                        <span>
+                                            <input type="checkbox" id="remember">
+                                            <label for="remember">Remember me</label>
+                                        </span>
+                                    </span>
+                                </fieldset>
+                            </div>
+                            <div align="right">
+                                <button class="btn btn--color-positive" id="do-login">Login</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div id="profile" title="Profile">
                 <div class="form-error"></div>
                 <form>
+                    <input type="hidden" value="@user.Email" id="user-email" />
+                    <fieldset>
+                        <label for="name">Name</label>
+                        <input type="text" data-bind="value: profile().name" id="name" />
+                    </fieldset>
                     <fieldset>
                         <label for="email">Email</label>
-                        <input type="text" id="email" />
+                        <input type="text" data-bind="value: profile().email" id="email" />
                     </fieldset>
                     <fieldset>
-                        <label for="password">Password</label>
-                        <input type="text" id="password" />
+                        <label for="password">New password</label>
+                        <input type="text" data-bind="value: profile().new_password" id="password" />
                     </fieldset>
-                    <div width="100%">
-                        <div align="left" style="float: left">
-                            <fieldset>
-                                <span class="checkbox">
-                                    <span>
-                                        <input type="checkbox" id="remember">
-                                        <label for="remember">Remember me</label>
-                                    </span>
-                                </span>
-                            </fieldset>
-                        </div>
-                        <div align="right">
-                            <button class="btn btn--color-positive" id="do-login">Login</button>
-                        </div>
+                    <fieldset data-bind="visible: profile().new_password().length > 0">
+                        <label for="old-password">Old password</label>
+                        <input type="text" id="old-password" />
+                    </fieldset>
+                    <fieldset>
+                        <label for="api">API key</label>
+                        <span data-bind="text: profile().api_key"></span>
+                        <img data-bind="click: profile().refreshApiKey" src="/Images/refresh.png" id="refresh-api-key" alt="Refresh key" title="Refresh key"/>
+                        <span class="checkbox">
+                            <span>
+                                <input type="checkbox" data-bind="checked: profile().link_to_domain" id="link-to-domain">
+                                <label for="link-to-domain">Link to domain</label>
+                            </span>
+                        </span>
+                        <label data-bind="visible: profile().link_to_domain" for="api-key-domain">Domain</label>
+                        <input data-bind="visible: profile().link_to_domain, value: profile().api_key_domain" type="text" id="api-key-domain" />
+                    </fieldset>
+                    <div align="right">
+                        <button class="btn btn--color-positive" id="do-login">Save</button>
                     </div>
                 </form>
             </div>
-        </div>
-    }
-    else
-    {
-        <div id="profile-link">
-
-        </div>
-    }
+            <div id="reference-box">
+                <button class="btn btn--size-s" id="reference-link">
+                    References
+                    <svg aria-hidden="true" class="icon icon--onRight" width="64" height="64" viewBox="0 0 64 64">
+                        <path d="M0 32 L15 48 L30 32"></path>
+                    </svg>            
+                </button>
+                <ul id="reference-menu">
+                    <li><a href="#">Units of measure</a></li>
+                    <li><a href="#">Materials</a></li>
+                    <li><a href="#">Methods</a></li>
+                </ul>
+            </div>
+            <button class="btn btn--hoverColor-info btn--size-s" id="profile-link">
+                <svg aria-hidden="true" class="icon icon--onLeft" width="64" height="64" viewBox="0 0 64 64">
+                    <path d="M51,49.957c0-3.038-1.717-5.816-4.434-7.174l-9.552-4.776C35.78,37.39,35,36.128,35,34.748V31
+	        c0.268-0.305,0.576-0.698,0.904-1.162c1.302-1.838,2.286-3.861,2.969-5.984C40.098,23.477,41,22.345,41,21v-4
+	        c0-0.88-0.391-1.667-1-2.217V9c0,0,1.187-9-11-9C16.812,0,18,9,18,9v5.783c-0.609,0.55-1,1.337-1,2.217v4
+	        c0,1.054,0.554,1.981,1.383,2.517C19.382,27.869,22,31,22,31v3.655c0,1.333-0.728,2.56-1.899,3.198L11.18,42.72
+	        C8.603,44.125,7,46.826,7,49.761V52c0,0,0,0.657,0,1c0,2.761,9.85,5,22,5s22-2.239,22-5c0-0.343,0-1,0-1V49.957z" />
+                </svg>
+                @Html.Raw("Tom Johnson")
+            </button>
+        }
+    </div>
     @RenderBody()
 </body>
 </html>

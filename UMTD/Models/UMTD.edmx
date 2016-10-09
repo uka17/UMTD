@@ -7,7 +7,15 @@
     <Schema Namespace="UMTDModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <Function Name="prcKeyCheck" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="UserKey" Type="nvarchar(max)" Mode="In" />
-          <Parameter Name="IP" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="Domain" Type="nvarchar(max)" Mode="In" />
+        </Function>
+        <Function Name="prcKeyCheckOwner" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserKey" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="Email" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="Domain" Type="nvarchar(max)" Mode="In" />
+        </Function>
+        <Function Name="prcKeyRefresh" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserKey" Type="nvarchar(max)" Mode="In" />
         </Function>
         <Function Name="prcLanguageList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="prcMaterialList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -154,10 +162,6 @@
             <Parameter Name="Translation" Mode="In" Type="String" />
             <Parameter Name="LanguageId" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="prcKeyCheck" ReturnType="Collection(Boolean)">
-            <Parameter Name="UserKey" Mode="In" Type="String" />
-            <Parameter Name="IP" Mode="In" Type="String" />
-          </FunctionImport>
           <FunctionImport Name="prcPrivilegeCheck" ReturnType="Collection(Boolean)">
             <Parameter Name="UserKey" Mode="In" Type="String" />
             <Parameter Name="Privilege" Mode="In" Type="String" />
@@ -199,7 +203,19 @@
           <Parameter Name="Name" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="prcUserSelect" ReturnType="Collection(UMTDModel.prcUserSelect_Result)">
+          <Parameter Name="Email" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="prcKeyRefresh" ReturnType="Collection(String)">
+          <Parameter Name="UserKey" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="prcKeyCheck" ReturnType="Collection(Boolean)">
+            <Parameter Name="UserKey" Mode="In" Type="String" />
+            <Parameter Name="Domain" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="prcKeyCheckOwner" ReturnType="Collection(Boolean)">
+            <Parameter Name="UserKey" Mode="In" Type="String" />
             <Parameter Name="Email" Mode="In" Type="String" />
+            <Parameter Name="Domain" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="prcLanguageList_Result">
@@ -249,6 +265,9 @@
           <Property Type="String" Name="Email" Nullable="false" />
           <Property Type="Int32" Name="LanguageId" Nullable="true" />
           <Property Type="Boolean" Name="Confirmed" Nullable="false" />
+          <Property Type="String" Name="ApiKey" Nullable="true" />
+          <Property Type="Boolean" Name="IsLinked" Nullable="true" />
+          <Property Type="String" Name="Domain" Nullable="true" />
           <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="23" />
           <Property Type="DateTime" Name="ModifiedOn" Nullable="false" Precision="23" />
           <Property Type="String" Name="ModifiedBy" Nullable="true" />
@@ -308,7 +327,6 @@
           <FunctionImportMapping FunctionImportName="prcTestTranslationDelete" FunctionName="UMTDModel.Store.prcTestTranslationDelete" />
           <FunctionImportMapping FunctionImportName="prcTestTranslationInsert" FunctionName="UMTDModel.Store.prcTestTranslationInsert" />
           <FunctionImportMapping FunctionImportName="prcTestTranslationUpdate" FunctionName="UMTDModel.Store.prcTestTranslationUpdate" />
-          <FunctionImportMapping FunctionImportName="prcKeyCheck" FunctionName="UMTDModel.Store.prcKeyCheck" />
           <FunctionImportMapping FunctionImportName="prcPrivilegeCheck" FunctionName="UMTDModel.Store.prcPrivilegeCheck" />
           <FunctionImportMapping FunctionImportName="prcMaterialList" FunctionName="UMTDModel.Store.prcMaterialList">
             <ResultMapping>
@@ -349,12 +367,18 @@
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="LanguageId" ColumnName="LanguageId" />
                 <ScalarProperty Name="Confirmed" ColumnName="Confirmed" />
+                <ScalarProperty Name="ApiKey" ColumnName="ApiKey" />
+                <ScalarProperty Name="IsLinked" ColumnName="IsLinked" />
+                <ScalarProperty Name="Domain" ColumnName="Domain" />
                 <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
                 <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
                 <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="prcKeyRefresh" FunctionName="UMTDModel.Store.prcKeyRefresh" />
+          <FunctionImportMapping FunctionImportName="prcKeyCheck" FunctionName="UMTDModel.Store.prcKeyCheck" />
+          <FunctionImportMapping FunctionImportName="prcKeyCheckOwner" FunctionName="UMTDModel.Store.prcKeyCheckOwner" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -49,10 +49,6 @@
       <Parameter Name="Translation" Mode="In" Type="String" />
       <Parameter Name="LanguageId" Mode="In" Type="Int32" />
     </FunctionImport>
-    <FunctionImport Name="prcKeyCheck" ReturnType="Collection(Boolean)">
-      <Parameter Name="UserKey" Mode="In" Type="String" />
-      <Parameter Name="IP" Mode="In" Type="String" />
-    </FunctionImport>
     <FunctionImport Name="prcPrivilegeCheck" ReturnType="Collection(Boolean)">
       <Parameter Name="UserKey" Mode="In" Type="String" />
       <Parameter Name="Privilege" Mode="In" Type="String" />
@@ -95,6 +91,18 @@
     </FunctionImport>
     <FunctionImport Name="prcUserSelect" ReturnType="Collection(UMTDModel.prcUserSelect_Result)">
       <Parameter Name="Email" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="prcKeyRefresh" ReturnType="Collection(String)">
+      <Parameter Name="UserKey" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="prcKeyCheck" ReturnType="Collection(Boolean)">
+      <Parameter Name="UserKey" Mode="In" Type="String" />
+      <Parameter Name="Domain" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="prcKeyCheckOwner" ReturnType="Collection(Boolean)">
+      <Parameter Name="UserKey" Mode="In" Type="String" />
+      <Parameter Name="Email" Mode="In" Type="String" />
+      <Parameter Name="Domain" Mode="In" Type="String" />
     </FunctionImport>
   </EntityContainer>
   <ComplexType Name="prcLanguageList_Result">
@@ -144,6 +152,9 @@
     <Property Type="String" Name="Email" Nullable="false" />
     <Property Type="Int32" Name="LanguageId" Nullable="true" />
     <Property Type="Boolean" Name="Confirmed" Nullable="false" />
+    <Property Type="String" Name="ApiKey" Nullable="true" />
+    <Property Type="Boolean" Name="IsLinked" Nullable="true" />
+    <Property Type="String" Name="Domain" Nullable="true" />
     <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="23" />
     <Property Type="DateTime" Name="ModifiedOn" Nullable="false" Precision="23" />
     <Property Type="String" Name="ModifiedBy" Nullable="true" />

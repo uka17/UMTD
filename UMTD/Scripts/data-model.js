@@ -159,3 +159,34 @@ var test = function (t) {
         $("#dialog-confirm-test").dialog("open");
     }
 }
+var profile = function (email) {
+    var self = this;
+    self.old_email = ko.observable('');
+    self.email = ko.observable('');
+    self.name = ko.observable('');
+    self.api_key = ko.observable('');
+    self.link_to_domain = ko.observable(false);
+    self.api_key_domain = ko.observable('');
+
+    self.new_password = ko.observable('');
+
+    var userProfileLoadDone = function (data) {
+        self.old_email(data.Email);
+        self.email(data.Email);
+        self.name(data.Name);
+        self.api_key(data.ApiKey);
+        self.link_to_domain(data.IsLinked);
+        self.api_key_domain(data.Domain);
+
+        self.new_password('');
+    };
+
+    ajaxLoad("/api/User/Profile", { email: email }, userProfileLoadDone);
+
+    self.refreshApiKey = function () {
+        var refreshApiKeyDone = function (data) {
+            self.api_key(data);
+        };
+        ajaxLoad("/api/User/RefreshApiKey", { apiKey: self.api_key() }, refreshApiKeyDone);
+    }
+}

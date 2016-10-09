@@ -188,19 +188,6 @@ namespace UMTD.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("prcTestTranslationUpdate", userKeyParameter, translationIdParameter, translationParameter, languageIdParameter);
         }
     
-        public virtual ObjectResult<Nullable<bool>> prcKeyCheck(string userKey, string iP)
-        {
-            var userKeyParameter = userKey != null ?
-                new ObjectParameter("UserKey", userKey) :
-                new ObjectParameter("UserKey", typeof(string));
-    
-            var iPParameter = iP != null ?
-                new ObjectParameter("IP", iP) :
-                new ObjectParameter("IP", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<bool>>("prcKeyCheck", userKeyParameter, iPParameter);
-        }
-    
         public virtual ObjectResult<Nullable<bool>> prcPrivilegeCheck(string userKey, string privilege)
         {
             var userKeyParameter = userKey != null ?
@@ -338,6 +325,45 @@ namespace UMTD.Models
                 new ObjectParameter("Email", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<prcUserSelect_Result>("prcUserSelect", emailParameter);
+        }
+    
+        public virtual ObjectResult<string> prcKeyRefresh(string userKey)
+        {
+            var userKeyParameter = userKey != null ?
+                new ObjectParameter("UserKey", userKey) :
+                new ObjectParameter("UserKey", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("prcKeyRefresh", userKeyParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<bool>> prcKeyCheck(string userKey, string domain)
+        {
+            var userKeyParameter = userKey != null ?
+                new ObjectParameter("UserKey", userKey) :
+                new ObjectParameter("UserKey", typeof(string));
+    
+            var domainParameter = domain != null ?
+                new ObjectParameter("Domain", domain) :
+                new ObjectParameter("Domain", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<bool>>("prcKeyCheck", userKeyParameter, domainParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<bool>> prcKeyCheckOwner(string userKey, string email, string domain)
+        {
+            var userKeyParameter = userKey != null ?
+                new ObjectParameter("UserKey", userKey) :
+                new ObjectParameter("UserKey", typeof(string));
+    
+            var emailParameter = email != null ?
+                new ObjectParameter("Email", email) :
+                new ObjectParameter("Email", typeof(string));
+    
+            var domainParameter = domain != null ?
+                new ObjectParameter("Domain", domain) :
+                new ObjectParameter("Domain", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<bool>>("prcKeyCheckOwner", userKeyParameter, emailParameter, domainParameter);
         }
     }
 }

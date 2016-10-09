@@ -41,6 +41,7 @@ namespace UMTD
                 throw exc;
             }
         }
+        /*
         /// <summary>
         /// Authorize user and creates cookie for authorization in case if remember option is true
         /// </summary>
@@ -75,5 +76,6 @@ namespace UMTD
                 throw exc;
             }
         }
+        */
     }
 }

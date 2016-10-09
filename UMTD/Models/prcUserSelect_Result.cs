@@ -18,6 +18,9 @@ namespace UMTD.Models
         public string Email { get; set; }
         public Nullable<int> LanguageId { get; set; }
         public bool Confirmed { get; set; }
+        public string ApiKey { get; set; }
+        public Nullable<bool> IsLinked { get; set; }
+        public string Domain { get; set; }
         public System.DateTime CreatedOn { get; set; }
         public System.DateTime ModifiedOn { get; set; }
         public string ModifiedBy { get; set; }

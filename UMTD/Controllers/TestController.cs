@@ -25,7 +25,7 @@ namespace UMTD.Controllers
             try
            {
                 //TODO: error translations and maybe separate function
-                if (!dbContext.prcKeyCheck(userKey, Request.RequestUri.AbsolutePath).FirstOrDefault().Value)
+                if (!dbContext.prcKeyCheck(userKey, Request.RequestUri.Host).FirstOrDefault().Value)
                     throw new Exception("UserKey is incorrect or used with wrong IP address");
                 if (!dbContext.prcPrivilegeCheck(userKey, "test.get").FirstOrDefault().Value)
                     throw new Exception("Forbidden");
@@ -51,7 +51,8 @@ namespace UMTD.Controllers
         {
             try
             {
-                if (!dbContext.prcKeyCheck(userKey, Request.RequestUri.AbsolutePath).FirstOrDefault().Value)
+                //TODO: error translations and maybe separate function
+                if (!dbContext.prcKeyCheck(userKey, Request.RequestUri.Host).FirstOrDefault().Value)
                     throw new Exception("userKey is incorrect or used with wrong IP address");
 
                 List<prcTestSelectAllSummary_Result> TestList = (from s in dbContext.prcTestSelectAllSummary(userKey, filter)
@@ -75,7 +76,8 @@ namespace UMTD.Controllers
         {
             try
             {
-                if (!dbContext.prcKeyCheck(userKey, Request.RequestUri.AbsolutePath).FirstOrDefault().Value)
+                //TODO: error translations and maybe separate function
+                if (!dbContext.prcKeyCheck(userKey, Request.RequestUri.Host).FirstOrDefault().Value)
                     throw new Exception("userKey is incorrect or used with wrong IP address");
 
                 dbContext.prcTestDelete(userKey, testId);
@@ -98,7 +100,8 @@ namespace UMTD.Controllers
         {
             try
             {
-                if (!dbContext.prcKeyCheck(userKey, Request.RequestUri.AbsolutePath).FirstOrDefault().Value)
+                //TODO: error translations and maybe separate function
+                if (!dbContext.prcKeyCheck(userKey, Request.RequestUri.Host).FirstOrDefault().Value)
                     throw new Exception("userKey is incorrect or used with wrong IP address");
 
                 dbContext.prcTestConfirm(userKey, testId);

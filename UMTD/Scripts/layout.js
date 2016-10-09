@@ -6,11 +6,30 @@
         position: { my: "center center", at: "center center" }
     });
 
+    $("#profile").dialog({
+        modal: true,
+        autoOpen: false,
+        width: 420,
+        position: { my: "center top", at: "center top" }
+    });
+
     $('#show-login-dialog').click(function () {
         $("#dialog-login").dialog("open");
         //$(".ui-dialog-titlebar").hide();
         return false;
     });
+    $('#reference-link').click(function (event) {
+        $('#reference-menu').toggle();
+        event.stopPropagation();
+    });
+    $('#profile-link').click(function (event) {
+        $('#profile').dialog('open');
+    });
+
+    $(window).click(function () {
+        $('#reference-menu').hide();
+    });
+
     $('#do-login').click(function () {
         $.ajax({
             url: "/api/User/Login",
@@ -29,7 +48,7 @@
             dataType: "json"
         })
         .done(function (data) {
-            alert(data.Name);
+            location.reload();
         })
         .error(function (jqXHR, status, errorThrown) {
             if (jqXHR.status != 403) {
@@ -39,15 +58,6 @@
         return false;
     });
 });
-
-
-
-
-function login() {
-    //ajax request
-    //login-link - hide
-    //profile-link - show and fill
-}
 
 
 

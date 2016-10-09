@@ -131,6 +131,7 @@
     <Content Include="Images\cancel.png" />
     <Content Include="Images\en.png" />
     <Content Include="Images\item-delete.png" />
+    <Content Include="Images\refresh.png" />
     <Content Include="Images\ru.png" />
     <Content Include="Images\save.png" />
     <Content Include="index.html" />

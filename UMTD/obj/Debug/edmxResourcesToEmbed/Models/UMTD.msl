@@ -50,7 +50,6 @@
     <FunctionImportMapping FunctionImportName="prcTestTranslationDelete" FunctionName="UMTDModel.Store.prcTestTranslationDelete" />
     <FunctionImportMapping FunctionImportName="prcTestTranslationInsert" FunctionName="UMTDModel.Store.prcTestTranslationInsert" />
     <FunctionImportMapping FunctionImportName="prcTestTranslationUpdate" FunctionName="UMTDModel.Store.prcTestTranslationUpdate" />
-    <FunctionImportMapping FunctionImportName="prcKeyCheck" FunctionName="UMTDModel.Store.prcKeyCheck" />
     <FunctionImportMapping FunctionImportName="prcPrivilegeCheck" FunctionName="UMTDModel.Store.prcPrivilegeCheck" />
     <FunctionImportMapping FunctionImportName="prcMaterialList" FunctionName="UMTDModel.Store.prcMaterialList">
       <ResultMapping>
@@ -91,11 +90,17 @@
           <ScalarProperty Name="Email" ColumnName="Email" />
           <ScalarProperty Name="LanguageId" ColumnName="LanguageId" />
           <ScalarProperty Name="Confirmed" ColumnName="Confirmed" />
+          <ScalarProperty Name="ApiKey" ColumnName="ApiKey" />
+          <ScalarProperty Name="IsLinked" ColumnName="IsLinked" />
+          <ScalarProperty Name="Domain" ColumnName="Domain" />
           <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
           <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
           <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="prcKeyRefresh" FunctionName="UMTDModel.Store.prcKeyRefresh" />
+    <FunctionImportMapping FunctionImportName="prcKeyCheck" FunctionName="UMTDModel.Store.prcKeyCheck" />
+    <FunctionImportMapping FunctionImportName="prcKeyCheckOwner" FunctionName="UMTDModel.Store.prcKeyCheckOwner" />
   </EntityContainerMapping>
 </Mapping>

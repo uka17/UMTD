@@ -41,9 +41,17 @@ var methodList = ko.observableArray();
 var languageList = ko.observableArray();
 var summaryTestList = ko.observableArray();
 var activeTest = ko.observable(new test({ Id: 0, Translation: "[]", Uom: "[]", Method: "[]", Material: "[]" }));
+var profile = ko.observable(new profile($('#user-email').val()));
 
 //Model itself
-var ViewModel = function (uomList, materialList, methodList, languageList, summaryTestList, activeTest) {
+var ViewModel = function (
+        uomList,
+        materialList,
+        methodList,
+        languageList,
+        summaryTestList,
+        activeTest,
+        profile) {
     var self = this;
     self.summaryTestList = summaryTestList;
     self.activeTest = activeTest;
@@ -51,6 +59,7 @@ var ViewModel = function (uomList, materialList, methodList, languageList, summa
     self.materialList = materialList;
     self.methodList = methodList;
     self.languageList = languageList;
+    self.profile = profile;
 
     self.filter = function (data, event) {
         if (event.keyCode == 13) {
@@ -72,7 +81,7 @@ var ViewModel = function (uomList, materialList, methodList, languageList, summa
     };
 };
 
-ko.applyBindings(new ViewModel(uomList, materialList, methodList, languageList, summaryTestList, activeTest));
+ko.applyBindings(new ViewModel(uomList, materialList, methodList, languageList, summaryTestList, activeTest, profile));
 
 //Test list
 loadTestList();
