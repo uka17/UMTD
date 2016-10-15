@@ -108,6 +108,15 @@
         <Function Name="prcUserSelect" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Email" Type="nvarchar(max)" Mode="In" />
         </Function>
+        <Function Name="prcUserUpdate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Id" Type="int" Mode="In" />
+          <Parameter Name="Name" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="Email" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="LanguageId" Type="int" Mode="In" />
+          <Parameter Name="IsLinked" Type="bit" Mode="In" />
+          <Parameter Name="Domain" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="ModifiedBy" Type="nvarchar(max)" Mode="In" />
+        </Function>
         <EntityContainer Name="UMTDModelStoreContainer" />
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -190,10 +199,6 @@
             <Parameter Name="TestId" Mode="In" Type="Int32" />
             <Parameter Name="UomId" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="prcUserCheck" ReturnType="Collection(Int32)">
-            <Parameter Name="Email" Mode="In" Type="String" />
-            <Parameter Name="Password" Mode="In" Type="String" />
-          </FunctionImport>
           <FunctionImport Name="prcUserRegister">
             <Parameter Name="Name" Mode="In" Type="String" />
             <Parameter Name="Email" Mode="In" Type="String" />
@@ -216,6 +221,19 @@
             <Parameter Name="UserKey" Mode="In" Type="String" />
             <Parameter Name="Email" Mode="In" Type="String" />
             <Parameter Name="Domain" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="prcUserUpdate">
+            <Parameter Name="Id" Mode="In" Type="Int32" />
+            <Parameter Name="Name" Mode="In" Type="String" />
+            <Parameter Name="Email" Mode="In" Type="String" />
+            <Parameter Name="LanguageId" Mode="In" Type="Int32" />
+            <Parameter Name="IsLinked" Mode="In" Type="Boolean" />
+            <Parameter Name="Domain" Mode="In" Type="String" />
+            <Parameter Name="ModifiedBy" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="prcUserCheck" ReturnType="Collection(Boolean)">
+            <Parameter Name="Email" Mode="In" Type="String" />
+            <Parameter Name="Password" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="prcLanguageList_Result">
@@ -356,7 +374,6 @@
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="prcTestUomInsert" FunctionName="UMTDModel.Store.prcTestUomInsert" />
-          <FunctionImportMapping FunctionImportName="prcUserCheck" FunctionName="UMTDModel.Store.prcUserCheck" />
           <FunctionImportMapping FunctionImportName="prcUserRegister" FunctionName="UMTDModel.Store.prcUserRegister" />
           <FunctionImportMapping FunctionImportName="prcSettingSelect" FunctionName="UMTDModel.Store.prcSettingSelect" />
           <FunctionImportMapping FunctionImportName="prcUserSelect" FunctionName="UMTDModel.Store.prcUserSelect">
@@ -379,6 +396,8 @@
           <FunctionImportMapping FunctionImportName="prcKeyRefresh" FunctionName="UMTDModel.Store.prcKeyRefresh" />
           <FunctionImportMapping FunctionImportName="prcKeyCheck" FunctionName="UMTDModel.Store.prcKeyCheck" />
           <FunctionImportMapping FunctionImportName="prcKeyCheckOwner" FunctionName="UMTDModel.Store.prcKeyCheckOwner" />
+          <FunctionImportMapping FunctionImportName="prcUserUpdate" FunctionName="UMTDModel.Store.prcUserUpdate" />
+          <FunctionImportMapping FunctionImportName="prcUserCheck" FunctionName="UMTDModel.Store.prcUserCheck" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

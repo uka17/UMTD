@@ -29,12 +29,9 @@ namespace UMTD.Controllers
         {
             try
             {
-                int NumberOfUsers = (from s in dbContext.prcUserCheck(email, password)
-                                     select s.Value).FirstOrDefault();
-
                 prcUserSelect_Result SelectedUser = null;
 
-                if (NumberOfUsers == 0)
+                if (!Verify(email, password))
                 {
                     //TODO: resolve translations
                     return Request.CreateResponse<string>(HttpStatusCode.Forbidden, "Incorrect email or password");
@@ -55,6 +52,31 @@ namespace UMTD.Controllers
 
         }
         /// <summary>
+        /// Remove cookie from response
+        /// </summary>
+        /// <returns>HttpStatusCode.OK in case if logout sucesfull, 
+        /// HttpStatusCode.InternalServerError and error description in case of error</returns>
+        [HttpGet]
+        [ActionName("Logout")]
+        public HttpResponseMessage Logout()
+        {
+            try
+            {
+                var cookie = new CookieHeaderValue("UMTD", "Logout");
+                cookie.Expires = DateTimeOffset.Now.AddDays(-1);
+                cookie.Domain = Request.RequestUri.Host;
+                cookie.Path = "/";                
+                HttpResponseMessage Response = Request.CreateResponse(HttpStatusCode.OK);
+                Response.Headers.AddCookies(new CookieHeaderValue[] { cookie });
+                return Response;
+            }
+            catch (Exception e)
+            {
+                return Request.CreateResponse<string>(HttpStatusCode.InternalServerError, e.Message);
+            }
+
+        }
+        /// <summary>
         /// Return user profiel by email
         /// </summary>
         /// <param name="email">User email which will be used as ID</param>
@@ -65,6 +87,10 @@ namespace UMTD.Controllers
         {
             try
             {
+                if (GetCurrentUserID() != email)
+                    //TODO Translation
+                    throw new Exception("Something wrong with user profile");
+
                 prcUserSelect_Result SelectedUser = (from s in dbContext.prcUserSelect(email)
                                                      select s).FirstOrDefault();
 
@@ -77,6 +103,37 @@ namespace UMTD.Controllers
                 {                    
                     return Request.CreateResponse<prcUserSelect_Result>(HttpStatusCode.OK, SelectedUser); 
                 }
+            }
+            catch (Exception e)
+            {
+                return Request.CreateResponse<string>(HttpStatusCode.InternalServerError, e.Message);
+            }
+
+        }
+        [HttpGet]
+        [ActionName("ProfileUpdate")]
+        public HttpResponseMessage ProfileUpdate(
+                int id,
+                string name,
+	            string email,
+	            int languageId,
+                bool isLinked,
+	            string domain,
+                string newPassword,
+                string oldPassword
+            )
+        {
+            try
+            {
+                if (GetCurrentUserID() != email)
+                    //TODO Translation
+                    throw new Exception("Something wrong with user profile update");
+
+                prcUserSelect_Result SelectedUser = (from s in dbContext.prcUserSelect(email)
+                                                     select s).FirstOrDefault();
+                return Request.CreateResponse<string>(HttpStatusCode.OK, "Profile was updated");
+
+
             }
             catch (Exception e)
             {
@@ -166,19 +223,58 @@ namespace UMTD.Controllers
             try
             {
                 bool Result = false;
-                CookieHeaderValue cookie = Request.Headers.GetCookies("UMTD").FirstOrDefault();
 
-                if (cookie["UMTD"] != null)
+                string UserId = GetCurrentUserID();
+
+                if (UserId != null)
                 {
-                    FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(cookie["UMTD"].Value);
 
-                    if (ticket.Name != null)
-                    {
-                        Result = (from s in dbContext.prcKeyCheckOwner(userKey, ticket.Name, Request.RequestUri.Host)
-                                      select s.Value).FirstOrDefault();
-                    }
+                    Result = (from s in dbContext.prcKeyCheckOwner(userKey, UserId, Request.RequestUri.Host)
+                                    select s.Value).FirstOrDefault();
                 }
                     
+                return Result;
+            }
+            catch (Exception exc)
+            {
+                //TODO Logging
+                //uLog.PutException(exc, "uController.OnActionExecuting");
+                throw exc;
+            }
+        }
+        /// <summary>
+        /// Obtain email of signed in user
+        /// </summary>
+        /// <returns>User id (email)</returns>
+        private string GetCurrentUserID()
+        {
+            string Result = null;
+
+            CookieHeaderValue cookie = Request.Headers.GetCookies("UMTD").FirstOrDefault();
+
+            if (cookie["UMTD"] != null)
+            {
+                FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(cookie["UMTD"].Value);
+
+                Result = ticket.Name;
+            }
+
+            return Result;
+        }
+        /// <summary>
+        /// Verify if email-password pair is correct
+        /// </summary>
+        /// <param name="email">Email value</param>
+        /// <param name="password">Password values</param>
+        /// <returns>True in case if pair is correct and false in case if incorrect</returns>
+        private bool Verify(string email, string password)
+        {
+            //TODO delay for query due to avoid brootforce
+            try
+            {
+                bool Result = (from s in dbContext.prcUserCheck(email, password)
+                            select s.Value).FirstOrDefault();
+
                 return Result;
             }
             catch (Exception exc)

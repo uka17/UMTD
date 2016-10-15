@@ -128,7 +128,7 @@ namespace UMTD.Controllers
         {
             try
             {
-                if (!dbContext.prcKeyCheck(userKey, Request.RequestUri.AbsolutePath).FirstOrDefault().Value)
+                if (!dbContext.prcKeyCheck(userKey, Request.RequestUri.Host).FirstOrDefault().Value)
                     throw new Exception("userKey is incorrect or used with wrong IP address");
 
                 int Result = (from s in dbContext.prcTestTranslationInsert(userKey, testId, languageId, translation)
@@ -154,7 +154,7 @@ namespace UMTD.Controllers
         {
             try
             {
-                if (!dbContext.prcKeyCheck(userKey, Request.RequestUri.AbsolutePath).FirstOrDefault().Value)
+                if (!dbContext.prcKeyCheck(userKey, Request.RequestUri.Host).FirstOrDefault().Value)
                     throw new Exception("userKey is incorrect or used with wrong IP address");
 
                 dbContext.prcTestTranslationUpdate(userKey, translationId, translation, languageId);
@@ -177,7 +177,7 @@ namespace UMTD.Controllers
         {
             try
             {
-                if (!dbContext.prcKeyCheck(userKey, Request.RequestUri.AbsolutePath).FirstOrDefault().Value)
+                if (!dbContext.prcKeyCheck(userKey, Request.RequestUri.Host).FirstOrDefault().Value)
                     throw new Exception("userKey is incorrect or used with wrong IP address");
 
                 dbContext.prcTestTranslationDelete(translationId);

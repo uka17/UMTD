@@ -41,6 +41,12 @@ var methodList = ko.observableArray();
 var languageList = ko.observableArray();
 var summaryTestList = ko.observableArray();
 var activeTest = ko.observable(new test({ Id: 0, Translation: "[]", Uom: "[]", Method: "[]", Material: "[]" }));
+
+loadReference("material");
+loadReference("method");
+loadReference("uom");
+loadReference("language");
+
 var profile = ko.observable(new profile($('#user-email').val()));
 
 //Model itself
@@ -85,11 +91,6 @@ ko.applyBindings(new ViewModel(uomList, materialList, methodList, languageList, 
 
 //Test list
 loadTestList();
-
-loadReference("material");
-loadReference("method");
-loadReference("uom");
-loadReference("language");
 
 $("#dialog-message").dialog({
     modal: true,

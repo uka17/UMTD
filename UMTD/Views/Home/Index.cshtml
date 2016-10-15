@@ -2,10 +2,12 @@
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    UMTD.Models.prcUserSelect_Result user = (UMTD.Models.prcUserSelect_Result)Session["user"];
+    if (Session["user"] != null)
+    {
+        UMTD.Models.prcUserSelect_Result user = (UMTD.Models.prcUserSelect_Result)Session["user"];
+    }
 }
 <br />
-<input type="hidden" value="@user.ApiKey" id="user-key"/>
 <div class="row--width-fluid row--align-left">
     <div class="grid-2">
         <input type="text" id="filter" data-bind="event: { keypress: filter }">
@@ -110,7 +112,7 @@
     <form>
         <fieldset>
             <label for="language">Language</label>
-            <select siz="10" id="language" data-bind='options: languageList, optionsText: "name", optionsValue: "id"'></select>
+            <select id="language" data-bind='options: languageList, optionsText: "name", optionsValue: "id"'></select>
         </fieldset>
         <fieldset>
             <label for="text">Text</label>

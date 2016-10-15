@@ -63,21 +63,26 @@
                 <div class="form-error"></div>
                 <form>
                     <input type="hidden" value="@user.Email" id="user-email" />
+                    <input type="hidden" value="@user.ApiKey" id="user-key" />
                     <fieldset>
-                        <label for="name">Name</label>
-                        <input type="text" data-bind="value: profile().name" id="name" />
+                        <label for="profile-name">Name</label>
+                        <input type="text" data-bind="value: profile().name" id="profile-name" />
                     </fieldset>
                     <fieldset>
-                        <label for="email">Email</label>
-                        <input type="text" data-bind="value: profile().email" id="email" />
+                        <label for="profile-email">Email</label>
+                        <input type="text" data-bind="value: profile().email" id="profile-email" />
                     </fieldset>
                     <fieldset>
-                        <label for="password">New password</label>
-                        <input type="text" data-bind="value: profile().new_password" id="password" />
+                        <label for="profile-language">Language</label>
+                        <select id="profile-language" data-bind='options: languageList, optionsText: "name", optionsValue: "id", value: profile().language_id'></select>
+                    </fieldset>
+                    <fieldset>
+                        <label for="profile-password">New password</label>
+                        <input type="text" data-bind="value: profile().new_password" id="profile-password" />
                     </fieldset>
                     <fieldset data-bind="visible: profile().new_password().length > 0">
                         <label for="old-password">Old password</label>
-                        <input type="text" id="old-password" />
+                        <input type="text" id="profile-old-password" />
                     </fieldset>
                     <fieldset>
                         <label for="api">API key</label>
@@ -85,15 +90,15 @@
                         <img data-bind="click: profile().refreshApiKey" src="/Images/refresh.png" id="refresh-api-key" alt="Refresh key" title="Refresh key"/>
                         <span class="checkbox">
                             <span>
-                                <input type="checkbox" data-bind="checked: profile().link_to_domain" id="link-to-domain">
-                                <label for="link-to-domain">Link to domain</label>
+                                <input type="checkbox" data-bind="checked: profile().link_to_domain" id="profile-link-to-domain">
+                                <label for="profile-link-to-domain">Link to domain</label>
                             </span>
                         </span>
-                        <label data-bind="visible: profile().link_to_domain" for="api-key-domain">Domain</label>
-                        <input data-bind="visible: profile().link_to_domain, value: profile().api_key_domain" type="text" id="api-key-domain" />
+                        <label data-bind="visible: profile().link_to_domain" for="profile-api-key-domain">Domain</label>
+                        <input data-bind="visible: profile().link_to_domain, value: profile().api_key_domain" type="text" id="profile-api-key-domain" />
                     </fieldset>
                     <div align="right">
-                        <button class="btn btn--color-positive" id="do-login">Save</button>
+                        <button class="btn btn--color-positive" id="profile-do-save">Save</button>
                     </div>
                 </form>
             </div>
@@ -119,6 +124,9 @@
 	        C8.603,44.125,7,46.826,7,49.761V52c0,0,0,0.657,0,1c0,2.761,9.85,5,22,5s22-2.239,22-5c0-0.343,0-1,0-1V49.957z" />
                 </svg>
                 @Html.Raw("Tom Johnson")
+            </button>
+            <button data-bind="click: profile().logout" class="btn btn--hoverColor-info btn--size-s" id="logout-link">
+                <img src="~/Images/logout.png" />
             </button>
         }
     </div>

@@ -164,6 +164,7 @@ var profile = function (email) {
     self.old_email = ko.observable('');
     self.email = ko.observable('');
     self.name = ko.observable('');
+    self.language_id = ko.observable('');
     self.api_key = ko.observable('');
     self.link_to_domain = ko.observable(false);
     self.api_key_domain = ko.observable('');
@@ -174,6 +175,7 @@ var profile = function (email) {
         self.old_email(data.Email);
         self.email(data.Email);
         self.name(data.Name);
+        self.language_id(data.LanguageId);
         self.api_key(data.ApiKey);
         self.link_to_domain(data.IsLinked);
         self.api_key_domain(data.Domain);
@@ -188,5 +190,11 @@ var profile = function (email) {
             self.api_key(data);
         };
         ajaxLoad("/api/User/RefreshApiKey", { apiKey: self.api_key() }, refreshApiKeyDone);
+    }
+    self.logout = function () {
+        var logoutDone = function (data) {
+            location.reload();
+        };
+        ajaxLoad("/api/User/Logout", {}, logoutDone);
     }
 }

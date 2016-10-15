@@ -279,19 +279,6 @@ namespace UMTD.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("prcTestUomInsert", userKeyParameter, testIdParameter, uomIdParameter);
         }
     
-        public virtual ObjectResult<Nullable<int>> prcUserCheck(string email, string password)
-        {
-            var emailParameter = email != null ?
-                new ObjectParameter("Email", email) :
-                new ObjectParameter("Email", typeof(string));
-    
-            var passwordParameter = password != null ?
-                new ObjectParameter("Password", password) :
-                new ObjectParameter("Password", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("prcUserCheck", emailParameter, passwordParameter);
-        }
-    
         public virtual int prcUserRegister(string name, string email, string password)
         {
             var nameParameter = name != null ?
@@ -364,6 +351,52 @@ namespace UMTD.Models
                 new ObjectParameter("Domain", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<bool>>("prcKeyCheckOwner", userKeyParameter, emailParameter, domainParameter);
+        }
+    
+        public virtual int prcUserUpdate(Nullable<int> id, string name, string email, Nullable<int> languageId, Nullable<bool> isLinked, string domain, string modifiedBy)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("Id", id) :
+                new ObjectParameter("Id", typeof(int));
+    
+            var nameParameter = name != null ?
+                new ObjectParameter("Name", name) :
+                new ObjectParameter("Name", typeof(string));
+    
+            var emailParameter = email != null ?
+                new ObjectParameter("Email", email) :
+                new ObjectParameter("Email", typeof(string));
+    
+            var languageIdParameter = languageId.HasValue ?
+                new ObjectParameter("LanguageId", languageId) :
+                new ObjectParameter("LanguageId", typeof(int));
+    
+            var isLinkedParameter = isLinked.HasValue ?
+                new ObjectParameter("IsLinked", isLinked) :
+                new ObjectParameter("IsLinked", typeof(bool));
+    
+            var domainParameter = domain != null ?
+                new ObjectParameter("Domain", domain) :
+                new ObjectParameter("Domain", typeof(string));
+    
+            var modifiedByParameter = modifiedBy != null ?
+                new ObjectParameter("ModifiedBy", modifiedBy) :
+                new ObjectParameter("ModifiedBy", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("prcUserUpdate", idParameter, nameParameter, emailParameter, languageIdParameter, isLinkedParameter, domainParameter, modifiedByParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<bool>> prcUserCheck(string email, string password)
+        {
+            var emailParameter = email != null ?
+                new ObjectParameter("Email", email) :
+                new ObjectParameter("Email", typeof(string));
+    
+            var passwordParameter = password != null ?
+                new ObjectParameter("Password", password) :
+                new ObjectParameter("Password", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<bool>>("prcUserCheck", emailParameter, passwordParameter);
         }
     }
 }

@@ -103,5 +103,14 @@
   <Function Name="prcUserSelect" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="Email" Type="nvarchar(max)" Mode="In" />
   </Function>
+  <Function Name="prcUserUpdate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Id" Type="int" Mode="In" />
+    <Parameter Name="Name" Type="nvarchar(max)" Mode="In" />
+    <Parameter Name="Email" Type="nvarchar(max)" Mode="In" />
+    <Parameter Name="LanguageId" Type="int" Mode="In" />
+    <Parameter Name="IsLinked" Type="bit" Mode="In" />
+    <Parameter Name="Domain" Type="nvarchar(max)" Mode="In" />
+    <Parameter Name="ModifiedBy" Type="nvarchar(max)" Mode="In" />
+  </Function>
   <EntityContainer Name="UMTDModelStoreContainer" />
 </Schema>

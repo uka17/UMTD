@@ -77,10 +77,6 @@
       <Parameter Name="TestId" Mode="In" Type="Int32" />
       <Parameter Name="UomId" Mode="In" Type="Int32" />
     </FunctionImport>
-    <FunctionImport Name="prcUserCheck" ReturnType="Collection(Int32)">
-      <Parameter Name="Email" Mode="In" Type="String" />
-      <Parameter Name="Password" Mode="In" Type="String" />
-    </FunctionImport>
     <FunctionImport Name="prcUserRegister">
       <Parameter Name="Name" Mode="In" Type="String" />
       <Parameter Name="Email" Mode="In" Type="String" />
@@ -103,6 +99,19 @@
       <Parameter Name="UserKey" Mode="In" Type="String" />
       <Parameter Name="Email" Mode="In" Type="String" />
       <Parameter Name="Domain" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="prcUserUpdate">
+      <Parameter Name="Id" Mode="In" Type="Int32" />
+      <Parameter Name="Name" Mode="In" Type="String" />
+      <Parameter Name="Email" Mode="In" Type="String" />
+      <Parameter Name="LanguageId" Mode="In" Type="Int32" />
+      <Parameter Name="IsLinked" Mode="In" Type="Boolean" />
+      <Parameter Name="Domain" Mode="In" Type="String" />
+      <Parameter Name="ModifiedBy" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="prcUserCheck" ReturnType="Collection(Boolean)">
+      <Parameter Name="Email" Mode="In" Type="String" />
+      <Parameter Name="Password" Mode="In" Type="String" />
     </FunctionImport>
   </EntityContainer>
   <ComplexType Name="prcLanguageList_Result">
