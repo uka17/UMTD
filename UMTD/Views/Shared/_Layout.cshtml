@@ -6,6 +6,7 @@
     <title>UMTD - @ViewBag.Title</title>
     @Scripts.Render("~/bundles/jquery-min")
     @Scripts.Render("~/bundles/jquery-ui-min")
+    @Scripts.Render("~/bundles/sammy-latest-min")    
     @Scripts.Render("~/bundles/knockout")
 
     @Scripts.Render("~/bundles/helper")
@@ -26,7 +27,7 @@
         @if (Session["user"] == null)
         {
             <div id="login-link">
-                <a class="spa-link" id="show-login-dialog">Login</a>
+                Hi stranger, we failed to recognize you, try to <a class="spa-link" id="show-login-dialog">login</a>
                 <div id="dialog-login" title="Login">
                     <div class="form-error"></div>
                     <form>

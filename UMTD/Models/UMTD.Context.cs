@@ -85,19 +85,6 @@ namespace UMTD.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<prcTestSelect_Result>("prcTestSelect", userKeyParameter, testIdParameter);
         }
     
-        public virtual ObjectResult<prcTestSelectAllSummary_Result> prcTestSelectAllSummary(string userKey, string filter)
-        {
-            var userKeyParameter = userKey != null ?
-                new ObjectParameter("UserKey", userKey) :
-                new ObjectParameter("UserKey", typeof(string));
-    
-            var filterParameter = filter != null ?
-                new ObjectParameter("Filter", filter) :
-                new ObjectParameter("Filter", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<prcTestSelectAllSummary_Result>("prcTestSelectAllSummary", userKeyParameter, filterParameter);
-        }
-    
         public virtual int prcTestUomDelete(Nullable<int> testId, Nullable<int> uomId)
         {
             var testIdParameter = testId.HasValue ?
@@ -397,6 +384,36 @@ namespace UMTD.Models
                 new ObjectParameter("Password", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<bool>>("prcUserCheck", emailParameter, passwordParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<int>> prcTestSelectAllSummaryPageCount(string userKey, string filter)
+        {
+            var userKeyParameter = userKey != null ?
+                new ObjectParameter("UserKey", userKey) :
+                new ObjectParameter("UserKey", typeof(string));
+    
+            var filterParameter = filter != null ?
+                new ObjectParameter("Filter", filter) :
+                new ObjectParameter("Filter", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("prcTestSelectAllSummaryPageCount", userKeyParameter, filterParameter);
+        }
+    
+        public virtual ObjectResult<prcTestSelectAllSummary_Result> prcTestSelectAllSummary(string userKey, string filter, Nullable<int> pageNumber)
+        {
+            var userKeyParameter = userKey != null ?
+                new ObjectParameter("UserKey", userKey) :
+                new ObjectParameter("UserKey", typeof(string));
+    
+            var filterParameter = filter != null ?
+                new ObjectParameter("Filter", filter) :
+                new ObjectParameter("Filter", typeof(string));
+    
+            var pageNumberParameter = pageNumber.HasValue ?
+                new ObjectParameter("PageNumber", pageNumber) :
+                new ObjectParameter("PageNumber", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<prcTestSelectAllSummary_Result>("prcTestSelectAllSummary", userKeyParameter, filterParameter, pageNumberParameter);
         }
     }
 }

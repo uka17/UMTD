@@ -40,14 +40,14 @@ namespace UMTD.Controllers
             }
         }
         /// <summary>
-        /// Returns list of Test entities for filter
+        /// Returns number of pages for test list
         /// </summary>
-        /// <param name="userKey">Authorization user key</param>
+        /// <param name="userKey">Authorization user key</param>        
         /// <param name="filter">Part of Test translation, method, material or uom name</param>
-        /// <returns>HttpStatusCode.OK and Test list in case of success, InternalServerError and error description in case of error</returns>
+        /// <returns>HttpStatusCode.OK and number of pages in case of success, InternalServerError and error description in case of error</returns>
         [HttpGet]
-        [ActionName("Summary")]
-        public HttpResponseMessage Summary(string userKey, string filter)
+        [ActionName("SummaryPageCount")]
+        public HttpResponseMessage SummaryPageCount(string userKey, string filter)
         {
             try
             {
@@ -55,7 +55,33 @@ namespace UMTD.Controllers
                 if (!dbContext.prcKeyCheck(userKey, Request.RequestUri.Host).FirstOrDefault().Value)
                     throw new Exception("userKey is incorrect or used with wrong IP address");
 
-                List<prcTestSelectAllSummary_Result> TestList = (from s in dbContext.prcTestSelectAllSummary(userKey, filter)
+                int PageCount = (from s in dbContext.prcTestSelectAllSummaryPageCount(userKey, filter)
+                                 select s.Value).FirstOrDefault();
+                return Request.CreateResponse<int>(HttpStatusCode.OK, PageCount);
+            }
+            catch (Exception e)
+            {
+                return Request.CreateResponse<string>(HttpStatusCode.InternalServerError, e.Message);
+            }
+        }
+        /// <summary>
+        /// Returns list of Test entities for filter
+        /// </summary>
+        /// <param name="userKey">Authorization user key</param>        
+        /// <param name="filter">Part of Test translation, method, material or uom name</param>
+        /// <param name="pageNumber">Number of current page</param>
+        /// <returns>HttpStatusCode.OK and Test list in case of success, InternalServerError and error description in case of error</returns>
+        [HttpGet]
+        [ActionName("Summary")]
+        public HttpResponseMessage Summary(string userKey, string filter, int pageNumber)
+        {
+            try
+            {
+                //TODO: error translations and maybe separate function
+                if (!dbContext.prcKeyCheck(userKey, Request.RequestUri.Host).FirstOrDefault().Value)
+                    throw new Exception("userKey is incorrect or used with wrong IP address");
+
+                List<prcTestSelectAllSummary_Result> TestList = (from s in dbContext.prcTestSelectAllSummary(userKey, filter, pageNumber)
                                                           select s).ToList();
                 return Request.CreateResponse<IEnumerable<prcTestSelectAllSummary_Result>>(HttpStatusCode.OK, TestList);
             }

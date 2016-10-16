@@ -68,6 +68,11 @@
         <Function Name="prcTestSelectAllSummary" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="UserKey" Type="nvarchar(max)" Mode="In" />
           <Parameter Name="Filter" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="PageNumber" Type="int" Mode="In" />
+        </Function>
+        <Function Name="prcTestSelectAllSummaryPageCount" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserKey" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="Filter" Type="nvarchar(max)" Mode="In" />
         </Function>
         <Function Name="prcTestTranslationDelete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="TestTranslationId" Type="int" Mode="In" />
@@ -139,10 +144,6 @@
           <FunctionImport Name="prcTestSelect" ReturnType="Collection(UMTDModel.prcTestSelect_Result)">
             <Parameter Name="UserKey" Mode="In" Type="String" />
             <Parameter Name="TestId" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="prcTestSelectAllSummary" ReturnType="Collection(UMTDModel.prcTestSelectAllSummary_Result)">
-            <Parameter Name="UserKey" Mode="In" Type="String" />
-            <Parameter Name="Filter" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="prcTestUomDelete">
             <Parameter Name="TestId" Mode="In" Type="Int32" />
@@ -235,6 +236,15 @@
             <Parameter Name="Email" Mode="In" Type="String" />
             <Parameter Name="Password" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="prcTestSelectAllSummaryPageCount" ReturnType="Collection(Int32)">
+            <Parameter Name="UserKey" Mode="In" Type="String" />
+            <Parameter Name="Filter" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="prcTestSelectAllSummary" ReturnType="Collection(UMTDModel.prcTestSelectAllSummary_Result)">
+            <Parameter Name="UserKey" Mode="In" Type="String" />
+            <Parameter Name="Filter" Mode="In" Type="String" />
+            <Parameter Name="PageNumber" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="prcLanguageList_Result">
           <Property Type="Int32" Name="Id" Nullable="false" />
@@ -248,20 +258,6 @@
           <Property Type="String" Name="Material" Nullable="true" />
           <Property Type="String" Name="Method" Nullable="true" />
           <Property Type="String" Name="Uom" Nullable="true" />
-          <Property Type="DateTime" Name="ModifiedOn" Nullable="false" Precision="23" />
-        </ComplexType>
-        <ComplexType Name="prcTestSelectAllSummary_Result">
-          <Property Type="Int32" Name="Id" Nullable="false" />
-          <Property Type="String" Name="Code" Nullable="true" />
-          <Property Type="String" Name="Name" Nullable="true" />
-          <Property Type="Int32" Name="Translation" Nullable="true" />
-          <Property Type="Int32" Name="TranslationCount" Nullable="true" />
-          <Property Type="Int32" Name="Material" Nullable="true" />
-          <Property Type="Int32" Name="MaterialCount" Nullable="true" />
-          <Property Type="Int32" Name="Method" Nullable="true" />
-          <Property Type="Int32" Name="MethodCount" Nullable="true" />
-          <Property Type="Int32" Name="Uom" Nullable="true" />
-          <Property Type="Int32" Name="UomCount" Nullable="true" />
           <Property Type="DateTime" Name="ModifiedOn" Nullable="false" Precision="23" />
         </ComplexType>
         <ComplexType Name="prcMaterialList_Result">
@@ -290,6 +286,20 @@
           <Property Type="DateTime" Name="ModifiedOn" Nullable="false" Precision="23" />
           <Property Type="String" Name="ModifiedBy" Nullable="true" />
         </ComplexType>
+        <ComplexType Name="prcTestSelectAllSummary_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="String" Name="Code" Nullable="true" />
+          <Property Type="String" Name="Name" Nullable="true" />
+          <Property Type="Int32" Name="Translation" Nullable="true" />
+          <Property Type="Int32" Name="TranslationCount" Nullable="true" />
+          <Property Type="Int32" Name="Material" Nullable="true" />
+          <Property Type="Int32" Name="MaterialCount" Nullable="true" />
+          <Property Type="Int32" Name="Method" Nullable="true" />
+          <Property Type="Int32" Name="MethodCount" Nullable="true" />
+          <Property Type="Int32" Name="Uom" Nullable="true" />
+          <Property Type="Int32" Name="UomCount" Nullable="true" />
+          <Property Type="DateTime" Name="ModifiedOn" Nullable="false" Precision="23" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -317,24 +327,6 @@
                 <ScalarProperty Name="Material" ColumnName="Material" />
                 <ScalarProperty Name="Method" ColumnName="Method" />
                 <ScalarProperty Name="Uom" ColumnName="Uom" />
-                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="prcTestSelectAllSummary" FunctionName="UMTDModel.Store.prcTestSelectAllSummary">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="UMTDModel.prcTestSelectAllSummary_Result">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Code" ColumnName="Code" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Translation" ColumnName="Translation" />
-                <ScalarProperty Name="TranslationCount" ColumnName="TranslationCount" />
-                <ScalarProperty Name="Material" ColumnName="Material" />
-                <ScalarProperty Name="MaterialCount" ColumnName="MaterialCount" />
-                <ScalarProperty Name="Method" ColumnName="Method" />
-                <ScalarProperty Name="MethodCount" ColumnName="MethodCount" />
-                <ScalarProperty Name="Uom" ColumnName="Uom" />
-                <ScalarProperty Name="UomCount" ColumnName="UomCount" />
                 <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
               </ComplexTypeMapping>
             </ResultMapping>
@@ -398,6 +390,25 @@
           <FunctionImportMapping FunctionImportName="prcKeyCheckOwner" FunctionName="UMTDModel.Store.prcKeyCheckOwner" />
           <FunctionImportMapping FunctionImportName="prcUserUpdate" FunctionName="UMTDModel.Store.prcUserUpdate" />
           <FunctionImportMapping FunctionImportName="prcUserCheck" FunctionName="UMTDModel.Store.prcUserCheck" />
+          <FunctionImportMapping FunctionImportName="prcTestSelectAllSummaryPageCount" FunctionName="UMTDModel.Store.prcTestSelectAllSummaryPageCount" />
+          <FunctionImportMapping FunctionImportName="prcTestSelectAllSummary" FunctionName="UMTDModel.Store.prcTestSelectAllSummary">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="UMTDModel.prcTestSelectAllSummary_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Translation" ColumnName="Translation" />
+                <ScalarProperty Name="TranslationCount" ColumnName="TranslationCount" />
+                <ScalarProperty Name="Material" ColumnName="Material" />
+                <ScalarProperty Name="MaterialCount" ColumnName="MaterialCount" />
+                <ScalarProperty Name="Method" ColumnName="Method" />
+                <ScalarProperty Name="MethodCount" ColumnName="MethodCount" />
+                <ScalarProperty Name="Uom" ColumnName="Uom" />
+                <ScalarProperty Name="UomCount" ColumnName="UomCount" />
+                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

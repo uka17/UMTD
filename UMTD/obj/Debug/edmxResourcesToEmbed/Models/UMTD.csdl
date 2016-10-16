@@ -18,10 +18,6 @@
       <Parameter Name="UserKey" Mode="In" Type="String" />
       <Parameter Name="TestId" Mode="In" Type="Int32" />
     </FunctionImport>
-    <FunctionImport Name="prcTestSelectAllSummary" ReturnType="Collection(UMTDModel.prcTestSelectAllSummary_Result)">
-      <Parameter Name="UserKey" Mode="In" Type="String" />
-      <Parameter Name="Filter" Mode="In" Type="String" />
-    </FunctionImport>
     <FunctionImport Name="prcTestUomDelete">
       <Parameter Name="TestId" Mode="In" Type="Int32" />
       <Parameter Name="UomId" Mode="In" Type="Int32" />
@@ -113,6 +109,15 @@
       <Parameter Name="Email" Mode="In" Type="String" />
       <Parameter Name="Password" Mode="In" Type="String" />
     </FunctionImport>
+    <FunctionImport Name="prcTestSelectAllSummaryPageCount" ReturnType="Collection(Int32)">
+      <Parameter Name="UserKey" Mode="In" Type="String" />
+      <Parameter Name="Filter" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="prcTestSelectAllSummary" ReturnType="Collection(UMTDModel.prcTestSelectAllSummary_Result)">
+      <Parameter Name="UserKey" Mode="In" Type="String" />
+      <Parameter Name="Filter" Mode="In" Type="String" />
+      <Parameter Name="PageNumber" Mode="In" Type="Int32" />
+    </FunctionImport>
   </EntityContainer>
   <ComplexType Name="prcLanguageList_Result">
     <Property Type="Int32" Name="Id" Nullable="false" />
@@ -126,20 +131,6 @@
     <Property Type="String" Name="Material" Nullable="true" />
     <Property Type="String" Name="Method" Nullable="true" />
     <Property Type="String" Name="Uom" Nullable="true" />
-    <Property Type="DateTime" Name="ModifiedOn" Nullable="false" Precision="23" />
-  </ComplexType>
-  <ComplexType Name="prcTestSelectAllSummary_Result">
-    <Property Type="Int32" Name="Id" Nullable="false" />
-    <Property Type="String" Name="Code" Nullable="true" />
-    <Property Type="String" Name="Name" Nullable="true" />
-    <Property Type="Int32" Name="Translation" Nullable="true" />
-    <Property Type="Int32" Name="TranslationCount" Nullable="true" />
-    <Property Type="Int32" Name="Material" Nullable="true" />
-    <Property Type="Int32" Name="MaterialCount" Nullable="true" />
-    <Property Type="Int32" Name="Method" Nullable="true" />
-    <Property Type="Int32" Name="MethodCount" Nullable="true" />
-    <Property Type="Int32" Name="Uom" Nullable="true" />
-    <Property Type="Int32" Name="UomCount" Nullable="true" />
     <Property Type="DateTime" Name="ModifiedOn" Nullable="false" Precision="23" />
   </ComplexType>
   <ComplexType Name="prcMaterialList_Result">
@@ -167,5 +158,19 @@
     <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="23" />
     <Property Type="DateTime" Name="ModifiedOn" Nullable="false" Precision="23" />
     <Property Type="String" Name="ModifiedBy" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="prcTestSelectAllSummary_Result">
+    <Property Type="Int32" Name="Id" Nullable="false" />
+    <Property Type="String" Name="Code" Nullable="true" />
+    <Property Type="String" Name="Name" Nullable="true" />
+    <Property Type="Int32" Name="Translation" Nullable="true" />
+    <Property Type="Int32" Name="TranslationCount" Nullable="true" />
+    <Property Type="Int32" Name="Material" Nullable="true" />
+    <Property Type="Int32" Name="MaterialCount" Nullable="true" />
+    <Property Type="Int32" Name="Method" Nullable="true" />
+    <Property Type="Int32" Name="MethodCount" Nullable="true" />
+    <Property Type="Int32" Name="Uom" Nullable="true" />
+    <Property Type="Int32" Name="UomCount" Nullable="true" />
+    <Property Type="DateTime" Name="ModifiedOn" Nullable="false" Precision="23" />
   </ComplexType>
 </Schema>

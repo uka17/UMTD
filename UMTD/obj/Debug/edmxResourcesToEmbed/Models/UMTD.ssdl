@@ -63,6 +63,11 @@
   <Function Name="prcTestSelectAllSummary" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="UserKey" Type="nvarchar(max)" Mode="In" />
     <Parameter Name="Filter" Type="nvarchar(max)" Mode="In" />
+    <Parameter Name="PageNumber" Type="int" Mode="In" />
+  </Function>
+  <Function Name="prcTestSelectAllSummaryPageCount" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="UserKey" Type="nvarchar(max)" Mode="In" />
+    <Parameter Name="Filter" Type="nvarchar(max)" Mode="In" />
   </Function>
   <Function Name="prcTestTranslationDelete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="TestTranslationId" Type="int" Mode="In" />

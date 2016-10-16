@@ -26,24 +26,6 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
-    <FunctionImportMapping FunctionImportName="prcTestSelectAllSummary" FunctionName="UMTDModel.Store.prcTestSelectAllSummary">
-      <ResultMapping>
-        <ComplexTypeMapping TypeName="UMTDModel.prcTestSelectAllSummary_Result">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="Code" ColumnName="Code" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
-          <ScalarProperty Name="Translation" ColumnName="Translation" />
-          <ScalarProperty Name="TranslationCount" ColumnName="TranslationCount" />
-          <ScalarProperty Name="Material" ColumnName="Material" />
-          <ScalarProperty Name="MaterialCount" ColumnName="MaterialCount" />
-          <ScalarProperty Name="Method" ColumnName="Method" />
-          <ScalarProperty Name="MethodCount" ColumnName="MethodCount" />
-          <ScalarProperty Name="Uom" ColumnName="Uom" />
-          <ScalarProperty Name="UomCount" ColumnName="UomCount" />
-          <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
-        </ComplexTypeMapping>
-      </ResultMapping>
-    </FunctionImportMapping>
     <FunctionImportMapping FunctionImportName="prcTestUomDelete" FunctionName="UMTDModel.Store.prcTestUomDelete" />
     <FunctionImportMapping FunctionImportName="prcTestConfirm" FunctionName="UMTDModel.Store.prcTestConfirm" />
     <FunctionImportMapping FunctionImportName="prcTestDelete" FunctionName="UMTDModel.Store.prcTestDelete" />
@@ -103,5 +85,24 @@
     <FunctionImportMapping FunctionImportName="prcKeyCheckOwner" FunctionName="UMTDModel.Store.prcKeyCheckOwner" />
     <FunctionImportMapping FunctionImportName="prcUserUpdate" FunctionName="UMTDModel.Store.prcUserUpdate" />
     <FunctionImportMapping FunctionImportName="prcUserCheck" FunctionName="UMTDModel.Store.prcUserCheck" />
+    <FunctionImportMapping FunctionImportName="prcTestSelectAllSummaryPageCount" FunctionName="UMTDModel.Store.prcTestSelectAllSummaryPageCount" />
+    <FunctionImportMapping FunctionImportName="prcTestSelectAllSummary" FunctionName="UMTDModel.Store.prcTestSelectAllSummary">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="UMTDModel.prcTestSelectAllSummary_Result">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Translation" ColumnName="Translation" />
+          <ScalarProperty Name="TranslationCount" ColumnName="TranslationCount" />
+          <ScalarProperty Name="Material" ColumnName="Material" />
+          <ScalarProperty Name="MaterialCount" ColumnName="MaterialCount" />
+          <ScalarProperty Name="Method" ColumnName="Method" />
+          <ScalarProperty Name="MethodCount" ColumnName="MethodCount" />
+          <ScalarProperty Name="Uom" ColumnName="Uom" />
+          <ScalarProperty Name="UomCount" ColumnName="UomCount" />
+          <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
   </EntityContainerMapping>
 </Mapping>

@@ -1,80 +1,80 @@
-﻿function loadTestList() {
-    loadTestDone = function (data) {
-        summaryTestList.removeAll();
-        data.map(function (e) {
-            summaryTestList.push(new summaryTest(e));
-        });
-    };
-    ajaxLoad("/api/Test/Summary", { userKey: $('#user-key').val(), filter: $('#filter').val() }, loadTestDone);
-}
-function loadReference(type) {
-    switch (type) {
-        case "material":
-            var materialLoadDone = function (data) {
-                data.map(function (e) { materialList.push({ id: e.Id, name: e.Name }); });
-            };
-            ajaxLoad("/api/Material/List", { userKey: $('#user-key').val() }, materialLoadDone);
-            break;
-        case "method":
-            var methodLoadDone = function (data) {
-                data.map(function (e) { methodList.push({ id: e.Id, name: e.Name }); });
-            };
-            ajaxLoad("/api/Method/List", { userKey: $('#user-key').val() }, methodLoadDone);
-            break;
-        case "language":
-            var languageLoadDone = function (data) {
-                data.map(function (e) { languageList.push({ id: e.Id, name: e.Name, code: e.Code }); });
-            };
-            ajaxLoad("/api/Language/List", { userKey: $('#user-key').val() }, languageLoadDone);
-            break;
-        case "uom":
-            var uomLoadDone = function (data) {
-                data.map(function (e) { uomList.push({ id: e.Id, name: e.FullName }); });
-            };
-            ajaxLoad("/api/Uom/List", { userKey: $('#user-key').val() }, uomLoadDone);
-    }
-}
-
-var uomList = ko.observableArray();
-var materialList = ko.observableArray();
-var methodList = ko.observableArray();
-var languageList = ko.observableArray();
-var summaryTestList = ko.observableArray();
-var activeTest = ko.observable(new test({ Id: 0, Translation: "[]", Uom: "[]", Method: "[]", Material: "[]" }));
-
-loadReference("material");
-loadReference("method");
-loadReference("uom");
-loadReference("language");
-
-var profile = ko.observable(new profile($('#user-email').val()));
+﻿//Buffer for current choosen object
+activeTest = ko.observable(new test({ Id: 0, Translation: "[]", Uom: "[]", Method: "[]", Material: "[]" }));
 
 //Model itself
-var ViewModel = function (
-        uomList,
-        materialList,
-        methodList,
-        languageList,
-        summaryTestList,
-        activeTest,
-        profile) {
+var ViewModel = function () {
     var self = this;
-    self.summaryTestList = summaryTestList;
-    self.activeTest = activeTest;
-    self.uomList = uomList;
-    self.materialList = materialList;
-    self.methodList = methodList;
-    self.languageList = languageList;
-    self.profile = profile;
+    
+    self.summaryTestList = ko.observableArray();    
+    self.uomList = ko.observableArray();;
+    self.materialList = ko.observableArray();
+    self.methodList = ko.observableArray();
+    self.languageList = ko.observableArray();
+    self.profile = ko.observable(new profile($('#user-email').val()));
 
+    self.currentPage = ko.observable();
+    self.pageCount = ko.observableArray();
+    
     self.filter = function (data, event) {
         if (event.keyCode == 13) {
-            loadTestList();
+            location.hash = $('#filter').val() + '/' + self.currentPage();
             return false;
         }
         else
             return true;
+    };
+    self.loadReference = function (type) {
+        switch (type) {
+            case "material":
+                var materialLoadDone = function (data) {
+                    data.map(function (e) { self.materialList.push({ id: e.Id, name: e.Name }); });
+                };
+                ajaxLoad("/api/Material/List", { userKey: self.profile().api_key() }, materialLoadDone);
+                break;
+            case "method":
+                var methodLoadDone = function (data) {
+                    data.map(function (e) { self.methodList.push({ id: e.Id, name: e.Name }); });
+                };
+                ajaxLoad("/api/Method/List", { userKey: self.profile().api_key() }, methodLoadDone);
+                break;
+            case "language":
+                var languageLoadDone = function (data) {
+                    data.map(function (e) { self.languageList.push({ id: e.Id, name: e.Name, code: e.Code }); });
+                };
+                ajaxLoad("/api/Language/List", { userKey: self.profile().api_key() }, languageLoadDone);
+                break;
+            case "uom":
+                var uomLoadDone = function (data) {
+                    data.map(function (e) { self.uomList.push({ id: e.Id, name: e.FullName }); });
+                };
+                ajaxLoad("/api/Uom/List", { userKey: self.profile().api_key() }, uomLoadDone);
+        }
+    };
+    self.gotoPage = function (pageNumber) {
+        location.hash = $('#filter').val() + '/' + pageNumber;
     }
+
+    self.loadTestList = function (pageNumber) {
+        self.currentPage(pageNumber);
+        loadTestDone = function (data) {           
+            data.map(function (e) {
+                self.summaryTestList.push(new summaryTest(e));
+            });
+            self.loadPageCount();
+        };
+        self.summaryTestList.removeAll();
+        ajaxLoad("/api/Test/Summary", { userKey: self.profile().api_key(), filter: $('#filter').val(), pageNumber: pageNumber }, loadTestDone);
+    };
+
+    self.loadPageCount = function () {
+        loadPageCountDone = function (data) {            
+            for (var i = 1; i < data + 1; i++) {
+                self.pageCount.push(i);
+            }
+        };
+        self.pageCount.removeAll();
+        ajaxLoad("/api/Test/SummaryPageCount", { userKey: self.profile().api_key(), filter: $('#filter').val() }, loadPageCountDone);        
+    };
 
     self.confirmTest = function () {
         ajaxGet("/api/Test/Confirm", { testId: activeTest().id });
@@ -87,11 +87,38 @@ var ViewModel = function (
     };
 };
 
-ko.applyBindings(new ViewModel(uomList, materialList, methodList, languageList, summaryTestList, activeTest, profile));
+//Main application bindings
+var App = new ViewModel();
+ko.applyBindings(App);
+
+//Client side navigation with Sammy
+Sammy(function () {
+    this.get('#:filter', function () {
+        $('#filter').val(this.params.filter)
+        App.loadTestList(App.currentPage());
+    });
+    this.get('#/:pageId', function () {
+        App.loadTestList(this.params.pageId);
+    });
+    this.get('#:filter/:pageId', function () {
+        $('#filter').val(this.params.filter)
+        App.loadTestList(this.params.pageId);
+    });
+    this.get('/', function () {
+        App.loadTestList(1);
+    });
+}).run();
 
 //Test list
-loadTestList();
-
+if (App.profile().api_key() != undefined) {
+    App.loadReference("material");
+    App.loadReference("method");
+    App.loadReference("uom");
+    App.loadReference("language");
+}
+else
+    $('#content').hide();
+//Dialogs
 $("#dialog-message").dialog({
     modal: true,
     autoOpen: false,

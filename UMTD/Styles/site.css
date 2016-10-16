@@ -47,12 +47,11 @@
     color: #C83C3B;
     text-align: center;
 }
-.test-content th, .pagination-table td {
+.test-content th, .pagination-content, .loading {
     border: 0px;    
     text-align: center;
 }
-
-.translation-field-header, .uom-field-header, .material-field-header, .method-field-header { 
+.translation-field-header, .uom-field-header, .material-field-header, .method-field-header, .research-field-header { 
     margin-bottom: 5px; 
     margin-top: 10px;
 }
@@ -68,6 +67,9 @@
 
 .method-field-label { color: #44357B; }
 .method-field-header { border-bottom: 1px solid #44357B; }
+
+.research-field-label { color: #44357B; }
+.research-field-header { border-bottom: 1px solid #44357B; }
 
 /*Language bar start*/
 #language-menu {
@@ -135,6 +137,7 @@ textarea.translation-input {
 .input-button {
     cursor: pointer;
 }
+
 /*Profile menu start*/
 #profile-box  {
     position: relative;

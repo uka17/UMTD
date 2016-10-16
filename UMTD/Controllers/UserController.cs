@@ -66,7 +66,7 @@ namespace UMTD.Controllers
                 cookie.Expires = DateTimeOffset.Now.AddDays(-1);
                 cookie.Domain = Request.RequestUri.Host;
                 cookie.Path = "/";                
-                HttpResponseMessage Response = Request.CreateResponse(HttpStatusCode.OK);
+                HttpResponseMessage Response = Request.CreateResponse<string>(HttpStatusCode.OK, "Logout complet");
                 Response.Headers.AddCookies(new CookieHeaderValue[] { cookie });
                 return Response;
             }

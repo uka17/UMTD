@@ -10,6 +10,8 @@ namespace UMTD
                         "~/Scripts/jquery-2.2.3.min.js"));
             bundles.Add(new ScriptBundle("~/bundles/jquery-ui-min").Include(
                         "~/Scripts/jquery-ui.min.js"));
+            bundles.Add(new ScriptBundle("~/bundles/sammy-latest-min").Include(
+                        "~/Scripts/sammy-latest.min.js"));            
             bundles.Add(new ScriptBundle("~/bundles/knockout").Include(
                         "~/Scripts/knockout-3.4.0.js"));
             bundles.Add(new ScriptBundle("~/bundles/test").Include(

@@ -2,19 +2,27 @@
     $.ajax({
         statusCode: {
             404: function () {
-                alert("Page not found");
-            }
+                alert("Resource was not found");
+            },
+            200: doneFunction
         },
         contentType: "application/json",
         dataType: "json",
         data: data,
         url: url,
     })
-  .done(doneFunction)
   .error(function (jqXHR, status, errorThrown) {
       alert(errorThrown + ": " + jqXHR.responseText);
   });
 
+}
+function ajaxLoadSync(url, data) {
+    return $.ajax({
+        type: "GET",
+        url: url,
+        data: data,
+        async: false
+    }).responseText;
 }
 function ajaxGet(url, data) {
     $.ajax({

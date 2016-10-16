@@ -49,7 +49,7 @@ var testTranslation = function (t) {
         self.languageListVisible(false);
     };
     self.update = function () {
-        $.get("/api/Test/TranslationUpdate", { userKey: $('#user-key').val(), translationId: self.id, languageId: self.languageId, translation: self.name });
+        $.get("/api/Test/TranslationUpdate", { userKey: App.profile().api_key(), translationId: self.id, languageId: self.languageId, translation: self.name });
         self.editState(false);
     }
 }
@@ -67,7 +67,7 @@ var summaryTest = function (t) {
             activeTest(new test(data));
             $("#dialog-edit-test").dialog("open");
         };
-        ajaxLoad("/api/Test/Get", { userKey: $('#user-key').val(), testId: obj.id }, loadCurrentTestDone);
+        ajaxLoad("/api/Test/Get", { userKey: App.profile().api_key(), testId: obj.id }, loadCurrentTestDone);
     }
 }
 var test = function (t) {
@@ -92,19 +92,19 @@ var test = function (t) {
                 id: data,
                 languageId: $('#language').val(),
                 name: $('#newTranslation').val(),
-                languageCode: languageList().find(function (obj) {
+                languageCode: App.languageList().find(function (obj) {
                     return obj.id == $('#language').val();
                 }).code
             }));
             $("#dialog-add-translation").dialog("close");
         };
-        ajaxLoad("/api/Test/TranslationInsert", { userKey: $('#user-key').val(), testId: activeTest().id, languageId: $('#language').val(), translation: $('#newTranslation').val() }, createTranslationDone);
+        ajaxLoad("/api/Test/TranslationInsert", { userKey: App.profile().api_key(), testId: activeTest().id, languageId: $('#language').val(), translation: $('#newTranslation').val() }, createTranslationDone);
 
     };
     self.removeTranslation = function (obj) {
         //Remove item
         self.translation.remove(obj);
-        ajaxGet("api/Test/TranslationDelete", { userKey: $('#user-key').val(), translationId: obj.id });
+        ajaxGet("api/Test/TranslationDelete", { userKey: App.profile().api_key(), translationId: obj.id });
     }
     //Uom
     self.removeUom = function (obj) {
@@ -115,43 +115,43 @@ var test = function (t) {
     self.selectedUom = ko.observableArray();
 
     self.selectedUom.subscribe(function (value) {
-        var name = findNameById(value, uomList);
+        var name = findNameById(value, App.uomList);
         //TODO: Do not allow to add duplicates
         if (name != null) {
             self.uom.push({ id: self.selectedUom()[0], name: name });
-            ajaxGet("/api/Test/UomInsert", { userKey: $('#user-key').val(), testId: self.id, uomId: self.selectedUom()[0] });
+            ajaxGet("/api/Test/UomInsert", { userKey: App.profile().api_key(), testId: self.id, uomId: self.selectedUom()[0] });
         }
     });
     //Material
     self.removeMaterial = function (obj) {
         //Remove item
         self.material.remove(obj);
-        ajaxGet("/api/Test/MaterialDelete", { userKey: $('#user-key').val(), testId: self.id, materialId: obj.id });
+        ajaxGet("/api/Test/MaterialDelete", { userKey: App.profile().api_key(), testId: self.id, materialId: obj.id });
     }
     self.selectedMaterial = ko.observableArray();
 
     self.selectedMaterial.subscribe(function (value) {
-        var name = findNameById(value, materialList);
+        var name = findNameById(value, App.materialList);
         //TODO: Do not allow to add duplicates
         if (name != null) {
             self.material.push({ id: self.selectedMaterial()[0], name: name });
-            ajaxGet("api/Test/MaterialInsert", { userKey: $('#user-key').val(), testId: self.id, materialId: self.selectedMaterial()[0] });
+            ajaxGet("api/Test/MaterialInsert", { userKey: App.profile().api_key(), testId: self.id, materialId: self.selectedMaterial()[0] });
         }
     });
     //Method
     self.removeMethod = function (obj) {
         //Remove item
         self.method.remove(obj);
-        ajaxGet("/api/Test/MethodDelete", { userKey: $('#user-key').val(), testId: self.id, methodId: obj.id });
+        ajaxGet("/api/Test/MethodDelete", { userKey: App.profile().api_key(), testId: self.id, methodId: obj.id });
     }
     self.selectedMethod = ko.observableArray();
 
     self.selectedMethod.subscribe(function (value) {
-        var name = findNameById(value, methodList);
+        var name = findNameById(value, App.methodList);
         //TODO: Do not allow to add duplicates
         if (name != null) {
             self.method.push({ id: self.selectedMethod()[0], name: name });
-            ajaxGet("/api/Test/MethodInsert", { userKey: $('#user-key').val(), testId: self.id, methodId: self.selectedMethod()[0] });
+            ajaxGet("/api/Test/MethodInsert", { userKey: App.profile().api_key(), testId: self.id, methodId: self.selectedMethod()[0] });
         }
     });
 
@@ -161,29 +161,15 @@ var test = function (t) {
 }
 var profile = function (email) {
     var self = this;
-    self.old_email = ko.observable('');
-    self.email = ko.observable('');
-    self.name = ko.observable('');
-    self.language_id = ko.observable('');
-    self.api_key = ko.observable('');
-    self.link_to_domain = ko.observable(false);
-    self.api_key_domain = ko.observable('');
-
-    self.new_password = ko.observable('');
-
-    var userProfileLoadDone = function (data) {
-        self.old_email(data.Email);
-        self.email(data.Email);
-        self.name(data.Name);
-        self.language_id(data.LanguageId);
-        self.api_key(data.ApiKey);
-        self.link_to_domain(data.IsLinked);
-        self.api_key_domain(data.Domain);
-
-        self.new_password('');
-    };
-
-    ajaxLoad("/api/User/Profile", { email: email }, userProfileLoadDone);
+    var data = jQuery.parseJSON(ajaxLoadSync("/api/User/Profile", { email: email }));
+    self.old_email = ko.observable(data.Email);
+    self.email = ko.observable(data.Email);
+    self.name = ko.observable(data.Name);
+    self.language_id = ko.observable(data.LanguageId);
+    self.api_key = ko.observable(data.ApiKey);
+    self.link_to_domain = ko.observable(data.IsLinked);
+    self.api_key_domain = ko.observable(data.Domain);
+    self.new_password = ko.observable('');  
 
     self.refreshApiKey = function () {
         var refreshApiKeyDone = function (data) {
@@ -192,7 +178,7 @@ var profile = function (email) {
         ajaxLoad("/api/User/RefreshApiKey", { apiKey: self.api_key() }, refreshApiKeyDone);
     }
     self.logout = function () {
-        var logoutDone = function (data) {
+        var logoutDone = function () {
             location.reload();
         };
         ajaxLoad("/api/User/Logout", {}, logoutDone);

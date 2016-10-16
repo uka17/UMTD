@@ -8,132 +8,149 @@
     }
 }
 <br />
-<div class="row--width-fluid row--align-left">
-    <div class="grid-2">
-        <input type="text" id="filter" data-bind="event: { keypress: filter }">
-    </div>
-    <div class="grid-1">
-        <button class="btn" data-bind="click: loadTestList">Filter</button>
-    </div>
-</div>
-
-<div id="dialog-message" title="">
-    <img src="/Images/ajax-loader.gif" alt="Loading..." title="Loading..." class="ajax-loader">
-</div>
-
-<div id="dialog-confirm-test" title="Confirmation">
-    <div>
-        Are you sure you want to confirm this test (this action will hide test)?
-    </div>
-    <br />
-    <div align="right">
-        <button class="btn btn--color-positive" data-bind="click: confirmTest">Confirm</button>
-    </div>
-</div>
-
-<div id="dialog-edit-test" title="Edit test">
-    <div class="translation-field-header">
-        <span class="translation-field-label">Translations</span>
-    </div>
-    <!-- ko foreach: activeTest().translation -->
-    <div class="test-translation">
-        <div data-bind="if: !editState()">
-            <div class="item-delete"><img alt="Delete" class="input-button" title="Delete" src="/Images/item-delete.png" data-bind="click: activeTest().removeTranslation.bind(activeTest(), $data)" /></div>
-            <span class="translation-item-text" data-bind="text: name, click: edit"></span>
-            <div id="language-menu" alt="Language" title="Language">
-                <img id="language-list-button" data-bind="attr: { src: languageIcon}, click: toggleLanguageList" />
-                <ul id="language-list" data-bind="if: languageListVisible()">
-                    <!-- ko foreach: languageList -->
-                    <li><div><img class="language-list-item" data-bind="click: $parent.setLanguage, attr: {src: '/Images/' + code + '.png'}" /></div></li>
-                    <!-- /ko -->
-                </ul>
-            </div>
+<div id="content">
+    <div class="row--width-fluid row--align-left">
+        <div class="grid-2">
+            <input type="text" id="filter" data-bind="event: { keypress: filter }">
         </div>
-        <div data-bind="if: editState()">
-            <textarea cols="50" rows="3" class="translation-input" name="comment" data-bind="value: name"></textarea>
-            <div class="edit-translation-buttons">
-                <img class="input-button" src="~/Images/save.png" alt="Save" title="Save" data-bind="click: update" />
-                <img class="input-button" src="~/Images/cancel.png" alt="Cancel" title="Cancel" data-bind="click: cancelEdit" />
-            </div>
+        <div class="grid-1">
+            <button class="btn" data-bind="click: loadTestList">Filter</button>
         </div>
     </div>
-    <!-- /ko -->
-    <span class="info-text" data-bind="if: activeTest().translation().length == 0">No items</span>
-    <br />
-    <button class="btn btn--size-s btn--style-ghost" data-bind="click: activeTest().addTranslation">Add...</button>
-    <div class="uom-field-header">
-        <span class="uom-field-label">Units of measurement</span>
+
+    <div id="dialog-message" title="">
+        <img src="/Images/ajax-loader.gif" alt="Loading..." title="Loading..." class="ajax-loader">
     </div>
-    <!-- ko foreach: activeTest().uom -->
-    <div class="test-uom">
-        <div class="item-delete"><img src="/Images/item-delete.png" class="input-button" data-bind="click: activeTest().removeUom.bind(activeTest(), $data)" /></div>
-        <span class="attribute-item-text" data-bind="text: name"></span>
-    </div>
-    <!-- /ko -->
-    <span class="info-text" data-bind="if: activeTest().uom().length == 0">No items</span>
-    <br />
-    <select data-bind='options: uomList, optionsText: "name", optionsCaption: "Add...", selectedOptions: activeTest().selectedUom, optionsValue: "id"'> </select>
-    <div class="material-field-header">
-        <span class="material-field-label">Materials</span>
-    </div>
-    <!-- ko foreach: activeTest().material -->
-    <div class="test-material">
-        <div class="item-delete"><img src="/Images/item-delete.png" class="input-button" data-bind="click: activeTest().removeMaterial.bind(activeTest(), $data)" /></div>
-        <span class="attribute-item-text" data-bind="text: name"></span>
-    </div>
-    <!-- /ko -->
-    <span class="info-text" data-bind="if: activeTest().material().length == 0">No items</span>
-    <br />
-    <select data-bind='options: materialList, optionsText: "name", optionsCaption: "Add...", selectedOptions: activeTest().selectedMaterial, optionsValue: "id"'> </select>
-    <div class="method-field-header">
-        <span class="method-field-label">Methods</span>
-    </div>
-    <!-- ko foreach: activeTest().method -->
-    <div class="test-method">
-        <div class="item-delete"><img src="/Images/item-delete.png" class="input-button" data-bind="click: activeTest().removeMethod.bind(activeTest(), $data)" /></div>
-        <span class="attribute-item-text" data-bind="text: name"></span>
-    </div>
-    <!-- /ko -->
-    <span class="info-text" data-bind="if: activeTest().method().length == 0">No items</span>
-    <br />
-    <select data-bind='options: methodList, optionsText: "name", optionsCaption: "Add...", selectedOptions: activeTest().selectedMethod, optionsValue: "id"'> </select>
-    <br />
-    <div width="100%">
-        <div align="left" style="float: left">
-            <button data-bind="click: activeTest().confirm" class="btn btn--color-positive">Confirm test</button>
+
+    <div id="dialog-confirm-test" title="Confirmation">
+        <div>
+            Are you sure you want to confirm this test (this action will hide test)?
         </div>
+        <br />
         <div align="right">
-            <button class="btn btn btn--color-info" data-bind="click: hideTest">Close</button>
+            <button class="btn btn--color-positive" data-bind="click: confirmTest">Confirm</button>
         </div>
     </div>
-</div>
 
-<div id="dialog-add-translation" title="Add translation">
-    <form>
-        <fieldset>
-            <label for="language">Language</label>
-            <select id="language" data-bind='options: languageList, optionsText: "name", optionsValue: "id"'></select>
-        </fieldset>
-        <fieldset>
-            <label for="text">Text</label>
-            <input type="text" id="newTranslation" />
-        </fieldset>
-        <div align="right">
-            <button class="btn btn--color-positive" data-bind="click: activeTest().createTranslation">Add</button>
+    <div id="dialog-edit-test" title="Edit test">
+        <div class="translation-field-header">
+            <span class="translation-field-label">Translations</span>
         </div>
-    </form>
-</div>
-<div class="row--width-fluid">
-    <div class="grid">
-        <!-- ko foreach: summaryTestList -->
-        <div class="test-summary" data-bind="click: showTest">
-            <span class="item-text" data-bind="text: name"></span>
-            <span class="item-text" data-bind="text: translationCount"></span>
-            <span class="item-text" data-bind="text: materialCount"></span>
-            <span class="item-text" data-bind="text: methodCount"></span>
-            <span class="item-text" data-bind="text: uomCount"></span>
+        <!-- ko foreach: activeTest().translation -->
+        <div class="test-translation">
+            <div data-bind="if: !editState()">
+                <div class="item-delete"><img alt="Delete" class="input-button" title="Delete" src="/Images/item-delete.png" data-bind="click: activeTest().removeTranslation.bind(activeTest(), $data)" /></div>
+                <span class="translation-item-text" data-bind="text: name, click: edit"></span>
+                <div id="language-menu" alt="Language" title="Language">
+                    <img id="language-list-button" data-bind="attr: { src: languageIcon}, click: toggleLanguageList" />
+                    <ul id="language-list" data-bind="if: languageListVisible()">
+                        <!-- ko foreach: languageList -->
+                        <li><div><img class="language-list-item" data-bind="click: $parent.setLanguage, attr: {src: '/Images/' + code + '.png'}" /></div></li>
+                        <!-- /ko -->
+                    </ul>
+                </div>
+            </div>
+            <div data-bind="if: editState()">
+                <textarea cols="50" rows="3" class="translation-input" name="comment" data-bind="value: name"></textarea>
+                <div class="edit-translation-buttons">
+                    <img class="input-button" src="~/Images/save.png" alt="Save" title="Save" data-bind="click: update" />
+                    <img class="input-button" src="~/Images/cancel.png" alt="Cancel" title="Cancel" data-bind="click: cancelEdit" />
+                </div>
+            </div>
         </div>
         <!-- /ko -->
+        <span class="info-text" data-bind="if: activeTest().translation().length == 0">No items</span>
+        <br />
+        <button class="btn btn--size-s btn--style-ghost" data-bind="click: activeTest().addTranslation">Add...</button>
+        <div class="uom-field-header">
+            <span class="uom-field-label">Units of measurement</span>
+        </div>
+        <!-- ko foreach: activeTest().uom -->
+        <div class="test-uom">
+            <div class="item-delete"><img src="/Images/item-delete.png" class="input-button" data-bind="click: activeTest().removeUom.bind(activeTest(), $data)" /></div>
+            <span class="attribute-item-text" data-bind="text: name"></span>
+        </div>
+        <!-- /ko -->
+        <span class="info-text" data-bind="if: activeTest().uom().length == 0">No items</span>
+        <br />
+        <select data-bind='options: uomList, optionsText: "name", optionsCaption: "Add...", selectedOptions: activeTest().selectedUom, optionsValue: "id"'> </select>
+        <div class="material-field-header">
+            <span class="material-field-label">Materials</span>
+        </div>
+        <!-- ko foreach: activeTest().material -->
+        <div class="test-material">
+            <div class="item-delete"><img src="/Images/item-delete.png" class="input-button" data-bind="click: activeTest().removeMaterial.bind(activeTest(), $data)" /></div>
+            <span class="attribute-item-text" data-bind="text: name"></span>
+        </div>
+        <!-- /ko -->
+        <span class="info-text" data-bind="if: activeTest().material().length == 0">No items</span>
+        <br />
+        <select data-bind='options: materialList, optionsText: "name", optionsCaption: "Add...", selectedOptions: activeTest().selectedMaterial, optionsValue: "id"'> </select>
+        <div class="method-field-header">
+            <span class="method-field-label">Methods</span>
+        </div>
+        <!-- ko foreach: activeTest().method -->
+        <div class="test-method">
+            <div class="item-delete"><img src="/Images/item-delete.png" class="input-button" data-bind="click: activeTest().removeMethod.bind(activeTest(), $data)" /></div>
+            <span class="attribute-item-text" data-bind="text: name"></span>
+        </div>
+        <!-- /ko -->
+        <span class="info-text" data-bind="if: activeTest().method().length == 0">No items</span>
+        <br />
+        <select data-bind='options: methodList, optionsText: "name", optionsCaption: "Add...", selectedOptions: activeTest().selectedMethod, optionsValue: "id"'> </select>
+        <br />
+        <div width="100%">
+            <div align="left" style="float: left">
+                <button data-bind="click: activeTest().confirm" class="btn btn--color-positive">Confirm test</button>
+            </div>
+            <div align="right">
+                <button class="btn btn btn--color-info" data-bind="click: hideTest">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="dialog-add-translation" title="Add translation">
+        <form>
+            <fieldset>
+                <label for="language">Language</label>
+                <select id="language" data-bind='options: languageList, optionsText: "name", optionsValue: "id"'></select>
+            </fieldset>
+            <fieldset>
+                <label for="text">Text</label>
+                <input type="text" id="newTranslation" />
+            </fieldset>
+            <div align="right">
+                <button class="btn btn--color-positive" data-bind="click: activeTest().createTranslation">Add</button>
+            </div>
+        </form>
+    </div>
+    <div class="research-field-header">
+        <span class="research-field-label">Researche list</span>
+    </div>
+    <div class="row--width-fluid" id="test-list-content" data-bind="visible: summaryTestList().length > 0">
+        <div class="grid">
+            <!-- ko foreach: summaryTestList -->
+            <div class="test-summary" data-bind="click: showTest">
+                <span class="item-text" data-bind="text: name"></span>
+                <span class="item-text" data-bind="text: translationCount"></span>
+                <span class="item-text" data-bind="text: materialCount"></span>
+                <span class="item-text" data-bind="text: methodCount"></span>
+                <span class="item-text" data-bind="text: uomCount"></span>
+            </div>
+            <!-- /ko -->
+        </div>
+    </div>
+    <div class="loading" id="test-list-loading" data-bind="visible: summaryTestList().length == 0">
+        <img src="~/Images/ajax-loader.gif"/> Updating research list...
+    </div>
+    <br />
+    <div class="pagination-content" data-bind="visible: pageCount().length > 0">
+        <!-- ko foreach: pageCount -->
+        <button class="btn" data-bind="click: $root.gotoPage, text: $data, enable: $root.currentPage() != $data"></button>
+        <!-- /ko -->
+    </div>
+    <div class="loading" id="pagination-loading" data-bind="visible: pageCount().length == 0">
+        <img src="~/Images/ajax-loader.gif"/> Updating pagination...
     </div>
 </div>
 @Scripts.Render("~/bundles/test")
