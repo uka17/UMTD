@@ -12,10 +12,8 @@ D:\Files\UMTD\UMTD.Tests\bin\Debug\roslyn\VBCSCompiler.exe
 D:\Files\UMTD\UMTD.Tests\bin\Debug\roslyn\VBCSCompiler.exe.config
 D:\Files\UMTD\UMTD.Tests\bin\Debug\UMTD.Tests.dll
 D:\Files\UMTD\UMTD.Tests\bin\Debug\UMTD.Tests.pdb
-D:\Files\UMTD\UMTD.Tests\bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll
 D:\Files\UMTD\UMTD.Tests\bin\Debug\UMTD.dll
 D:\Files\UMTD\UMTD.Tests\bin\Debug\System.Web.Http.dll
-D:\Files\UMTD\UMTD.Tests\bin\Debug\EntityFramework.dll
 D:\Files\UMTD\UMTD.Tests\bin\Debug\System.Web.Mvc.dll
 D:\Files\UMTD\UMTD.Tests\bin\Debug\System.Web.Http.WebHost.dll
 D:\Files\UMTD\UMTD.Tests\bin\Debug\System.Net.Http.Formatting.dll
@@ -42,3 +40,6 @@ D:\Files\UMTD\UMTD.Tests\obj\Debug\UMTD.Tests.pdb
 D:\Files\UMTD\UMTD.Tests\bin\Debug\UMTD.Tests.dll.config
 D:\Files\UMTD\UMTD.Tests\bin\Debug\System.Web.Optimization.dll
 D:\Files\UMTD\UMTD.Tests\bin\Debug\System.Web.Optimization.xml
+D:\Files\UMTD\UMTD.Tests\bin\Debug\EntityFramework.dll
+D:\Files\UMTD\UMTD.Tests\bin\Debug\EntityFramework.SqlServer.dll
+D:\Files\UMTD\UMTD.Tests\bin\Debug\EntityFramework.SqlServer.xml
