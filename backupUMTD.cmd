@@ -1,6 +1,12 @@
 echo off
 cls
-echo Clouding of DB backup
+echo Clouding of DB backup...
 "C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\110\Tools\Binn\SQLCMD.EXE" -S localhost\SQLEXPRESS -i D:\Files\UMTD\backupUMTDdb.sql
+echo Deleteing old RAR...
+del "D:\Files\UMTD\UMTD.rar"
+echo Raring new RAR...
+"C:\Program Files\WinRAR\Rar.exe" a -pOffice97Office97 UMTD "D:\Files\UMTD\UMTD.bak"
+echo Deleteing BAK...
+del "D:\Files\UMTD\UMTD.bak"
 echo Done!
 pause

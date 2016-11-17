@@ -10,7 +10,8 @@ var ViewModel = function () {
     self.materialList = ko.observableArray();
     self.methodList = ko.observableArray();
     self.languageList = ko.observableArray();
-    self.profile = ko.observable(new profile($('#user-email').val()));
+    if ($('#user-email').val() != undefined)
+        self.profile = ko.observable(new profile($('#user-email').val()));
 
     self.currentPage = ko.observable();
     self.pageCount = ko.observableArray();
@@ -55,25 +56,31 @@ var ViewModel = function () {
     }
 
     self.loadTestList = function (pageNumber) {
-        self.currentPage(pageNumber);
-        loadTestDone = function (data) {           
-            data.map(function (e) {
-                self.summaryTestList.push(new summaryTest(e));
-            });
-            self.loadPageCount();
-        };
-        self.summaryTestList.removeAll();
-        ajaxLoad("/api/Test/Summary", { userKey: self.profile().api_key(), filter: $('#filter').val(), pageNumber: pageNumber }, loadTestDone);
+        if ($('#user-email').val() != undefined)
+            if (App.profile().api_key() != undefined) {
+            self.currentPage(pageNumber);
+            loadTestDone = function (data) {
+                data.map(function (e) {
+                    self.summaryTestList.push(new summaryTest(e));
+                });
+                self.loadPageCount();
+            };
+            self.summaryTestList.removeAll();
+            ajaxLoad("/api/Test/Summary", { userKey: self.profile().api_key(), filter: $('#filter').val(), pageNumber: pageNumber }, loadTestDone);
+        }
     };
 
     self.loadPageCount = function () {
-        loadPageCountDone = function (data) {            
-            for (var i = 1; i < data + 1; i++) {
-                self.pageCount.push(i);
+        if ($('#user-email').val() != undefined)
+            if (App.profile().api_key() != undefined) {
+                loadPageCountDone = function (data) {
+                    for (var i = 1; i < data + 1; i++) {
+                        self.pageCount.push(i);
+                    }
+                };
+                self.pageCount.removeAll();
+                ajaxLoad("/api/Test/SummaryPageCount", { userKey: self.profile().api_key(), filter: $('#filter').val() }, loadPageCountDone);
             }
-        };
-        self.pageCount.removeAll();
-        ajaxLoad("/api/Test/SummaryPageCount", { userKey: self.profile().api_key(), filter: $('#filter').val() }, loadPageCountDone);        
     };
 
     self.confirmTest = function () {
@@ -110,11 +117,15 @@ Sammy(function () {
 }).run();
 
 //Test list
-if (App.profile().api_key() != undefined) {
-    App.loadReference("material");
-    App.loadReference("method");
-    App.loadReference("uom");
-    App.loadReference("language");
+if ($('#user-email').val() != undefined) {
+    if (App.profile().api_key() != undefined) {
+        App.loadReference("material");
+        App.loadReference("method");
+        App.loadReference("uom");
+        App.loadReference("language");
+    }
+    else
+        $('#content').hide();
 }
 else
     $('#content').hide();
