@@ -83,8 +83,6 @@
     <FunctionImportMapping FunctionImportName="prcKeyRefresh" FunctionName="UMTDModel.Store.prcKeyRefresh" />
     <FunctionImportMapping FunctionImportName="prcKeyCheck" FunctionName="UMTDModel.Store.prcKeyCheck" />
     <FunctionImportMapping FunctionImportName="prcKeyCheckOwner" FunctionName="UMTDModel.Store.prcKeyCheckOwner" />
-    <FunctionImportMapping FunctionImportName="prcUserUpdate" FunctionName="UMTDModel.Store.prcUserUpdate" />
-    <FunctionImportMapping FunctionImportName="prcUserCheck" FunctionName="UMTDModel.Store.prcUserCheck" />
     <FunctionImportMapping FunctionImportName="prcTestSelectAllSummaryPageCount" FunctionName="UMTDModel.Store.prcTestSelectAllSummaryPageCount" />
     <FunctionImportMapping FunctionImportName="prcTestSelectAllSummary" FunctionName="UMTDModel.Store.prcTestSelectAllSummary">
       <ResultMapping>
@@ -104,5 +102,8 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="prcUserCheck" FunctionName="UMTDModel.Store.prcUserCheck" />
+    <FunctionImportMapping FunctionImportName="prcUserUpdate" FunctionName="UMTDModel.Store.prcUserUpdate" />
+    <FunctionImportMapping FunctionImportName="prcUserSelectEmail" FunctionName="UMTDModel.Store.prcUserSelectEmail" />
   </EntityContainerMapping>
 </Mapping>

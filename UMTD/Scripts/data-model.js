@@ -45,7 +45,7 @@ var testTranslation = function (t) {
     self.setLanguage = function (data) {
         self.languageId(data.id);
         self.languageCode(data.code);
-        self.updateTranslation();
+        self.update();
         self.languageListVisible(false);
     };
     self.update = function () {
@@ -67,7 +67,7 @@ var summaryTest = function (t) {
             activeTest(new test(data));
             $("#dialog-edit-test").dialog("open");
         };
-        ajaxLoad("/api/Test/Get", { userKey: App.profile().api_key(), testId: obj.id }, loadCurrentTestDone);
+        ajaxLoad("/api/Test/Get", { userKey: App.profile().api_key(), testId: obj.id }, loadCurrentTestDone, null);
     }
 }
 var test = function (t) {
@@ -98,7 +98,7 @@ var test = function (t) {
             }));
             $("#dialog-add-translation").dialog("close");
         };
-        ajaxLoad("/api/Test/TranslationInsert", { userKey: App.profile().api_key(), testId: activeTest().id, languageId: $('#language').val(), translation: $('#newTranslation').val() }, createTranslationDone);
+        ajaxLoad("/api/Test/TranslationInsert", { userKey: App.profile().api_key(), testId: activeTest().id, languageId: $('#language').val(), translation: $('#newTranslation').val() }, createTranslationDone, null);
 
     };
     self.removeTranslation = function (obj) {
@@ -162,6 +162,7 @@ var test = function (t) {
 var profile = function (email) {
     var self = this;
     var data = jQuery.parseJSON(ajaxLoadSync("/api/User/Profile", { email: email }));
+    self.id = data.Id;
     self.old_email = ko.observable(data.Email);
     self.email = ko.observable(data.Email);
     self.name = ko.observable(data.Name);
@@ -169,18 +170,44 @@ var profile = function (email) {
     self.api_key = ko.observable(data.ApiKey);
     self.link_to_domain = ko.observable(data.IsLinked);
     self.api_key_domain = ko.observable(data.Domain);
-    self.new_password = ko.observable('');  
+    self.new_password = ko.observable('');
+    self.old_password = ko.observable('');
+
+    self.can_update = function () {
+        return ((self.new_password().length > 0 && self.old_password().length > 0) || self.new_password().length == 0) && self.email().includes('@');
+    }
 
     self.refreshApiKey = function () {
         var refreshApiKeyDone = function (data) {
             self.api_key(data);
         };
-        ajaxLoad("/api/User/RefreshApiKey", { apiKey: self.api_key() }, refreshApiKeyDone);
+        ajaxLoad("/api/User/RefreshApiKey", { apiKey: self.api_key() }, refreshApiKeyDone, null);
     }
     self.logout = function () {
         var logoutDone = function () {
             location.reload();
         };
-        ajaxLoad("/api/User/Logout", {}, logoutDone);
+        ajaxLoad("/api/User/Logout", {}, logoutDone, null);
+    }
+    self.show = function () {
+        $('#profile').dialog('open');
+    };
+    self.update = function () {
+        var updateDone = function (jqXHR, status, errorThrown) {
+            location.reload();
+        };
+        var updateFailed = function (jqXHR, status, errorThrown) {
+            $('#profile-update-message').html('<div class="error">' + JSON.parse(jqXHR.responseText) + '</div>');
+        }
+        ajaxLoad("/api/User/ProfileUpdate",
+        { id: self.id,
+          name: self.name,
+          email: self.email,
+          languageId: self.language_id,
+          isLinked: self.link_to_domain,
+          domain: self.api_key_domain,
+          newPassword: self.new_password,
+          oldPassword: self.old_password
+        }, updateDone, updateFailed);
     }
 }

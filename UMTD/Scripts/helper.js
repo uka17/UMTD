@@ -1,4 +1,8 @@
-﻿function ajaxLoad(url, data, doneFunction) {
+﻿var alertStandart = function (jqXHR, status, errorThrown) {
+    alert(errorThrown + ": " + jqXHR.responseText);
+}
+
+function ajaxLoad(url, data, doneFunction, errorFunction) {
     $.ajax({
         statusCode: {
             404: function () {
@@ -11,10 +15,7 @@
         data: data,
         url: url,
     })
-  .error(function (jqXHR, status, errorThrown) {
-      alert(errorThrown + ": " + jqXHR.responseText);
-  });
-
+  .error(errorFunction == null ? alertStandart : errorFunction);
 }
 function ajaxLoadSync(url, data) {
     return $.ajax({

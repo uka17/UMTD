@@ -43,8 +43,16 @@
     border-bottom: 1px dotted;
     cursor: pointer;
 }
-.form-error {
+.error {
     color: #C83C3B;
+}
+.success {
+    color: #75C22A;
+}
+.info {
+    color: #999;
+}
+.form-message {
     text-align: center;
 }
 .test-content th, .pagination-content, .loading {
@@ -79,7 +87,7 @@
     margin-top: 2px;
     float: left;
     position: absolute;
-    z-index: 1000;
+    z-index: 999;
     border: 1px solid #666;
     position: absolute;
     left: 1px;

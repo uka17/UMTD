@@ -22,9 +22,6 @@
         $('#reference-menu').toggle();
         event.stopPropagation();
     });
-    $('#profile-link').click(function (event) {
-        $('#profile').dialog('open');
-    });
 
     $(window).click(function () {
         $('#reference-menu').hide();
@@ -36,12 +33,12 @@
             data: { email: $('#email').val(), password: $('#password').val(), remember: $('#remember').prop('checked') },
             statusCode: {
                 404: function () {
-                    $('.form-error').html("Page not found");
+                    $('#login-message').html("Page not found");
                 },
                 403: function (data) {
-                    $('.form-error').html('⚠ ' + data.responseJSON);
-                    $('.form-error').fadeOut();
-                    $('.form-error').fadeIn();
+                    $('#login-message').html('<div class="error">⚠ ' + data.responseJSON + "</div>");
+                    $('#login-message').fadeOut();
+                    $('#login-message').fadeIn();
                 }
             },
             contentType: "application/json",

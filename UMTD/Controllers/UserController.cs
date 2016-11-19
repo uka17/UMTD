@@ -7,6 +7,7 @@ using System.Net.Http.Headers;
 using System.Web.Http;
 using System.Web.Security;
 using UMTD.Models;
+using UMTD.Classes;
 
 namespace UMTD.Controllers
 {
@@ -115,7 +116,7 @@ namespace UMTD.Controllers
         public HttpResponseMessage ProfileUpdate(
                 int id,
                 string name,
-	            string email,
+                string email,
 	            int languageId,
                 bool isLinked,
 	            string domain,
@@ -125,12 +126,40 @@ namespace UMTD.Controllers
         {
             try
             {
-                if (GetCurrentUserID() != email)
+                string UserCurrentEmail = (from s in dbContext.prcUserSelectEmail(id)
+                                           select s).FirstOrDefault();
+                if (GetCurrentUserID() != UserCurrentEmail)
                     //TODO Translation
                     throw new Exception("Something wrong with user profile update");
 
-                prcUserSelect_Result SelectedUser = (from s in dbContext.prcUserSelect(email)
+                prcUserSelect_Result SelectedUser = (from s in dbContext.prcUserSelect(UserCurrentEmail)
                                                      select s).FirstOrDefault();
+                if (newPassword != null)
+                {
+                    
+                    if (!Verify(email, oldPassword))
+                        //TODO Translation
+                        throw new Exception("Incorrect old password");
+                    uMD5 newPassworduMD5 = new uMD5(newPassword);
+                    newPassword = newPassworduMD5.GetMd5Hash();
+                }
+
+                dbContext.prcUserUpdate(
+                    id,
+                    name,
+                    email,
+                    newPassword,
+                    languageId,
+                    isLinked,
+                    domain,
+                    email
+                    );
+                
+                if(UserCurrentEmail != email)
+                {
+                    //User has changed email
+                    Logout();
+                }
                 return Request.CreateResponse<string>(HttpStatusCode.OK, "Profile was updated");
 
 
@@ -272,7 +301,8 @@ namespace UMTD.Controllers
             //TODO delay for query due to avoid brootforce
             try
             {
-                bool Result = (from s in dbContext.prcUserCheck(email, password)
+                uMD5 pass = new uMD5(password);
+                bool Result = (from s in dbContext.prcUserCheck(email, pass.GetMd5Hash())
                             select s.Value).FirstOrDefault();
 
                 return Result;

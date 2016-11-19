@@ -151,6 +151,7 @@
     <Content Include="Scripts\jquery-ui.min.js" />
     <Content Include="Scripts\knockout-3.4.0.js" />
     <Content Include="Scripts\layout.js" />
+    <Content Include="Scripts\sammy-latest.min.js" />
     <Content Include="Scripts\test.js" />
     <Content Include="Styles\amazium.css" />
     <Content Include="Styles\images\asc.gif" />
@@ -184,6 +185,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Classes\uController.cs" />
+    <Compile Include="Classes\uMD5.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\UomController.cs" />
     <Compile Include="Controllers\MaterialController.cs" />

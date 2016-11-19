@@ -4,26 +4,6 @@ activeTest = ko.observable(new test({ Id: 0, Translation: "[]", Uom: "[]", Metho
 //Model itself
 var ViewModel = function () {
     var self = this;
-    
-    self.summaryTestList = ko.observableArray();    
-    self.uomList = ko.observableArray();;
-    self.materialList = ko.observableArray();
-    self.methodList = ko.observableArray();
-    self.languageList = ko.observableArray();
-    if ($('#user-email').val() != undefined)
-        self.profile = ko.observable(new profile($('#user-email').val()));
-
-    self.currentPage = ko.observable();
-    self.pageCount = ko.observableArray();
-    
-    self.filter = function (data, event) {
-        if (event.keyCode == 13) {
-            location.hash = $('#filter').val() + '/' + self.currentPage();
-            return false;
-        }
-        else
-            return true;
-    };
     self.loadReference = function (type) {
         switch (type) {
             case "material":
@@ -39,10 +19,9 @@ var ViewModel = function () {
                 ajaxLoad("/api/Method/List", { userKey: self.profile().api_key() }, methodLoadDone);
                 break;
             case "language":
-                var languageLoadDone = function (data) {
-                    data.map(function (e) { self.languageList.push({ id: e.Id, name: e.Name, code: e.Code }); });
-                };
-                ajaxLoad("/api/Language/List", { userKey: self.profile().api_key() }, languageLoadDone);
+                //who cares about key for language list?
+                var languageListRaw = jQuery.parseJSON(ajaxLoadSync("/api/Language/List", { userKey: "fuck you!" }));
+                languageListRaw.map(function (e) { self.languageList.push({ id: e.Id, name: e.Name, code: e.Code }); });
                 break;
             case "uom":
                 var uomLoadDone = function (data) {
@@ -51,6 +30,28 @@ var ViewModel = function () {
                 ajaxLoad("/api/Uom/List", { userKey: self.profile().api_key() }, uomLoadDone);
         }
     };
+
+    self.summaryTestList = ko.observableArray();    
+    self.uomList = ko.observableArray();;
+    self.materialList = ko.observableArray();
+    self.methodList = ko.observableArray();
+    self.languageList = ko.observableArray();
+    self.loadReference("language");
+    if ($('#user-email').val() != undefined)
+        self.profile = ko.observable(new profile($('#user-email').val()));
+
+    self.currentPage = ko.observable();
+    self.pageCount = ko.observableArray();
+    
+    self.filter = function (data, event) {
+        if (event.keyCode == 13) {
+            location.hash = $('#filter').val() + '/' + self.currentPage();
+            return false;
+        }
+        else
+            return true;
+    };
+
     self.gotoPage = function (pageNumber) {
         location.hash = $('#filter').val() + '/' + pageNumber;
     }
@@ -122,7 +123,6 @@ if ($('#user-email').val() != undefined) {
         App.loadReference("material");
         App.loadReference("method");
         App.loadReference("uom");
-        App.loadReference("language");
     }
     else
         $('#content').hide();

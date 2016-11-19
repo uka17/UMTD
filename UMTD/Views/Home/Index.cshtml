@@ -44,7 +44,7 @@
                 <div id="language-menu" alt="Language" title="Language">
                     <img id="language-list-button" data-bind="attr: { src: languageIcon}, click: toggleLanguageList" />
                     <ul id="language-list" data-bind="if: languageListVisible()">
-                        <!-- ko foreach: languageList -->
+                        <!-- ko foreach: $parent.languageList -->
                         <li><div><img class="language-list-item" data-bind="click: $parent.setLanguage, attr: {src: '/Images/' + code + '.png'}" /></div></li>
                         <!-- /ko -->
                     </ul>

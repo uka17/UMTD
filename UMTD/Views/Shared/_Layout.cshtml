@@ -29,7 +29,7 @@
             <div id="login-link">
                 Hi stranger, we failed to recognize you, try to <a class="spa-link" id="show-login-dialog">login</a>
                 <div id="dialog-login" title="Login">
-                    <div class="form-error"></div>
+                    <div class="form-message" id="login-message"></div>
                     <form>
                         <fieldset>
                             <label for="email">Email</label>
@@ -37,7 +37,7 @@
                         </fieldset>
                         <fieldset>
                             <label for="password">Password</label>
-                            <input type="text" id="password" />
+                            <input type="password" id="password" />
                         </fieldset>
                         <div width="100%">
                             <div align="left" style="float: left">
@@ -61,7 +61,7 @@
         else
         {
             <div id="profile" title="Profile">
-                <div class="form-error"></div>
+                <div class="form-message" id="profile-update-message"></div>
                 <form>
                     <input type="hidden" value="@user.Email" id="user-email" />
                     <input type="hidden" value="@user.ApiKey" id="user-key" />
@@ -71,7 +71,8 @@
                     </fieldset>
                     <fieldset>
                         <label for="profile-email">Email</label>
-                        <input type="text" data-bind="value: profile().email" id="profile-email" />
+                        <input type="text" data-bind="textInput: profile().email" id="profile-email" />
+                        <span class="info" data-bind="visible: profile().old_email() != profile().email()">As your email is changed you will need to confirm your new email and login again after saving your profile.</span>
                     </fieldset>
                     <fieldset>
                         <label for="profile-language">Language</label>
@@ -79,11 +80,11 @@
                     </fieldset>
                     <fieldset>
                         <label for="profile-password">New password</label>
-                        <input type="text" data-bind="value: profile().new_password" id="profile-password" />
+                        <input type="password" data-bind="textInput: profile().new_password" id="profile-password" />
                     </fieldset>
                     <fieldset data-bind="visible: profile().new_password().length > 0">
                         <label for="old-password">Old password</label>
-                        <input type="text" id="profile-old-password" />
+                        <input type="password" data-bind="textInput: profile().old_password" id="profile-old-password" />
                     </fieldset>
                     <fieldset>
                         <label for="api">API key</label>
@@ -99,7 +100,7 @@
                         <input data-bind="visible: profile().link_to_domain, value: profile().api_key_domain" type="text" id="profile-api-key-domain" />
                     </fieldset>
                     <div align="right">
-                        <button class="btn btn--color-positive" id="profile-do-save">Save</button>
+                        <button data-bind="click: profile().update, enable: profile().can_update()" class="btn btn--color-positive" id="profile-do-save">Save</button>
                     </div>
                 </form>
             </div>
@@ -116,7 +117,7 @@
                     <li><a href="#">Methods</a></li>
                 </ul>
             </div>
-            <button class="btn btn--hoverColor-info btn--size-s" id="profile-link">
+            <button class="btn btn--hoverColor-info btn--size-s" id="profile-link" data-bind="click: profile().show">
                 <svg aria-hidden="true" class="icon icon--onLeft" width="64" height="64" viewBox="0 0 64 64">
                     <path d="M51,49.957c0-3.038-1.717-5.816-4.434-7.174l-9.552-4.776C35.78,37.39,35,36.128,35,34.748V31
 	        c0.268-0.305,0.576-0.698,0.904-1.162c1.302-1.838,2.286-3.861,2.969-5.984C40.098,23.477,41,22.345,41,21v-4
@@ -124,7 +125,7 @@
 	        c0,1.054,0.554,1.981,1.383,2.517C19.382,27.869,22,31,22,31v3.655c0,1.333-0.728,2.56-1.899,3.198L11.18,42.72
 	        C8.603,44.125,7,46.826,7,49.761V52c0,0,0,0.657,0,1c0,2.761,9.85,5,22,5s22-2.239,22-5c0-0.343,0-1,0-1V49.957z" />
                 </svg>
-                @Html.Raw("Tom Johnson")
+                <span id="user-name">@Html.Raw(user.Name)</span>
             </button>
             <button data-bind="click: profile().logout" class="btn btn--hoverColor-info btn--size-s" id="logout-link">
                 <img src="~/Images/logout.png" />

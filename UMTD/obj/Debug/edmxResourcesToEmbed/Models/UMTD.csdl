@@ -96,19 +96,6 @@
       <Parameter Name="Email" Mode="In" Type="String" />
       <Parameter Name="Domain" Mode="In" Type="String" />
     </FunctionImport>
-    <FunctionImport Name="prcUserUpdate">
-      <Parameter Name="Id" Mode="In" Type="Int32" />
-      <Parameter Name="Name" Mode="In" Type="String" />
-      <Parameter Name="Email" Mode="In" Type="String" />
-      <Parameter Name="LanguageId" Mode="In" Type="Int32" />
-      <Parameter Name="IsLinked" Mode="In" Type="Boolean" />
-      <Parameter Name="Domain" Mode="In" Type="String" />
-      <Parameter Name="ModifiedBy" Mode="In" Type="String" />
-    </FunctionImport>
-    <FunctionImport Name="prcUserCheck" ReturnType="Collection(Boolean)">
-      <Parameter Name="Email" Mode="In" Type="String" />
-      <Parameter Name="Password" Mode="In" Type="String" />
-    </FunctionImport>
     <FunctionImport Name="prcTestSelectAllSummaryPageCount" ReturnType="Collection(Int32)">
       <Parameter Name="UserKey" Mode="In" Type="String" />
       <Parameter Name="Filter" Mode="In" Type="String" />
@@ -117,6 +104,23 @@
       <Parameter Name="UserKey" Mode="In" Type="String" />
       <Parameter Name="Filter" Mode="In" Type="String" />
       <Parameter Name="PageNumber" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="prcUserCheck" ReturnType="Collection(Boolean)">
+      <Parameter Name="Email" Mode="In" Type="String" />
+      <Parameter Name="Password" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="prcUserUpdate">
+      <Parameter Name="Id" Mode="In" Type="Int32" />
+      <Parameter Name="Name" Mode="In" Type="String" />
+      <Parameter Name="Email" Mode="In" Type="String" />
+      <Parameter Name="NewPassword" Mode="In" Type="String" />
+      <Parameter Name="LanguageId" Mode="In" Type="Int32" />
+      <Parameter Name="IsLinked" Mode="In" Type="Boolean" />
+      <Parameter Name="Domain" Mode="In" Type="String" />
+      <Parameter Name="ModifiedBy" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="prcUserSelectEmail" ReturnType="Collection(String)">
+      <Parameter Name="Id" Mode="In" Type="Int32" />
     </FunctionImport>
   </EntityContainer>
   <ComplexType Name="prcLanguageList_Result">
