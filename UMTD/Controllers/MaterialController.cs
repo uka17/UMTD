@@ -23,6 +23,9 @@ namespace UMTD.Controllers
         {
             try
             {
+                //TODO: error translations and maybe separate function
+                if (!dbContext.prcKeyCheck(userKey, Request.RequestUri.Host).FirstOrDefault().Value)
+                    throw new Exception("UserKey is incorrect or used with wrong IP address");
                 List<prcMaterialList_Result> MaterialList = (from s in dbContext.prcMaterialList(userKey)
                                                              select s).ToList();
                 return Request.CreateResponse<IEnumerable<prcMaterialList_Result>>(HttpStatusCode.OK, MaterialList);

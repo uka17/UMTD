@@ -24,11 +24,8 @@ namespace UMTD.Controllers
         {
             try
            {
-                //TODO: error translations and maybe separate function
-                if (!dbContext.prcKeyCheck(userKey, Request.RequestUri.Host).FirstOrDefault().Value)
-                    throw new Exception("UserKey is incorrect or used with wrong IP address");
-                if (!dbContext.prcPrivilegeCheck(userKey, "test.get").FirstOrDefault().Value)
-                    throw new Exception("Forbidden");
+                CheckKey(userKey);
+                CheckPrivilege(userKey, "test.get");
 
                 prcTestSelect_Result Test = (from s in dbContext.prcTestSelect(userKey, testId)
                                              select s).FirstOrDefault();
@@ -51,9 +48,8 @@ namespace UMTD.Controllers
         {
             try
             {
-                //TODO: error translations and maybe separate function
-                if (!dbContext.prcKeyCheck(userKey, Request.RequestUri.Host).FirstOrDefault().Value)
-                    throw new Exception("userKey is incorrect or used with wrong IP address");
+                CheckKey(userKey);
+                CheckPrivilege(userKey, "test.summary_page_count");
 
                 int PageCount = (from s in dbContext.prcTestSelectAllSummaryPageCount(userKey, filter)
                                  select s.Value).FirstOrDefault();
@@ -77,9 +73,8 @@ namespace UMTD.Controllers
         {
             try
             {
-                //TODO: error translations and maybe separate function
-                if (!dbContext.prcKeyCheck(userKey, Request.RequestUri.Host).FirstOrDefault().Value)
-                    throw new Exception("userKey is incorrect or used with wrong IP address");
+                CheckKey(userKey);
+                CheckPrivilege(userKey, "test.summary");
 
                 List<prcTestSelectAllSummary_Result> TestList = (from s in dbContext.prcTestSelectAllSummary(userKey, filter, pageNumber)
                                                           select s).ToList();
@@ -102,9 +97,8 @@ namespace UMTD.Controllers
         {
             try
             {
-                //TODO: error translations and maybe separate function
-                if (!dbContext.prcKeyCheck(userKey, Request.RequestUri.Host).FirstOrDefault().Value)
-                    throw new Exception("userKey is incorrect or used with wrong IP address");
+                CheckKey(userKey);
+                CheckPrivilege(userKey, "test.delete");
 
                 dbContext.prcTestDelete(userKey, testId);
                 return new HttpResponseMessage(HttpStatusCode.OK);
@@ -126,9 +120,8 @@ namespace UMTD.Controllers
         {
             try
             {
-                //TODO: error translations and maybe separate function
-                if (!dbContext.prcKeyCheck(userKey, Request.RequestUri.Host).FirstOrDefault().Value)
-                    throw new Exception("userKey is incorrect or used with wrong IP address");
+                CheckKey(userKey);
+                CheckPrivilege(userKey, "test.confirm");
 
                 dbContext.prcTestConfirm(userKey, testId);
                 return new HttpResponseMessage(HttpStatusCode.OK);
@@ -154,8 +147,8 @@ namespace UMTD.Controllers
         {
             try
             {
-                if (!dbContext.prcKeyCheck(userKey, Request.RequestUri.Host).FirstOrDefault().Value)
-                    throw new Exception("userKey is incorrect or used with wrong IP address");
+                CheckKey(userKey);
+                CheckPrivilege(userKey, "test.translation_insert");
 
                 int Result = (from s in dbContext.prcTestTranslationInsert(userKey, testId, languageId, translation)
                               select s.Value).FirstOrDefault();
@@ -180,8 +173,8 @@ namespace UMTD.Controllers
         {
             try
             {
-                if (!dbContext.prcKeyCheck(userKey, Request.RequestUri.Host).FirstOrDefault().Value)
-                    throw new Exception("userKey is incorrect or used with wrong IP address");
+                CheckKey(userKey);
+                CheckPrivilege(userKey, "test.translation_update");
 
                 dbContext.prcTestTranslationUpdate(userKey, translationId, translation, languageId);
                 return Request.CreateResponse(HttpStatusCode.OK);
@@ -203,8 +196,8 @@ namespace UMTD.Controllers
         {
             try
             {
-                if (!dbContext.prcKeyCheck(userKey, Request.RequestUri.Host).FirstOrDefault().Value)
-                    throw new Exception("userKey is incorrect or used with wrong IP address");
+                CheckKey(userKey);
+                CheckPrivilege(userKey, "test.translation_delete");
 
                 dbContext.prcTestTranslationDelete(translationId);
                 return new HttpResponseMessage(HttpStatusCode.OK);
@@ -229,6 +222,9 @@ namespace UMTD.Controllers
         {
             try
             {
+                CheckKey(userKey);
+                CheckPrivilege(userKey, "test.uom_delete");
+
                 dbContext.prcTestUomDelete(testId, uomId);
                 return new HttpResponseMessage(HttpStatusCode.OK);
             }
@@ -250,6 +246,8 @@ namespace UMTD.Controllers
         {
             try
             {
+                CheckKey(userKey);
+                CheckPrivilege(userKey, "test.uom_insert");
                 dbContext.prcTestUomInsert(userKey, testId, uomId);
                 return new HttpResponseMessage(HttpStatusCode.OK);
             }
@@ -345,6 +343,29 @@ namespace UMTD.Controllers
             {
                 return Request.CreateResponse<string>(HttpStatusCode.InternalServerError, e.Message);
             }
+        }
+        #endregion
+        #region Service
+        /// <summary>
+        /// Check if key is valid for IP where it is being used
+        /// </summary>
+        /// <param name="userKey">Api key of user</param>
+        private void CheckKey(string userKey)
+        {
+            //TODO: error translations and maybe separate function
+            if (!dbContext.prcKeyCheck(userKey, Request.RequestUri.Host).FirstOrDefault().Value)
+                throw new Exception("UserKey is incorrect or used with wrong IP address");
+        }
+        /// <summary>
+        /// Check if this api key can use this section
+        /// </summary>
+        /// <param name="userKey"></param>
+        /// <param name="section"></param>
+        private void CheckPrivilege(string userKey, string section)
+        {
+            //TODO: error translations and maybe separate function
+            if (!dbContext.prcPrivilegeCheck(userKey, section).FirstOrDefault().Value)
+                throw new Exception("Forbidden");
         }
         #endregion
     }
