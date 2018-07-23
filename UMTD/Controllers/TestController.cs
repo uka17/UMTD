@@ -271,6 +271,9 @@ namespace UMTD.Controllers
         {
             try
             {
+                CheckKey(userKey);
+                CheckPrivilege(userKey, "test.material_delete");
+
                 dbContext.prcTestMaterialDelete(testId, materialId);
                 return new HttpResponseMessage(HttpStatusCode.OK);
             }
@@ -292,6 +295,9 @@ namespace UMTD.Controllers
         {
             try
             {
+                CheckKey(userKey);
+                CheckPrivilege(userKey, "test.material_insert");
+
                 dbContext.prcTestMaterialInsert(userKey, testId, materialId);
                 return new HttpResponseMessage(HttpStatusCode.OK);
             }
@@ -315,6 +321,9 @@ namespace UMTD.Controllers
         {
             try
             {
+                CheckKey(userKey);
+                CheckPrivilege(userKey, "test.method_delete");
+
                 dbContext.prcTestMethodDelete(testId, methodId);
                 return new HttpResponseMessage(HttpStatusCode.OK);
             }
@@ -336,6 +345,9 @@ namespace UMTD.Controllers
         {
             try
             {
+                CheckKey(userKey);
+                CheckPrivilege(userKey, "test.method_insert");
+
                 dbContext.prcTestMethodInsert(userKey, testId, methodId);
                 return new HttpResponseMessage(HttpStatusCode.OK);
             }
